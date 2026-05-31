@@ -119,7 +119,6 @@ export default function LoadingScreen({
       /* draw floor plan lines one by one */
       .add(() => {
         planLines.forEach((l, i) => {
-          const len = parseFloat(l.getAttribute("stroke-dasharray") || "1000");
           gsap.to(l, {
             strokeDashoffset: 0,
             duration: 1.2 + i * 0.15,

@@ -5,7 +5,6 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion";
-import type React from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TeamMemberCard from "./team-member-card";
