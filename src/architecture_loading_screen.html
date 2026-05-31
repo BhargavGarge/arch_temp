@@ -1,0 +1,395 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Jost:wght@200;300;400&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+.loader-wrap{
+  width:100%;
+  height:520px;
+  background:#0e0d0b;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-family:'Jost',sans-serif;
+}
+
+/* Grid lines */
+.grid-h, .grid-v{position:absolute;inset:0;pointer-events:none}
+.grid-line{position:absolute;background:rgba(255,255,255,0.04)}
+.grid-line.h{left:0;right:0;height:1px}
+.grid-line.v{top:0;bottom:0;width:1px}
+
+/* Blueprint SVG */
+#blueprint{
+  position:absolute;
+  inset:0;
+  opacity:0;
+}
+
+/* Floor plan lines drawn via SVG stroke-dashoffset */
+.plan-line{
+  stroke:rgba(184,147,90,0.25);
+  stroke-width:0.5;
+  fill:none;
+  stroke-dasharray:1000;
+  stroke-dashoffset:1000;
+}
+.plan-line.fast{ stroke-dasharray:400; stroke-dashoffset:400; }
+
+/* Center content */
+.loader-center{
+  position:relative;
+  z-index:10;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+}
+
+/* Logo mark */
+.logo-mark{
+  width:48px;height:48px;
+  border:1px solid rgba(184,147,90,0.5);
+  position:relative;
+  margin-bottom:28px;
+  opacity:0;
+  transform:scale(0.85);
+}
+.logo-mark::before{
+  content:'';position:absolute;
+  inset:5px;border:1px solid rgba(184,147,90,0.25);
+}
+.logo-mark::after{
+  content:'';position:absolute;
+  top:50%;left:0;right:0;height:1px;
+  background:rgba(184,147,90,0.4);
+}
+.logo-inner{
+  position:absolute;
+  left:50%;top:0;bottom:0;width:1px;
+  background:rgba(184,147,90,0.4);
+}
+
+/* Brand name */
+.brand{
+  font-family:'Cormorant Garamond',serif;
+  font-size:32px;
+  font-weight:300;
+  letter-spacing:0.18em;
+  color:#f5f0e8;
+  opacity:0;
+  transform:translateY(8px);
+  margin-bottom:6px;
+}
+
+.tagline{
+  font-size:10px;
+  font-weight:200;
+  letter-spacing:0.35em;
+  text-transform:uppercase;
+  color:rgba(184,147,90,0.7);
+  opacity:0;
+  margin-bottom:40px;
+}
+
+/* Progress bar */
+.progress-wrap{
+  width:200px;
+  height:1px;
+  background:rgba(255,255,255,0.08);
+  position:relative;
+  overflow:hidden;
+}
+.progress-bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg, rgba(184,147,90,0.4), #b8935a);
+  transition:width 0.05s linear;
+}
+
+.progress-num{
+  position:absolute;
+  right:0;
+  top:-20px;
+  font-size:10px;
+  font-weight:300;
+  letter-spacing:0.1em;
+  color:rgba(184,147,90,0.6);
+  font-variant-numeric:tabular-nums;
+  opacity:0;
+}
+
+/* Side labels */
+.side-label{
+  position:absolute;
+  font-size:9px;
+  font-weight:200;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.15);
+  opacity:0;
+}
+.side-label.left{ left:28px; top:50%; transform:rotate(-90deg) translateY(-50%); transform-origin:left center; writing-mode:vertical-rl; letter-spacing:0.4em;}
+.side-label.right{ right:28px; top:50%; transform:rotate(90deg) translateY(-50%); transform-origin:right center; writing-mode:vertical-rl; letter-spacing:0.4em;}
+.side-label.bottom{ bottom:28px; left:50%; transform:translateX(-50%);}
+
+/* Corner accents */
+.corner{
+  position:absolute;
+  width:20px; height:20px;
+  opacity:0;
+}
+.corner.tl{top:20px;left:20px; border-top:1px solid rgba(184,147,90,0.4); border-left:1px solid rgba(184,147,90,0.4);}
+.corner.tr{top:20px;right:20px; border-top:1px solid rgba(184,147,90,0.4); border-right:1px solid rgba(184,147,90,0.4);}
+.corner.bl{bottom:20px;left:20px; border-bottom:1px solid rgba(184,147,90,0.4); border-left:1px solid rgba(184,147,90,0.4);}
+.corner.br{bottom:20px;right:20px; border-bottom:1px solid rgba(184,147,90,0.4); border-right:1px solid rgba(184,147,90,0.4);}
+
+/* Curtain reveal */
+.curtain{
+  position:absolute;
+  inset:0;
+  background:#0e0d0b;
+  transform-origin:top;
+  z-index:50;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+  padding-bottom:2rem;
+  pointer-events:none;
+  opacity:0;
+}
+
+/* Final reveal state */
+.loader-wrap.done .loader-center{ opacity:0; pointer-events:none; }
+
+/* Status text cycling */
+.status-text{
+  position:absolute;
+  bottom:48px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:9px;
+  font-weight:200;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.2);
+  white-space:nowrap;
+  opacity:0;
+  z-index:10;
+}
+</style>
+
+<div class="loader-wrap" id="loaderWrap">
+
+  <!-- Grid -->
+  <div class="grid-h">
+    <div class="grid-line h" style="top:20%"></div>
+    <div class="grid-line h" style="top:40%"></div>
+    <div class="grid-line h" style="top:60%"></div>
+    <div class="grid-line h" style="top:80%"></div>
+  </div>
+  <div class="grid-v">
+    <div class="grid-line v" style="left:15%"></div>
+    <div class="grid-line v" style="left:35%"></div>
+    <div class="grid-line v" style="left:65%"></div>
+    <div class="grid-line v" style="left:85%"></div>
+  </div>
+
+  <!-- Blueprint floor plan SVG -->
+  <svg id="blueprint" viewBox="0 0 800 520" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;position:absolute;inset:0">
+    <!-- Outer walls -->
+    <rect x="160" y="110" width="480" height="300" class="plan-line" rx="0"/>
+    <!-- Inner rooms -->
+    <line x1="160" y1="230" x2="400" y2="230" class="plan-line"/>
+    <line x1="400" y1="110" x2="400" y2="410" class="plan-line"/>
+    <line x1="400" y1="280" x2="640" y2="280" class="plan-line"/>
+    <line x1="500" y1="110" x2="500" y2="230" class="plan-line fast"/>
+    <line x1="160" y1="320" x2="280" y2="320" class="plan-line fast"/>
+    <line x1="280" y1="320" x2="280" y2="410" class="plan-line fast"/>
+    <!-- Dimension lines -->
+    <line x1="140" y1="110" x2="140" y2="410" stroke="rgba(184,147,90,0.12)" stroke-width="0.5" fill="none" stroke-dasharray="4 4"/>
+    <line x1="160" y1="90" x2="640" y2="90" stroke="rgba(184,147,90,0.12)" stroke-width="0.5" fill="none" stroke-dasharray="4 4"/>
+    <!-- Small circles at room corners -->
+    <circle cx="400" cy="230" r="3" fill="none" stroke="rgba(184,147,90,0.3)" stroke-width="0.5" opacity="0" id="jt1"/>
+    <circle cx="400" cy="280" r="3" fill="none" stroke="rgba(184,147,90,0.3)" stroke-width="0.5" opacity="0" id="jt2"/>
+    <circle cx="280" cy="320" r="3" fill="none" stroke="rgba(184,147,90,0.3)" stroke-width="0.5" opacity="0" id="jt3"/>
+    <circle cx="500" cy="230" r="3" fill="none" stroke="rgba(184,147,90,0.3)" stroke-width="0.5" opacity="0" id="jt4"/>
+  </svg>
+
+  <!-- Corner accents -->
+  <div class="corner tl" id="cTL"></div>
+  <div class="corner tr" id="cTR"></div>
+  <div class="corner bl" id="cBL"></div>
+  <div class="corner br" id="cBR"></div>
+
+  <!-- Side labels -->
+  <div class="side-label left" id="sLeft">Architecture · Interior</div>
+  <div class="side-label right" id="sRight">Est. MMXXIV</div>
+  <div class="side-label bottom" id="sBottom">Studio · Design · Space</div>
+
+  <!-- Center content -->
+  <div class="loader-center" id="loaderCenter">
+    <div class="logo-mark" id="logoMark">
+      <div class="logo-inner"></div>
+    </div>
+    <div class="brand" id="brand">ARCHO</div>
+    <div class="tagline" id="tagline">Architecture &amp; Interior Design</div>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar"></div>
+      <div class="progress-num" id="progressNum">0%</div>
+    </div>
+  </div>
+
+  <!-- Status text -->
+  <div class="status-text" id="statusText">Initialising workspace</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+(function(){
+
+const tl = gsap.timeline({ defaults:{ ease:'power3.out' }});
+const ease2 = 'power2.inOut';
+
+const planLines = document.querySelectorAll('.plan-line');
+const junctions = [document.getElementById('jt1'),document.getElementById('jt2'),document.getElementById('jt3'),document.getElementById('jt4')];
+const bar = document.getElementById('progressBar');
+const num = document.getElementById('progressNum');
+const statusEl = document.getElementById('statusText');
+
+const statuses = ['Initialising workspace','Loading materials','Rendering spaces','Calibrating light','Almost ready'];
+let sIdx = 0;
+function cycleStatus(){
+  gsap.to(statusEl,{opacity:0,duration:0.3,onComplete:()=>{
+    sIdx = Math.min(sIdx+1,statuses.length-1);
+    statusEl.textContent = statuses[sIdx];
+    gsap.to(statusEl,{opacity:1,duration:0.4});
+  }});
+}
+
+let prog = {val:0};
+function updateProgress(target, dur){
+  gsap.to(prog,{val:target,duration:dur,ease:'none',
+    onUpdate:()=>{
+      const v = Math.round(prog.val);
+      bar.style.width = v+'%';
+      num.textContent = v+'%';
+    }
+  });
+}
+
+tl
+  .set('#blueprint',{opacity:0})
+  .set(statusEl,{opacity:0})
+
+  /* corners snap in */
+  .to(['#cTL','#cTR','#cBL','#cBR'],{opacity:1,duration:0.001,stagger:0.08})
+
+  /* logo mark */
+  .to('#logoMark',{opacity:1,scale:1,duration:0.6,ease:'back.out(1.4)'}, 0.3)
+
+  /* brand name */
+  .to('#brand',{opacity:1,y:0,duration:0.7,ease:ease2}, 0.55)
+  .to('#tagline',{opacity:1,duration:0.5}, 0.85)
+  .to('#progressNum',{opacity:1,duration:0.4}, 0.9)
+
+  /* status */
+  .to(statusEl,{opacity:1,duration:0.4}, 1.0)
+
+  /* blueprint fades in */
+  .to('#blueprint',{opacity:1,duration:0.8,ease:'power1.inOut'}, 1.1)
+
+  /* draw floor plan lines one by one */
+  .add(()=>{
+    planLines.forEach((l,i)=>{
+      const len = parseFloat(l.getAttribute('stroke-dasharray'));
+      gsap.to(l,{strokeDashoffset:0,duration:1.2+(i*0.15),ease:'power2.inOut',delay:i*0.12});
+    });
+  }, 1.2)
+
+  /* junction dots appear */
+  .to(junctions,{opacity:1,duration:0.3,stagger:0.15,ease:'power1.out'}, 2.0)
+
+  /* side labels */
+  .to(['#sLeft','#sRight','#sBottom'],{opacity:1,duration:0.6,stagger:0.15}, 1.8)
+
+  /* progress 0→100 */
+  .add(()=>{ updateProgress(100,2.5); },1.2)
+
+  /* cycle status messages */
+  .add(()=>{ cycleStatus(); },1.6)
+  .add(()=>{ cycleStatus(); },2.2)
+  .add(()=>{ cycleStatus(); },2.8)
+  .add(()=>{ cycleStatus(); },3.3)
+  .add(()=>{ cycleStatus(); },3.7)
+
+  /* curtain reveal — split panels sweep up */
+  .add(()=>{
+    const wrap = document.getElementById('loaderWrap');
+
+    /* fade out centre content */
+    gsap.to('#loaderCenter',{opacity:0,duration:0.4,ease:'power2.in'});
+    gsap.to(statusEl,{opacity:0,duration:0.3});
+    gsap.to(['#sLeft','#sRight','#sBottom'],{opacity:0,duration:0.3});
+
+    /* blueprint flares then fades */
+    gsap.to('#blueprint',{opacity:0.6,duration:0.2,yoyo:true,repeat:1,ease:'power1.inOut'});
+
+    /* curtain panels sweep up */
+    const n = 5;
+    for(let i=0;i<n;i++){
+      const panel = document.createElement('div');
+      panel.style.cssText = `
+        position:absolute;
+        top:0;bottom:0;
+        left:${(i/n)*100}%;
+        width:${(1/n)*100}%;
+        background:#f5f0e8;
+        z-index:60;
+        transform:translateY(100%);
+      `;
+      wrap.appendChild(panel);
+      gsap.to(panel,{
+        y:'-100%',
+        duration:0.8,
+        ease:'power4.inOut',
+        delay: i*0.06,
+        onComplete:()=>{
+          if(i===n-1){
+            gsap.to(wrap,{opacity:0,duration:0.5,delay:0.1});
+          }
+        }
+      });
+    }
+  }, 4.2)
+
+  /* restart loop */
+  .add(()=>{
+    setTimeout(()=>{
+      gsap.set('#loaderWrap',{opacity:1});
+      const panels = document.querySelectorAll('#loaderWrap > div[style*="z-index:60"]');
+      panels.forEach(p=>p.remove());
+      gsap.set('#loaderWrap',{opacity:1});
+      planLines.forEach(l=>{
+        const len = parseFloat(l.getAttribute('stroke-dasharray'));
+        gsap.set(l,{strokeDashoffset:len});
+      });
+      junctions.forEach(j=>gsap.set(j,{opacity:0}));
+      gsap.set(['#logoMark','#brand','#tagline','#progressNum','#sLeft','#sRight','#sBottom'],{opacity:0});
+      gsap.set('#logoMark',{scale:0.85});
+      gsap.set('#brand',{y:8});
+      gsap.set('#blueprint',{opacity:0});
+      gsap.set('#loaderCenter',{opacity:1});
+      prog.val=0; bar.style.width='0%'; num.textContent='0%';
+      sIdx=0; statusEl.textContent=statuses[0];
+      tl.restart();
+    },1200);
+  },5.2);
+
+})();
+</script>
