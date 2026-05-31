@@ -83,7 +83,10 @@ export function Footer() {
   };
 
   return (
-    <footer id="footer-section" className="relative bg-[#080808] overflow-hidden">
+    <footer
+      id="footer-section"
+      className="relative bg-[#080808] overflow-hidden"
+    >
       {/* ── Background image + CTA ──────────────────────────────── */}
       <div className="relative h-[58vh] min-h-[400px] overflow-hidden">
         {/* Photo */}
@@ -132,7 +135,7 @@ export function Footer() {
       <div className="relative z-10 px-4 md:px-8 lg:px-12 -mt-6 pb-6">
         <div className="bg-[#111111] border border-white/[0.07] rounded-2xl overflow-hidden shadow-[0_-8px_60px_rgba(0,0,0,0.6)]">
           {/* Main grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 px-8 md:px-12 lg:px-14 pt-12 pb-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-10 px-5 md:px-10 lg:px-14 pt-8 md:pt-12 pb-8 md:pb-10">
             {/* Brand + newsletter */}
             <AnimatedContainer delay={0.05} className="lg:col-span-2">
               <div className="flex items-center gap-2.5 mb-3">
@@ -216,23 +219,20 @@ export function Footer() {
           </div>
 
           {/* Bottom bar */}
-          <div className="border-t border-white/[0.05] px-8 md:px-12 lg:px-14 py-5">
+          <div className="border-t border-white/[0.05] px-5 md:px-10 lg:px-14 py-4 md:py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <p className="text-white/20 text-[11px]">
                 © 2025 {COMPANY_NAME}. All Rights Reserved.
               </p>
-              <div className="flex items-center gap-3">
-                {SOCIAL.map(({ Icon, label }) => (
-                  <a
-                    key={label}
-                    href="#"
-                    aria-label={label}
-                    className="w-7 h-7 rounded-full border border-white/10 flex items-center justify-center text-white/30 hover:border-[#88734C]/60 hover:text-[#88734C] transition-all duration-300"
-                  >
-                    <Icon className="w-3 h-3" />
-                  </a>
-                ))}
-              </div>
+              <a
+                className="flex items-center gap-3 text-white/20 text-[11px]"
+                href="https://pheneron.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span>Art by</span>
+                Pheneron{" "}
+              </a>
             </div>
           </div>
         </div>

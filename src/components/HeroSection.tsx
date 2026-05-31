@@ -1,7 +1,14 @@
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import AnimatedHeading from "./AnimatedHeading";
 import FadeIn from "./FadeIn";
 
+const NAV_LINKS = ["Services", "Portfolio", "About Us", "Contact Us"];
+
 export default function HeroSection() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <section className="relative w-full h-screen flex flex-col overflow-hidden">
       {/* Video background */}
@@ -18,38 +25,76 @@ export default function HeroSection() {
       {/* Content layer */}
       <div className="relative z-10 flex flex-col h-full">
         {/* Navbar */}
-        <div className="px-6 md:px-12 lg:px-16 pt-6">
+        <div className="px-4 md:px-12 lg:px-16 pt-6">
           <nav className="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
+            {/* Brand */}
             <div className="flex items-center gap-3">
               <span className="text-2xl font-semibold tracking-tight text-white">
                 Nexus
               </span>
             </div>
 
-            {/* Center links */}
+            {/* Desktop centre links */}
             <div className="hidden md:flex items-center gap-8">
-              {["Services", "Portfolio", "About Us", "Contact Us"].map(
-                (link) => (
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link}
+                  href="#"
+                  className="text-sm text-white hover:text-gray-300 transition-colors duration-200"
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
+
+            {/* Desktop CTA */}
+            <button className="hidden md:block bg-white text-black px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-200">
+              Start a Chat
+            </button>
+
+            {/* Mobile: hamburger */}
+            <button
+              className="md:hidden text-white p-1.5 rounded-lg hover:bg-white/10 transition-colors"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </nav>
+
+          {/* Mobile dropdown */}
+          <AnimatePresence>
+            {menuOpen && (
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.2 }}
+                className="md:hidden mt-2 rounded-xl overflow-hidden liquid-glass border border-white/10"
+              >
+                {NAV_LINKS.map((link, i) => (
                   <a
                     key={link}
                     href="#"
-                    className="text-sm text-white hover:text-gray-300 transition-colors duration-200"
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-center px-5 py-3.5 text-sm text-white/90 hover:bg-white/10 transition-colors border-b border-white/[0.06] last:border-0"
+                    style={{ animationDelay: `${i * 40}ms` }}
                   >
                     {link}
                   </a>
-                ),
-              )}
-            </div>
-
-            {/* CTA button */}
-            <button className="bg-white text-black px-6 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-200">
-              Start a Chat
-            </button>
-          </nav>
+                ))}
+                <div className="px-4 py-3">
+                  <button className="w-full bg-white text-black py-2.5 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-200">
+                    Start a Chat
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Hero content */}
-        <div className="px-6 md:px-12 lg:px-16 flex-1 flex flex-col justify-end pb-12 lg:pb-16">
+        <div className="px-4 md:px-12 lg:px-16 flex-1 flex flex-col justify-end pb-10 md:pb-12 lg:pb-16">
           <div className="lg:grid lg:grid-cols-2 lg:items-end">
             {/* Left column */}
             <div>
@@ -62,21 +107,19 @@ export default function HeroSection() {
               />
 
               <FadeIn delay={800} duration={1000}>
-                <p className="text-base md:text-lg text-gray-300 mb-5">
-                  Nexus, is dedicated to creating architectural masterpieces
-                  that seamlessly blend luxury with sustainability. The firm
-                  works closely with each client to understand their vision,
-                  ensuring that every project reflects their desires while
-                  upholding the highest standards of design excellence.
+                <p className="text-sm md:text-base lg:text-lg text-gray-300 mb-5 max-w-lg">
+                  Nexus is dedicated to creating architectural masterpieces that
+                  seamlessly blend luxury with sustainability, working closely
+                  with each client to reflect their vision.
                 </p>
               </FadeIn>
 
               <FadeIn delay={1200} duration={1000}>
-                <div className="flex flex-wrap gap-4">
-                  <button className="bg-white text-black px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-200">
+                <div className="flex flex-wrap gap-3">
+                  <button className="bg-white text-black px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-200">
                     Start a Chat
                   </button>
-                  <button className="liquid-glass border border-white/20 text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-black transition-colors duration-200">
+                  <button className="liquid-glass border border-white/20 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-white hover:text-black transition-colors duration-200">
                     Explore Now
                   </button>
                 </div>
@@ -87,10 +130,10 @@ export default function HeroSection() {
             <FadeIn
               delay={1400}
               duration={1000}
-              className="flex items-end justify-start lg:justify-end mt-8 lg:mt-0"
+              className="flex items-end justify-start lg:justify-end mt-6 lg:mt-0"
             >
-              <div className="liquid-glass border border-white/20 px-6 py-3 rounded-xl">
-                <span className="text-lg md:text-xl lg:text-2xl font-light text-white">
+              <div className="liquid-glass border border-white/20 px-5 py-2.5 rounded-xl">
+                <span className="text-base md:text-xl lg:text-2xl font-light text-white">
                   Investing. Building. Advisory.
                 </span>
               </div>

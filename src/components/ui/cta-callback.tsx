@@ -32,7 +32,7 @@ export default function CTACallback() {
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#88734C]/5 blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#88734C]/3 blur-[100px] pointer-events-none" />
 
-      <div className="container mx-auto max-w-6xl px-6 md:px-12 lg:px-16 py-28 relative z-20">
+      <div className="container mx-auto max-w-6xl px-6 md:px-12 lg:px-16 py-16 md:py-28 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-20">
 
           {/* ── Left: text + form ─────────────────────────────── */}

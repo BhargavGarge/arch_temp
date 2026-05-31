@@ -1,8 +1,11 @@
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 
-const ITEM_WIDTH = 400
 const GAP = 30
+function getItemWidth() {
+  if (typeof window === "undefined") return 368
+  return Math.min(400, window.innerWidth - 32)
+}
 
 const items = [
   {
@@ -54,6 +57,7 @@ export default function ScrollGallery() {
     offset: ["start start", "end end"],
   })
 
+  const ITEM_WIDTH = getItemWidth()
   const totalDistance = (items.length - 1) * (ITEM_WIDTH + GAP)
   const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance])
 
@@ -135,7 +139,7 @@ export default function ScrollGallery() {
             }}
           >
             {items.map((item) => (
-              <GalleryItem key={item.id} item={item} />
+              <GalleryItem key={item.id} item={item} width={ITEM_WIDTH} />
             ))}
           </motion.div>
         </div>
@@ -190,13 +194,13 @@ export default function ScrollGallery() {
   )
 }
 
-function GalleryItem({ item }: { item: (typeof items)[0] }) {
+function GalleryItem({ item, width }: { item: (typeof items)[0]; width: number }) {
   return (
     <div
       style={{
         flexShrink: 0,
-        width: `${ITEM_WIDTH}px`,
-        height: "500px",
+        width: `${width}px`,
+        height: `${Math.min(500, Math.round(width * 1.3))}px`,
         borderRadius: "12px",
         position: "relative",
         overflow: "hidden",

@@ -60,7 +60,7 @@ export function Testimonial() {
   return (
     <section id="testimonial-section" className="overflow-hidden">
       {/* ── Section header ───────────────────────────────────────── */}
-      <div className="container mx-auto max-w-6xl px-6 md:px-12 lg:px-16 pt-24 pb-0">
+      <div className="container mx-auto max-w-6xl px-4 md:px-12 lg:px-16 pt-14 md:pt-24 pb-0">
         <motion.span
           className="block text-[#88734C] text-[10px] tracking-[0.4em] uppercase font-medium mb-5"
           initial={{ opacity: 0, y: 12 }}
@@ -106,15 +106,15 @@ export function Testimonial() {
       </div>
 
       {/* ── Testimonial widget ───────────────────────────────────── */}
-      <div className="flex items-center justify-center py-20 px-4 md:px-12 lg:px-16">
+      <div className="flex items-center justify-center py-10 md:py-20 px-4 md:px-12 lg:px-16">
         <div
           ref={containerRef}
           className="relative w-full max-w-5xl"
           onMouseMove={handleMouseMove}
         >
-          {/* Oversized parallax index number */}
+          {/* Oversized parallax index number — desktop only */}
           <motion.div
-            className="absolute -left-8 top-1/2 -translate-y-1/2 text-[22rem] font-bold text-[#202e44]/[0.04] select-none pointer-events-none leading-none tracking-tighter"
+            className="hidden md:block absolute -left-8 top-1/2 -translate-y-1/2 text-[22rem] font-bold text-[#202e44]/[0.04] select-none pointer-events-none leading-none tracking-tighter"
             style={{ x: numberX, y: numberY }}
           >
             <AnimatePresence mode="wait">
@@ -134,7 +134,7 @@ export function Testimonial() {
           {/* Asymmetric layout */}
           <div className="relative flex">
             {/* Left column — vertical label + progress */}
-            <div className="flex flex-col items-center justify-center pr-12 md:pr-16 border-r border-[#202e44]/[0.1]">
+            <div className="hidden sm:flex flex-col items-center justify-center pr-4 md:pr-12 lg:pr-16 border-r border-[#202e44]/[0.1]">
               <motion.span
                 className="text-[10px] font-mono text-[#202e44]/40 tracking-widest uppercase"
                 style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}
@@ -158,7 +158,7 @@ export function Testimonial() {
             </div>
 
             {/* Center — main content */}
-            <div className="flex-1 pl-12 md:pl-16 py-12">
+            <div className="flex-1 pl-0 sm:pl-6 md:pl-12 lg:pl-16 py-6 md:py-12">
               {/* Location badge */}
               <AnimatePresence mode="wait">
                 <motion.div
@@ -181,7 +181,7 @@ export function Testimonial() {
                 <AnimatePresence mode="wait">
                   <motion.blockquote
                     key={activeIndex}
-                    className="text-3xl md:text-4xl lg:text-5xl font-light text-[#202e44] leading-[1.2] tracking-tight"
+                    className="text-xl md:text-3xl lg:text-4xl xl:text-5xl font-light text-[#202e44] leading-[1.2] tracking-tight"
                     initial="hidden"
                     animate="visible"
                     exit="exit"

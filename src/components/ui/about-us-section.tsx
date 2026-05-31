@@ -146,14 +146,14 @@ export default function AboutUsSection() {
 
           {/* "About" — overflow-hidden keeps chars clipped while offscreen */}
           <div className="overflow-hidden leading-[0.85] pb-1">
-            <h2 className="text-[clamp(4.5rem,11vw,9rem)] font-extralight tracking-[-0.025em] text-[#F2F2EB]">
+            <h2 className="text-[clamp(3.2rem,11vw,9rem)] font-extralight tracking-[-0.025em] text-[#F2F2EB]">
               <SplitWord word="About" />
             </h2>
           </div>
 
           {/* "Us" with extending gold rule */}
           <div className="overflow-hidden leading-[0.85] flex items-end gap-8 pb-1">
-            <h2 className="text-[clamp(4.5rem,11vw,9rem)] font-extralight tracking-[-0.025em] text-[#88734C]">
+            <h2 className="text-[clamp(3.2rem,11vw,9rem)] font-extralight tracking-[-0.025em] text-[#88734C]">
               <SplitWord word="Us" />
             </h2>
             <motion.div
@@ -167,7 +167,7 @@ export default function AboutUsSection() {
         </div>
 
         {/* ── TWO-COLUMN INTRO ──────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-16 pb-24 border-b border-[#F2F2EB]/[0.05]">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-8 lg:gap-16 pb-16 md:pb-24 border-b border-[#F2F2EB]/[0.05]">
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -232,13 +232,13 @@ export default function AboutUsSection() {
 
         {/* ── STATS ─────────────────────────────────────────────── */}
         <div className="border-t border-[#F2F2EB]/[0.05]">
-          <div className="grid grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4">
             {stats.map((stat, i) => (
               <LuxuryStatCounter
                 key={i}
                 {...stat}
                 index={i}
-                total={stats.length}
+
               />
             ))}
           </div>
@@ -253,7 +253,7 @@ export default function AboutUsSection() {
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
         >
-          <span className="font-serif text-[8rem] leading-none text-[#88734C]/18 select-none pointer-events-none -mb-4">
+          <span className="font-serif text-[4rem] md:text-[8rem] leading-none text-[#88734C]/18 select-none pointer-events-none -mb-4">
             &#8220;
           </span>
           <blockquote className="max-w-[780px] text-center">
@@ -335,7 +335,6 @@ interface LuxuryStatCounterProps {
   label: string;
   suffix: string;
   index: number;
-  total: number;
 }
 
 function LuxuryStatCounter({
@@ -343,7 +342,6 @@ function LuxuryStatCounter({
   label,
   suffix,
   index,
-  total,
 }: LuxuryStatCounterProps) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: false, amount: 0.5 });
@@ -362,13 +360,13 @@ function LuxuryStatCounter({
     }
   }, [isInView, value, springValue, hasAnimated]);
 
-  const isLast = index === total - 1;
 
   return (
     <motion.div
       ref={ref}
-      className={`py-12 px-8 relative group cursor-default${
-        !isLast ? " border-r border-[#F2F2EB]/[0.05]" : ""
+      className={`py-7 px-4 sm:py-10 sm:px-6 md:py-12 md:px-8 relative group cursor-default${
+        /* hide right border on even columns (mobile 2-col) and last cell */
+        index % 2 === 1 ? "" : " border-r border-[#F2F2EB]/[0.05] sm:border-r"
       }`}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}

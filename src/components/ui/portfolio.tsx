@@ -272,7 +272,7 @@ export default function Portfolio() {
 
             <h2
               className="port-heading text-white font-light tracking-tight leading-[1.05] mb-10"
-              style={{ fontSize: "clamp(3rem, 8vw, 7rem)" }}
+              style={{ fontSize: "clamp(2rem, 8vw, 7rem)" }}
             >
               Spaces That
               <br />
@@ -290,41 +290,63 @@ export default function Portfolio() {
 
       {/* ── Gallery grid ──────────────────────────────────────── */}
       <div className="bg-[#080808] text-white">
-        <div className="grid grid-cols-12 gap-2 p-2">
-          {/* Left: scrolls normally */}
-          <div className="port-left-col col-span-4 grid gap-2">
-            {leftProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                className="port-left-item"
-              />
-            ))}
-          </div>
 
-          {/* Center: sticky for the full height of the gallery */}
-          <div className="port-center-col col-span-4 sticky top-0 h-screen grid grid-rows-3 gap-2">
-            {centerProjects.map((project) => (
-              <ProjectCard
+        {/* Mobile: simple 2-column grid ─────────────────────── */}
+        <div className="md:hidden grid grid-cols-2 gap-2 p-2">
+          {[...leftProjects, ...centerProjects, ...rightProjects].map(
+            (project, i) => (
+              <motion.div
                 key={project.id}
-                project={project}
-                className="port-center-item"
-                isCenter
-              />
-            ))}
-          </div>
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, delay: (i % 4) * 0.07 }}
+              >
+                <ProjectCard project={project} className="h-44" />
+              </motion.div>
+            ),
+          )}
+        </div>
 
-          {/* Right: scrolls normally */}
-          <div className="port-right-col col-span-4 grid gap-2">
-            {rightProjects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                className="port-right-item"
-              />
-            ))}
+        {/* Desktop: original 3-column sticky layout ─────────── */}
+        <div className="hidden md:block">
+          <div className="grid grid-cols-12 gap-2 p-2">
+            {/* Left: scrolls normally */}
+            <div className="port-left-col col-span-4 grid gap-2">
+              {leftProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  className="port-left-item"
+                />
+              ))}
+            </div>
+
+            {/* Center: sticky */}
+            <div className="port-center-col col-span-4 sticky top-0 h-screen grid grid-rows-3 gap-2">
+              {centerProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  className="port-center-item"
+                  isCenter
+                />
+              ))}
+            </div>
+
+            {/* Right: scrolls normally */}
+            <div className="port-right-col col-span-4 grid gap-2">
+              {rightProjects.map((project) => (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  className="port-right-item"
+                />
+              ))}
+            </div>
           </div>
         </div>
+
       </div>
 
       {/* ── Footer ────────────────────────────────────────────── */}
@@ -341,7 +363,7 @@ export default function Portfolio() {
         </h2>
 
         {/* CTA pill */}
-        <div className="relative z-10 bg-black rounded-tl-[2.5rem] rounded-tr-[2.5rem] h-44 grid place-content-center">
+        <div className="relative z-10 bg-black rounded-tl-[1.5rem] rounded-tr-[1.5rem] md:rounded-tl-[2.5rem] md:rounded-tr-[2.5rem] h-44 grid place-content-center">
           <motion.button
             className="flex items-center gap-3 text-white border border-white/15 px-8 py-3.5 rounded-full text-sm tracking-wide hover:border-white/50 transition-colors duration-300"
             whileHover={{ scale: 1.04 }}
