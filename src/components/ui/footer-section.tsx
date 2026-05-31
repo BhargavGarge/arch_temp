@@ -48,13 +48,6 @@ function IconLinkedin({ className }: { className?: string }) {
   );
 }
 
-const SOCIAL = [
-  { Icon: IconFacebook, label: "Facebook" },
-  { Icon: IconInstagram, label: "Instagram" },
-  { Icon: IconYoutube, label: "YouTube" },
-  { Icon: IconLinkedin, label: "LinkedIn" },
-];
-
 const NAV_COLUMNS = [
   {
     heading: "Explore",
