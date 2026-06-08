@@ -1,44 +1,27 @@
-import { ReactLenis } from "lenis/react";
-import { useEffect, useState } from "react";
-import HeroSection from "./components/HeroSection";
-import AboutUsSection from "./components/ui/about-us-section";
-import Portfolio from "./components/ui/portfolio";
-import { Testimonial } from "./components/ui/design-testimonial";
-import CTACallback from "./components/ui/cta-callback";
-import { Footer } from "./components/ui/footer-section";
-import ScrollBackground from "./components/ScrollBackground";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
+import HeroSection from "./components/HeroSection";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 5000);
-    return () => clearTimeout(timer);
-  }, []);
+  const [loading, setLoading] = useState(true);
 
   return (
     <>
-      <LoadingScreen
-        isLoading={isLoading}
-        onLoadingComplete={() => setIsLoading(false)}
-      />
-      {!isLoading && (
-        <>
-          <ScrollBackground />
-          <ReactLenis
-            root
-            options={{ lerp: 0.08, duration: 1.4, smoothWheel: true }}
+      <AnimatePresence mode="wait">
+        {loading && (
+          <motion.div
+            key="loader"
+            className="fixed inset-0 z-[999]"
+            exit={{ opacity: 0, scale: 1.03 }}
+            transition={{ duration: 0.75, ease: [0.4, 0, 0.2, 1] }}
           >
-            <HeroSection />
-            <AboutUsSection />
-            <Portfolio />
-            <Testimonial />
-            <CTACallback />
-            <Footer />
-          </ReactLenis>
-        </>
-      )}
+            <LoadingScreen onComplete={() => setLoading(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {!loading && <HeroSection />}
     </>
   );
 }
