@@ -1,6 +1,12 @@
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion"
-import type React from "react"
+import { useState, useEffect, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import type React from "react";
 
 const testimonials = [
   {
@@ -24,41 +30,42 @@ const testimonials = [
     role: "Residential Client",
     company: "Ahmedabad",
   },
-]
+];
 
 export function Testimonial() {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const springConfig = { damping: 25, stiffness: 200 }
-  const x = useSpring(mouseX, springConfig)
-  const y = useSpring(mouseY, springConfig)
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springConfig = { damping: 25, stiffness: 200 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
 
-  const numberX = useTransform(x, [-200, 200], [-20, 20])
-  const numberY = useTransform(y, [-200, 200], [-10, 10])
+  const numberX = useTransform(x, [-200, 200], [-20, 20]);
+  const numberY = useTransform(y, [-200, 200], [-10, 10]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = containerRef.current?.getBoundingClientRect()
+    const rect = containerRef.current?.getBoundingClientRect();
     if (rect) {
-      mouseX.set(e.clientX - (rect.left + rect.width / 2))
-      mouseY.set(e.clientY - (rect.top + rect.height / 2))
+      mouseX.set(e.clientX - (rect.left + rect.width / 2));
+      mouseY.set(e.clientY - (rect.top + rect.height / 2));
     }
-  }
+  };
 
-  const goNext = () => setActiveIndex((p) => (p + 1) % testimonials.length)
-  const goPrev = () => setActiveIndex((p) => (p - 1 + testimonials.length) % testimonials.length)
+  const goNext = () => setActiveIndex((p) => (p + 1) % testimonials.length);
+  const goPrev = () =>
+    setActiveIndex((p) => (p - 1 + testimonials.length) % testimonials.length);
 
   useEffect(() => {
-    const timer = setInterval(goNext, 6000)
-    return () => clearInterval(timer)
-  }, [])
+    const timer = setInterval(goNext, 6000);
+    return () => clearInterval(timer);
+  }, []);
 
-  const current = testimonials[activeIndex]
+  const current = testimonials[activeIndex];
 
   return (
-    <section id="testimonial-section" className="overflow-hidden">
+    <section id="testimonial-section" className="overflow-hidden bg-white">
       {/* ── Section header ───────────────────────────────────────── */}
       <div className="container mx-auto max-w-6xl px-4 md:px-12 lg:px-16 pt-14 md:pt-24 pb-0">
         <motion.span
@@ -90,7 +97,8 @@ export function Testimonial() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            Together with our clients and partners,<br />
+            Together with our clients and partners,
+            <br />
             we shape the cities of our future.
           </motion.p>
         </div>
@@ -238,7 +246,9 @@ export function Testimonial() {
                       <p className="text-sm md:text-base font-medium text-[#202e44] leading-tight">
                         {current.author}
                       </p>
-                      <p className="text-xs md:text-sm text-[#202e44]/55 mt-0.5">{current.role}</p>
+                      <p className="text-xs md:text-sm text-[#202e44]/55 mt-0.5">
+                        {current.role}
+                      </p>
                     </div>
                   </motion.div>
                 </AnimatePresence>
@@ -257,7 +267,10 @@ export function Testimonial() {
                     key={i}
                     onClick={() => setActiveIndex(i)}
                     className="relative h-px overflow-hidden cursor-pointer"
-                    style={{ width: i === activeIndex ? "32px" : "16px", transition: "width 0.4s ease" }}
+                    style={{
+                      width: i === activeIndex ? "32px" : "16px",
+                      transition: "width 0.4s ease",
+                    }}
                   >
                     <span className="absolute inset-0 bg-[#202e44]/[0.15]" />
                     {i === activeIndex && (
@@ -282,7 +295,7 @@ export function Testimonial() {
             >
               {[...Array(8)].map((_, i) => (
                 <span key={i} className="mx-10">
-                  {testimonials.map((t) => t.company).join("  ·  ")}  ·
+                  {testimonials.map((t) => t.company).join("  ·  ")} ·
                 </span>
               ))}
             </motion.div>
@@ -295,14 +308,14 @@ export function Testimonial() {
         <div className="h-px bg-[#202e44]/[0.08]" />
       </div>
     </section>
-  )
+  );
 }
 
 // ── Nav button (light-themed) ─────────────────────────────────────
 
 interface NavButtonProps {
-  onClick: () => void
-  direction: "prev" | "next"
+  onClick: () => void;
+  direction: "prev" | "next";
 }
 
 function NavButton({ onClick, direction }: NavButtonProps) {
@@ -351,5 +364,5 @@ function NavButton({ onClick, direction }: NavButtonProps) {
         )}
       </motion.svg>
     </motion.button>
-  )
+  );
 }
