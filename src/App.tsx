@@ -3,9 +3,8 @@ import { useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import HeroSection from "./components/HeroSection";
 import AboutUsSection from "./components/ui/about-us-section";
-import { ServiceFeatureGrid } from "./components/ui/feature";
+
 import Portfolio from "./components/ui/portfolio";
-import ScrollGallery from "./components/ui/scroll-gallery";
 import { Testimonial } from "./components/ui/design-testimonial";
 import CTACallback from "./components/ui/cta-callback";
 import { Footer } from "./components/ui/footer-section";
