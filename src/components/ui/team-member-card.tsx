@@ -31,7 +31,10 @@ export default function TeamMemberCard({
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={cn("relative my-10 md:my-16 flex flex-col justify-center", className)}
+      className={cn(
+        "relative my-10 md:my-16 flex flex-col justify-center",
+        className,
+      )}
     >
       {/* Job position label */}
       <motion.div
@@ -42,7 +45,7 @@ export default function TeamMemberCard({
       >
         <p
           className={cn(
-            "mb-4 text-xs font-medium tracking-[0.3em] text-[#88734C] uppercase",
+            "mb-4 text-xs font-medium tracking-[0.3em] text-[#222A35] uppercase",
             isRight && "md:text-right",
           )}
         >
@@ -69,8 +72,8 @@ export default function TeamMemberCard({
           transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
             "relative overflow-hidden rounded-sm",
-            "h-[260px] w-full",                           // mobile
-            "md:h-[500px] md:w-[22.5rem] md:shrink-0",   // desktop
+            "h-[260px] w-full", // mobile
+            "md:h-[500px] md:w-[22.5rem] md:shrink-0", // desktop
             isRight && "md:order-1",
           )}
         >
@@ -90,14 +93,14 @@ export default function TeamMemberCard({
           transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
             "relative z-[2] flex flex-col",
-            "gap-6 mt-6 w-full",                                    // mobile
+            "gap-6 mt-6 w-full", // mobile
             "md:mt-0 md:-left-8 md:w-[calc(100%-350px)] md:gap-14", // desktop
             isRight && "md:left-8 md:items-end",
           )}
         >
           {/* Display name */}
           <div>
-            <p className="text-3xl md:text-5xl leading-[1.1] font-extralight tracking-tight text-[#ffffff]">
+            <p className="text-3xl md:text-5xl leading-[1.1] font-extralight tracking-tight text-[#222A35]">
               {firstName}
               <br />
               <span className="font-normal">{lastName}</span>
@@ -105,18 +108,20 @@ export default function TeamMemberCard({
           </div>
 
           {/* Arrow button + bio */}
-          <div className={cn("flex gap-6 md:gap-8", isRight && "md:justify-end")}>
+          <div
+            className={cn("flex gap-6 md:gap-8", isRight && "md:justify-end")}
+          >
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               className={cn(
-                "group flex h-14 w-14 md:h-20 md:w-20 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#88734C]/30 transition-colors duration-300 hover:border-[#88734C] hover:bg-[#88734C]",
+                "group flex h-14 w-14 md:h-20 md:w-20 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#222A35]/30 transition-colors duration-300 hover:border-[#222A35] hover:bg-[#222A35]",
               )}
             >
               <ArrowRight
                 size={18}
                 className={cn(
-                  "text-[#ffffff] transition-all duration-300 group-hover:-rotate-45 group-hover:text-white",
+                  "text-[#222A35] transition-all duration-300 group-hover:-rotate-45 group-hover:text-white",
                   isRight && "rotate-180 group-hover:rotate-[225deg]",
                 )}
               />
@@ -126,7 +131,7 @@ export default function TeamMemberCard({
             <div className="flex-1 md:flex-none md:w-[40%]">
               <p
                 className={cn(
-                  "text-sm leading-[1.8] text-[#e4e4e4]/60",
+                  "text-sm leading-[1.8] text-[#222A35]/60",
                   isRight && "md:text-right",
                 )}
               >

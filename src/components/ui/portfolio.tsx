@@ -255,7 +255,7 @@ export default function Portfolio() {
   }, []);
 
   return (
-    <section ref={sectionRef} id="portfolio" className="bg-[#080808]">
+    <section ref={sectionRef} id="portfolio" className="bg-[#ffffff]">
       {/* ── Sticky intro ──────────────────────────────────────── */}
       <div>
         <div className="h-screen w-full grid place-content-center sticky top-0 relative overflow-hidden">
@@ -263,15 +263,15 @@ export default function Portfolio() {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
 
           {/* Floating ambient glow */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[#88734C]/8 blur-[120px] pointer-events-none" />
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[#222A35]/8 blur-[120px] pointer-events-none" />
 
           <div className="relative z-10 text-center px-8 max-w-5xl mx-auto">
-            <span className="port-eyebrow block text-[#88734C] text-[10px] tracking-[0.4em] uppercase font-medium mb-6">
+            <span className="port-eyebrow block text-[#222A35] text-[10px] tracking-[0.4em] uppercase font-medium mb-6">
               {COMPANY_NAME} — Since 1997
             </span>
 
             <h2
-              className="port-heading text-white font-light tracking-tight leading-[1.05] mb-10"
+              className="port-heading text-[#222A35] font-light tracking-tight leading-[1.05] mb-10"
               style={{ fontSize: "clamp(2rem, 8vw, 7rem)" }}
             >
               Spaces That
@@ -279,7 +279,7 @@ export default function Portfolio() {
               Define Tomorrow
             </h2>
 
-            <div className="port-rule w-16 h-px bg-[#88734C] mx-auto origin-left" />
+            <div className="port-rule w-16 h-px bg-[#222A35] mx-auto origin-left" />
 
             <p className="text-white/25 text-[10px] tracking-[0.3em] uppercase mt-10 animate-bounce">
               ↓ scroll to explore
@@ -290,7 +290,6 @@ export default function Portfolio() {
 
       {/* ── Gallery grid ──────────────────────────────────────── */}
       <div className="bg-[#080808] text-white">
-
         {/* Mobile: simple 2-column grid ─────────────────────── */}
         <div className="md:hidden grid grid-cols-2 gap-2 p-2">
           {[...leftProjects, ...centerProjects, ...rightProjects].map(
@@ -346,24 +345,23 @@ export default function Portfolio() {
             </div>
           </div>
         </div>
-
       </div>
 
       {/* ── Footer ────────────────────────────────────────────── */}
-      <footer className="bg-[#080808] overflow-hidden pb-0">
+      <footer className="bg-[#ffffff] overflow-hidden pb-0">
         {/* Large scrubbed text */}
         <h2
-          className="port-footer-text select-none text-center font-light uppercase leading-none tracking-tighter text-white"
+          className="port-footer-text select-none text-center font-light uppercase leading-none tracking-tighter text-[#222A35]"
           style={{
             fontSize: "clamp(4rem, 18vw, 18rem)",
             transform: "translateY(20%)",
           }}
         >
-          Nexus
+          KAD
         </h2>
 
         {/* CTA pill */}
-        <div className="relative z-10 bg-black rounded-tl-[1.5rem] rounded-tr-[1.5rem] md:rounded-tl-[2.5rem] md:rounded-tr-[2.5rem] h-44 grid place-content-center">
+        <div className="relative z-10 bg-[#222A35] rounded-tl-[1.5rem] rounded-tr-[1.5rem] md:rounded-tl-[2.5rem] md:rounded-tr-[2.5rem] h-44 grid place-content-center">
           <motion.button
             className="flex items-center gap-3 text-white border border-white/15 px-8 py-3.5 rounded-full text-sm tracking-wide hover:border-white/50 transition-colors duration-300"
             whileHover={{ scale: 1.04 }}
@@ -473,7 +471,7 @@ function ProjectCard({
       <AnimatePresence>
         {hovered && (
           <motion.div
-            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#88734C]/60 to-transparent"
+            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#222A35]/60 to-transparent"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             exit={{ scaleX: 0 }}

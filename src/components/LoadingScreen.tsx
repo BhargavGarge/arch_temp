@@ -124,21 +124,21 @@ export default function LoadingScreen({ onComplete }: Props) {
     <div
       ref={containerRef}
       className="fixed inset-0 z-[999] flex flex-col items-center justify-center select-none overflow-hidden"
-      style={{ background: "#f4f1ec", fontFamily: "'Jost', sans-serif" }}
+      style={{ background: "#222A35", fontFamily: "'Jost', sans-serif" }}
     >
       {/* Subtle grid lines */}
       {[20, 40, 60, 80].map((p) => (
         <div
           key={`h${p}`}
           className="absolute left-0 right-0 h-px"
-          style={{ top: `${p}%`, background: "rgba(0,0,0,0.05)" }}
+          style={{ top: `${p}%`, background: "rgba(255,255,255,0.04)" }}
         />
       ))}
       {[15, 35, 65, 85].map((p) => (
         <div
           key={`v${p}`}
           className="absolute top-0 bottom-0 w-px"
-          style={{ left: `${p}%`, background: "rgba(0,0,0,0.05)" }}
+          style={{ left: `${p}%`, background: "rgba(255,255,255,0.04)" }}
         />
       ))}
 
@@ -196,7 +196,7 @@ export default function LoadingScreen({ onComplete }: Props) {
         <div
           key={id}
           className={`corner absolute w-5 h-5 opacity-0 ${cls}`}
-          style={{ borderColor: "rgba(184,147,90,0.4)" }}
+          style={{ borderColor: "rgba(255,255,255,0.25)" }}
         />
       ))}
 
@@ -221,7 +221,7 @@ export default function LoadingScreen({ onComplete }: Props) {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontWeight: 300,
                   fontSize: "clamp(5rem, 13vw, 10rem)",
-                  color: "#1a1714",
+                  color: "#FFFFFF",
                   letterSpacing: "0.1em",
                   lineHeight: 1,
                 }}
@@ -241,11 +241,11 @@ export default function LoadingScreen({ onComplete }: Props) {
             fontSize: "clamp(8px, 1.2vw, 11px)",
             letterSpacing: "0.55em",
             textTransform: "uppercase",
-            color: "rgba(120,90,40,0.75)",
+            color: "rgba(255,255,255,0.55)",
             marginBottom: "clamp(2.5rem, 5vw, 3.5rem)",
           }}
         >
-          Design Studio
+          Infra Ventures
         </p>
 
         {/* Bottom line */}
@@ -264,7 +264,7 @@ export default function LoadingScreen({ onComplete }: Props) {
             fontSize: "clamp(7px, 1vw, 9px)",
             letterSpacing: "0.3em",
             textTransform: "uppercase",
-            color: "rgba(0,0,0,0.55)",
+            color: "rgba(255,255,255,0.35)",
           }}
         >
           art by pheneron
@@ -274,7 +274,7 @@ export default function LoadingScreen({ onComplete }: Props) {
       {/* Progress line — bottom */}
       <div
         className="absolute bottom-0 left-0 right-0 h-px overflow-hidden"
-        style={{ background: "rgba(0,0,0,0.08)" }}
+        style={{ background: "rgba(255,255,255,0.08)" }}
       >
         <div
           ref={progressRef}

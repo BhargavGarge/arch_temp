@@ -10,7 +10,7 @@ function getItemWidth() {
 const items = [
   {
     id: 1,
-    color: "#88734C",
+    color: "#222A35",
     label: "Residences",
     category: "01",
     image:
@@ -81,7 +81,7 @@ export default function ScrollGallery() {
             fontSize: "11px",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color: "#88734C",
+            color: "#222A35",
             fontWeight: 500,
             marginBottom: "12px",
             display: "block",
@@ -106,7 +106,7 @@ export default function ScrollGallery() {
           style={{
             width: "60px",
             height: "1px",
-            background: "#88734C",
+            background: "#222A35",
             margin: "20px auto 0",
           }}
         />
@@ -175,7 +175,7 @@ export default function ScrollGallery() {
         </p>
         <button
           style={{
-            background: "#88734C",
+            background: "#222A35",
             color: "#fff",
             border: "none",
             padding: "14px 32px",

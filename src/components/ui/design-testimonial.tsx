@@ -69,7 +69,7 @@ export function Testimonial() {
       {/* ── Section header ───────────────────────────────────────── */}
       <div className="container mx-auto max-w-6xl px-4 md:px-12 lg:px-16 pt-14 md:pt-24 pb-0">
         <motion.span
-          className="block text-[#88734C] text-[10px] tracking-[0.4em] uppercase font-medium mb-5"
+          className="block text-[#222A35] text-[10px] tracking-[0.4em] uppercase font-medium mb-5"
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -156,7 +156,7 @@ export function Testimonial() {
               {/* Vertical progress track */}
               <div className="relative h-32 w-px bg-[#202e44]/[0.1] mt-8">
                 <motion.div
-                  className="absolute top-0 left-0 w-full bg-[#88734C] origin-top"
+                  className="absolute top-0 left-0 w-full bg-[#222A35] origin-top"
                   animate={{
                     height: `${((activeIndex + 1) / testimonials.length) * 100}%`,
                   }}
@@ -178,7 +178,7 @@ export function Testimonial() {
                   className="mb-8"
                 >
                   <span className="inline-flex items-center gap-2 text-[10px] font-mono text-[#202e44]/50 border border-[#202e44]/[0.12] rounded-full px-3 py-1 tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#88734C]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#222A35]" />
                     {current.company}
                   </span>
                 </motion.div>
@@ -236,7 +236,7 @@ export function Testimonial() {
                     className="flex items-center gap-4"
                   >
                     <motion.div
-                      className="w-8 h-px bg-[#88734C] flex-shrink-0"
+                      className="w-8 h-px bg-[#222A35] flex-shrink-0"
                       initial={{ scaleX: 0 }}
                       animate={{ scaleX: 1 }}
                       transition={{ duration: 0.6, delay: 0.3 }}
@@ -275,7 +275,7 @@ export function Testimonial() {
                     <span className="absolute inset-0 bg-[#202e44]/[0.15]" />
                     {i === activeIndex && (
                       <motion.span
-                        className="absolute inset-0 bg-[#88734C]"
+                        className="absolute inset-0 bg-[#222A35]"
                         layoutId="activeDot"
                         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                       />

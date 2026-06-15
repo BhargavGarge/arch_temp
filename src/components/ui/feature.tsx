@@ -11,7 +11,7 @@ function BlueprintLines() {
       {widths.map((w, i) => (
         <motion.div
           key={i}
-          className="h-px rounded-full bg-[#88734C]"
+          className="h-px rounded-full bg-[#222A35]"
           initial={{ width: 0, opacity: 0 }}
           whileInView={{ width: `${w}%`, opacity: i % 2 === 0 ? 0.7 : 0.35 }}
           viewport={{ once: false, amount: 0.5 }}
@@ -38,7 +38,7 @@ function OfficeGrid() {
             className="w-7 h-7 rounded-sm"
             animate={{
               backgroundColor:
-                i <= active ? "rgba(136,115,76,0.85)" : "rgba(136,115,76,0.1)",
+                i <= active ? "rgba(34,42,53,0.85)" : "rgba(34,42,53,0.1)",
               scale: i === active ? 1.25 : 1,
             }}
             transition={{ duration: 0.2 }}
@@ -73,15 +73,15 @@ function StarRating() {
               strokeLinecap="round"
               strokeLinejoin="round"
               animate={{
-                fill: s <= filled ? "#88734C" : "rgba(136,115,76,0.12)",
-                stroke: s <= filled ? "#88734C" : "rgba(136,115,76,0.4)",
+                fill: s <= filled ? "#222A35" : "rgba(34,42,53,0.12)",
+                stroke: s <= filled ? "#222A35" : "rgba(34,42,53,0.4)",
               }}
               transition={{ duration: 0.25 }}
             />
           </motion.svg>
         ))}
       </div>
-      <span className="text-[10px] tracking-[0.25em] text-[#88734C]/60 uppercase">Client Satisfaction</span>
+      <span className="text-[10px] tracking-[0.25em] text-[#222A35]/60 uppercase">Client Satisfaction</span>
     </div>
   )
 }
@@ -102,10 +102,10 @@ function EcoProgress() {
     <div className="flex items-center justify-center h-full">
       <div className="relative">
         <svg width="84" height="84" viewBox="0 0 84 84">
-          <circle cx="42" cy="42" r={r} fill="none" stroke="rgba(136,115,76,0.1)" strokeWidth="4" />
+          <circle cx="42" cy="42" r={r} fill="none" stroke="rgba(34,42,53,0.1)" strokeWidth="4" />
           <motion.circle
             cx="42" cy="42" r={r}
-            fill="none" stroke="#88734C" strokeWidth="4"
+            fill="none" stroke="#222A35" strokeWidth="4"
             strokeLinecap="round"
             strokeDasharray={circ}
             animate={{ strokeDashoffset: circ * (1 - progress / 100) }}
@@ -114,8 +114,8 @@ function EcoProgress() {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-[#88734C] font-medium text-base leading-tight">{progress}%</span>
-          <span className="text-[#202e44]/40 text-[8px] tracking-widest uppercase">Eco</span>
+          <span className="text-[#222A35] font-medium text-base leading-tight">{progress}%</span>
+          <span className="text-[#222A35]/40 text-[8px] tracking-widest uppercase">Eco</span>
         </div>
       </div>
     </div>
@@ -143,7 +143,7 @@ function SpaceLayout() {
         {cfg.spans.map((span, i) => (
           <motion.div
             key={i}
-            className="bg-[#88734C]/20 rounded-sm border border-[#88734C]/15 min-h-[20px]"
+            className="bg-[#222A35]/20 rounded-sm border border-[#222A35]/15 min-h-[20px]"
             style={{ gridColumn: `span ${span}` }}
             layout
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
@@ -161,7 +161,7 @@ function RippleCircles() {
         {[0, 1, 2].map(i => (
           <motion.div
             key={i}
-            className="absolute rounded-full border border-[#88734C]"
+            className="absolute rounded-full border border-[#222A35]"
             animate={{
               width: ["20px", "72px"],
               height: ["20px", "72px"],
@@ -175,7 +175,7 @@ function RippleCircles() {
             }}
           />
         ))}
-        <Droplets className="w-6 h-6 text-[#88734C]" strokeWidth={1.5} />
+        <Droplets className="w-6 h-6 text-[#222A35]" strokeWidth={1.5} />
       </div>
     </div>
   )
@@ -235,9 +235,9 @@ export function ServiceFeatureGrid({ dark = false }: { dark?: boolean }) {
     ? "bg-[#F2F2EB]/[0.04] backdrop-blur-sm rounded-2xl p-6 min-h-[280px] flex flex-col border border-[#F2F2EB]/[0.07] shadow-sm"
     : "bg-white/55 backdrop-blur-sm rounded-2xl p-6 min-h-[280px] flex flex-col border border-[#202e44]/[0.07] shadow-sm"
 
-  const title = dark ? "text-[#F2F2EB] font-medium text-base mb-1" : "text-[#202e44] font-medium text-base mb-1"
-  const desc = dark ? "text-[#F2F2EB]/45 text-sm leading-relaxed" : "text-[#202e44]/55 text-sm leading-relaxed"
-  const divider = dark ? "h-px bg-[#88734C]/20 mb-4" : "h-px bg-[#88734C]/15 mb-4"
+  const title = dark ? "text-[#222A35] font-medium text-base mb-1" : "text-[#222A35] font-medium text-base mb-1"
+  const desc = dark ? "text-[#222A35]/55 text-sm leading-relaxed" : "text-[#222A35]/55 text-sm leading-relaxed"
+  const divider = dark ? "h-px bg-[#222A35]/20 mb-4" : "h-px bg-[#222A35]/15 mb-4"
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

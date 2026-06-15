@@ -1,27 +1,36 @@
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle2, ArrowRight } from "lucide-react"
-import { ContainerStagger, ContainerAnimated, GalleryGrid, GalleryGridCell } from "./cta-section-with-gallery"
-import { Button } from "./button"
-import type { FormEvent } from "react"
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle2, ArrowRight } from "lucide-react";
+import {
+  ContainerStagger,
+  ContainerAnimated,
+  GalleryGrid,
+  GalleryGridCell,
+} from "./cta-section-with-gallery";
+import { Button } from "./button";
+import type { FormEvent } from "react";
 
 const IMAGES = [
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80",
   "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800&auto=format&fit=crop&q=80",
   "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&auto=format&fit=crop&q=80",
   "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&auto=format&fit=crop&q=80",
-]
+];
 
 export default function CTACallback() {
-  const [formData, setFormData] = useState({ name: "", phone: "", accepted: false })
-  const [submitted, setSubmitted] = useState(false)
-  const [focused, setFocused] = useState<string | null>(null)
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    accepted: false,
+  });
+  const [submitted, setSubmitted] = useState(false);
+  const [focused, setFocused] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (!formData.accepted) return
-    setSubmitted(true)
-  }
+    e.preventDefault();
+    if (!formData.accepted) return;
+    setSubmitted(true);
+  };
 
   return (
     <section id="cta-section" className="relative overflow-hidden">
@@ -29,16 +38,15 @@ export default function CTACallback() {
       <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent pointer-events-none z-10" />
 
       {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#88734C]/5 blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#88734C]/3 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#222A35]/5 blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#222A35]/3 blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto max-w-6xl px-6 md:px-12 lg:px-16 py-16 md:py-28 relative z-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-20">
-
           {/* ── Left: text + form ─────────────────────────────── */}
           <ContainerStagger>
             <ContainerAnimated>
-              <span className="block text-[#88734C] text-[10px] tracking-[0.4em] uppercase font-medium mb-5">
+              <span className="block text-[#222A35] text-[10px] tracking-[0.4em] uppercase font-medium mb-5">
                 Start Your Project
               </span>
             </ContainerAnimated>
@@ -49,7 +57,7 @@ export default function CTACallback() {
                 style={{ fontSize: "clamp(2.8rem, 5.5vw, 4.5rem)" }}
               >
                 Request a<br />
-                <em className="not-italic text-[#88734C]">Callback</em>
+                <em className="not-italic text-[#ffffff]">Callback</em>
               </h2>
             </ContainerAnimated>
 
@@ -69,9 +77,9 @@ export default function CTACallback() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.5 }}
-                  className="flex items-start gap-4 p-6 rounded-xl border border-[#88734C]/30 bg-[#88734C]/5"
+                  className="flex items-start gap-4 p-6 rounded-xl border border-[#222A35]/30 bg-[#222A35]/5"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-[#88734C] flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-[#222A35] flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-white text-sm font-medium mb-1">
                       Thank you, {formData.name || "there"}.
@@ -90,7 +98,6 @@ export default function CTACallback() {
                 >
                   <ContainerAnimated>
                     <form onSubmit={handleSubmit} className="space-y-5">
-
                       {/* Name */}
                       <div>
                         <label className="block text-[10px] tracking-[0.25em] uppercase text-white/35 mb-2 font-medium">
@@ -103,17 +110,22 @@ export default function CTACallback() {
                             value={formData.name}
                             onFocus={() => setFocused("name")}
                             onBlur={() => setFocused(null)}
-                            onChange={e =>
-                              setFormData(prev => ({ ...prev, name: e.target.value }))
+                            onChange={(e) =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                name: e.target.value,
+                              }))
                             }
                             className="w-full bg-white/[0.04] border rounded-lg px-4 py-3.5 text-white text-sm placeholder:text-white/20 focus:outline-none transition-all duration-300"
                             style={{
-                              borderColor: focused === "name"
-                                ? "rgba(136,115,76,0.6)"
-                                : "rgba(255,255,255,0.08)",
-                              boxShadow: focused === "name"
-                                ? "0 0 0 3px rgba(136,115,76,0.08)"
-                                : "none",
+                              borderColor:
+                                focused === "name"
+                                  ? "rgba(34,42,53,0.6)"
+                                  : "rgba(255,255,255,0.08)",
+                              boxShadow:
+                                focused === "name"
+                                  ? "0 0 0 3px rgba(34,42,53,0.08)"
+                                  : "none",
                             }}
                             placeholder="Rajiv Sharma"
                           />
@@ -131,17 +143,22 @@ export default function CTACallback() {
                           value={formData.phone}
                           onFocus={() => setFocused("phone")}
                           onBlur={() => setFocused(null)}
-                          onChange={e =>
-                            setFormData(prev => ({ ...prev, phone: e.target.value }))
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              phone: e.target.value,
+                            }))
                           }
                           className="w-full bg-white/[0.04] border rounded-lg px-4 py-3.5 text-white text-sm placeholder:text-white/20 focus:outline-none transition-all duration-300"
                           style={{
-                            borderColor: focused === "phone"
-                              ? "rgba(136,115,76,0.6)"
-                              : "rgba(255,255,255,0.08)",
-                            boxShadow: focused === "phone"
-                              ? "0 0 0 3px rgba(136,115,76,0.08)"
-                              : "none",
+                            borderColor:
+                              focused === "phone"
+                                ? "rgba(34,42,53,0.6)"
+                                : "rgba(255,255,255,0.08)",
+                            boxShadow:
+                              focused === "phone"
+                                ? "0 0 0 3px rgba(34,42,53,0.08)"
+                                : "none",
                           }}
                           placeholder="+91 98765 43210"
                         />
@@ -152,11 +169,18 @@ export default function CTACallback() {
                         <div
                           className="relative mt-0.5 flex-shrink-0 w-4 h-4 rounded border transition-all duration-200 flex items-center justify-center"
                           style={{
-                            background: formData.accepted ? "#88734C" : "transparent",
-                            borderColor: formData.accepted ? "#88734C" : "rgba(255,255,255,0.2)",
+                            background: formData.accepted
+                              ? "#222A35"
+                              : "transparent",
+                            borderColor: formData.accepted
+                              ? "#222A35"
+                              : "rgba(255,255,255,0.2)",
                           }}
                           onClick={() =>
-                            setFormData(prev => ({ ...prev, accepted: !prev.accepted }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              accepted: !prev.accepted,
+                            }))
                           }
                         >
                           <AnimatePresence>
@@ -186,8 +210,11 @@ export default function CTACallback() {
                           required
                           className="sr-only"
                           checked={formData.accepted}
-                          onChange={e =>
-                            setFormData(prev => ({ ...prev, accepted: e.target.checked }))
+                          onChange={(e) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              accepted: e.target.checked,
+                            }))
                           }
                         />
                         <span className="text-xs text-white/35 leading-relaxed group-hover/check:text-white/55 transition-colors duration-200 select-none">
@@ -199,7 +226,7 @@ export default function CTACallback() {
                         <Button
                           type="submit"
                           size="lg"
-                          className="flex items-center gap-2 bg-[#88734C] hover:bg-[#7a6640] text-white font-light tracking-wide"
+                          className="flex items-center gap-2 bg-[#222A35] hover:bg-[#7a6640] text-white font-light tracking-wide"
                         >
                           Request Callback
                           <ArrowRight className="w-4 h-4" />
@@ -223,14 +250,13 @@ export default function CTACallback() {
                     className="size-full object-cover object-center transition-transform duration-700 hover:scale-105"
                   />
                   {/* Subtle tint overlay */}
-                  <div className="absolute inset-0 bg-[#88734C]/10 mix-blend-multiply pointer-events-none" />
+                  <div className="absolute inset-0 bg-[#222A35]/10 mix-blend-multiply pointer-events-none" />
                 </GalleryGridCell>
               ))}
             </GalleryGrid>
           </div>
-
         </div>
       </div>
     </section>
-  )
+  );
 }

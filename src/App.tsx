@@ -1,20 +1,49 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { useState } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LoadingScreen from "./components/LoadingScreen";
 import HeroSection from "./components/HeroSection";
 import AboutUsSection from "./components/ui/about-us-section";
-
 import Portfolio from "./components/ui/portfolio";
 import { Testimonial } from "./components/ui/design-testimonial";
 import CTACallback from "./components/ui/cta-callback";
 import { Footer } from "./components/ui/footer-section";
 
+gsap.registerPlugin(ScrollTrigger);
+
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 50, restDelta: 0.001 });
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-[2px] origin-left z-[9999] pointer-events-none"
+      style={{ scaleX, backgroundColor: "#fff", mixBlendMode: "difference" }}
+    />
+  );
+}
+
+function LenisSync() {
+  useLenis(ScrollTrigger.update);
+  return null;
+}
+
 function App() {
   const [loading, setLoading] = useState(true);
-  const [explored, setExplored] = useState(false);
 
   return (
-    <>
+    <ReactLenis
+      root
+      options={{
+        duration: 1.4,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        syncTouch: true,
+      }}
+    >
+      <LenisSync />
+      <ScrollProgress />
       <AnimatePresence mode="wait">
         {loading && (
           <motion.div
@@ -27,43 +56,19 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
-
       {!loading && (
         <>
           <HeroSection />
-
-          {!explored && (
-            <div className="flex justify-center py-12">
-              <button
-                onClick={() => {
-                  setExplored(true);
-                  setTimeout(() => {
-                    document
-                      .getElementById("explore-sections")
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }, 50);
-                }}
-                className="px-8 py-3 text-sm font-semibold tracking-widest uppercase border border-white/30 text-white bg-white/5 hover:bg-white hover:text-black transition-all duration-300 rounded-sm"
-              >
-                Explore
-              </button>
-            </div>
-          )}
-
-          {explored && (
-            <div id="explore-sections">
-              <AboutUsSection />
-              {/* <ServiceFeatureGrid /> */}
-              <Portfolio />
-              {/* <ScrollGallery /> */}
-              <Testimonial />
-              <CTACallback />
-              <Footer />
-            </div>
-          )}
+          <div id="explore-sections">
+            <AboutUsSection />
+            <Portfolio />
+            <Testimonial />
+            <CTACallback />
+            <Footer />
+          </div>
         </>
       )}
-    </>
+    </ReactLenis>
   );
 }
 
