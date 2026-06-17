@@ -96,21 +96,6 @@ export default function HeroSection() {
         className="relative z-10 flex flex-col h-full px-6 md:px-14 lg:px-20"
         style={{ opacity: contentOpacity, y: contentY }}
       >
-        {/* Top bar */}
-        <motion.header
-          className="pt-8 md:pt-10 flex flex-col items-center"
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.6, ease: easeSmooth }}
-        >
-          <span className="text-white text-2xl md:text-3xl font-light tracking-[0.2em] uppercase">
-            KAD
-          </span>
-          <span className="text-white/45 text-[9px] md:text-[10px] tracking-[0.35em] uppercase font-light mt-1">
-            Infra Ventures
-          </span>
-        </motion.header>
-
         {/* Main content — pushed to bottom */}
         <div className="flex-1 flex flex-col justify-end pb-10 md:pb-14 lg:pb-16">
           {/* Headline */}

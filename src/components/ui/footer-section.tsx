@@ -172,11 +172,11 @@ export function Footer() {
           <div className="border-t border-white/[0.05] px-5 md:px-10 lg:px-14 py-4 md:py-5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
               <p className="text-white/20 text-[11px]">
-                © 2025 {COMPANY_NAME}. All Rights Reserved.
+                © 2026 {COMPANY_NAME}. All Rights Reserved.
               </p>
               <a
                 className="flex items-center gap-3 text-white/20 text-[11px]"
-                href="https://pheneron.vercel.app"
+                href="https://pheneron.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >

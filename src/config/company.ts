@@ -1,8 +1,8 @@
-export const COMPANY_NAME = "KAD Infra Ventures";
+export const COMPANY_NAME = "KAD Studio & Infra Ventures";
 export const COMPANY_SHORT = "KAD";
 export const COMPANY_ADDRESS = {
-  line1: " Navbharat Press Road, 1 st Floor G.S. PLAZA,",
-  line2: "CMD Chowk, opposite Jeet Talkies, Bilaspur, Chhattisgarh,",
+  line1: "A102, Sector 12. Kamal Vihar-Devpuri,",
+  line2: "Raipur. (CG) ",
   line3: "495004, India",
 };
 

@@ -234,17 +234,18 @@ export default function Portfolio() {
         },
       );
 
-      // ── Footer headline scrub ──────────────────────────────────
+      // ── Footer headline scrub — opacity + letter-spacing expand ──
       gsap.fromTo(
         ".port-footer-text",
-        { opacity: 0.08 },
+        { opacity: 0.05, letterSpacing: "-0.06em" },
         {
-          opacity: 0.35,
+          opacity: 0.38,
+          letterSpacing: "0.18em",
           ease: "none",
           scrollTrigger: {
             trigger: ".port-footer-text",
-            start: "top 90%",
-            end: "bottom 30%",
+            start: "top 95%",
+            end: "bottom 20%",
             scrub: true,
           },
         },
@@ -349,29 +350,113 @@ export default function Portfolio() {
 
       {/* ── Footer ────────────────────────────────────────────── */}
       <footer className="bg-[#ffffff] overflow-hidden pb-0">
-        {/* Large scrubbed text */}
-        <h2
-          className="port-footer-text select-none text-center font-light uppercase leading-none tracking-tighter text-[#222A35]"
-          style={{
-            fontSize: "clamp(4rem, 18vw, 18rem)",
-            transform: "translateY(20%)",
-          }}
-        >
-          KAD
-        </h2>
-
-        {/* CTA pill */}
-        <div className="relative z-10 bg-[#222A35] rounded-tl-[1.5rem] rounded-tr-[1.5rem] md:rounded-tl-[2.5rem] md:rounded-tr-[2.5rem] h-44 grid place-content-center">
-          <motion.button
-            className="flex items-center gap-3 text-white border border-white/15 px-8 py-3.5 rounded-full text-sm tracking-wide hover:border-white/50 transition-colors duration-300"
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
+        {/* Large scrubbed text — letter-spacing + opacity scrub via GSAP */}
+        <div className="relative overflow-hidden">
+          <h2
+            className="port-footer-text select-none text-center font-extralight uppercase leading-none text-[#222A35]"
+            style={{ fontSize: "clamp(5rem, 20vw, 22rem)", transform: "translateY(22%)" }}
           >
-            View Complete Portfolio
-            <span className="w-7 h-7 rounded-full border border-white/20 flex items-center justify-center">
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </span>
-          </motion.button>
+            KAD
+          </h2>
+        </div>
+
+        {/* ── Luxury CTA band ───────────────────────────────────── */}
+        <div className="relative z-10 bg-[#222A35] rounded-tl-[2rem] rounded-tr-[2rem] md:rounded-tl-[3.5rem] md:rounded-tr-[3.5rem] overflow-hidden">
+          {/* Subtle grid texture */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
+
+          <div className="relative z-10 max-w-6xl mx-auto px-8 md:px-14 lg:px-20">
+            {/* Main row */}
+            <div className="pt-16 md:pt-20 pb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 border-b border-white/[0.06]">
+              {/* Editorial heading */}
+              <div>
+                <motion.span
+                  className="text-white/28 text-[10px] tracking-[0.48em] uppercase block mb-8"
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.65 }}
+                >
+                  Selected Works
+                </motion.span>
+
+                <div className="overflow-hidden">
+                  <motion.h3
+                    className="text-white font-extralight leading-[1.04] tracking-[-0.03em]"
+                    style={{ fontSize: "clamp(2.2rem, 5.5vw, 4.2rem)" }}
+                    initial={{ y: "106%" }}
+                    whileInView={{ y: "0%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    Our complete
+                  </motion.h3>
+                </div>
+                <div className="overflow-hidden">
+                  <motion.h3
+                    className="text-white/38 font-extralight leading-[1.04] tracking-[-0.03em] italic"
+                    style={{ fontSize: "clamp(2.2rem, 5.5vw, 4.2rem)" }}
+                    initial={{ y: "106%" }}
+                    whileInView={{ y: "0%" }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.05, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    portfolio.
+                  </motion.h3>
+                </div>
+              </div>
+
+              {/* Circle arrow button */}
+              <motion.button
+                className="group flex items-center gap-5 self-start lg:self-end mb-1 cursor-pointer"
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.75, delay: 0.25 }}
+                whileHover="hover"
+              >
+                <div className="relative w-16 h-16 rounded-full border border-white/18 flex items-center justify-center overflow-hidden group-hover:border-white/50 transition-colors duration-400">
+                  <motion.div
+                    className="absolute inset-0 bg-white rounded-full"
+                    initial={{ scale: 0 }}
+                    variants={{ hover: { scale: 1 } }}
+                    transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                  />
+                  <ArrowUpRight className="relative z-10 w-5 h-5 text-white group-hover:text-[#222A35] transition-colors duration-200" />
+                </div>
+                <span className="text-white/55 text-[11px] font-light tracking-[0.22em] uppercase group-hover:text-white transition-colors duration-300">
+                  View All
+                </span>
+              </motion.button>
+            </div>
+
+            {/* Stats row */}
+            <div className="py-8 md:py-10 grid grid-cols-3 gap-6">
+              {[
+                { value: "100+", label: "Projects Completed" },
+                { value: "15+", label: "Years of Practice" },
+                { value: "98%", label: "Client Satisfaction" },
+              ].map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.65 }}
+                >
+                  <div
+                    className="text-white font-extralight tracking-[-0.02em]"
+                    style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
+                  >
+                    {stat.value}
+                  </div>
+                  <div className="text-white/22 text-[10px] tracking-[0.28em] uppercase mt-1.5">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </footer>
     </section>

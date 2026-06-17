@@ -4,8 +4,11 @@ import { ReactLenis, useLenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LoadingScreen from "./components/LoadingScreen";
+import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
-import AboutUsSection from "./components/ui/about-us-section";
+import VisionSection from "./components/ui/vision-section";
+
+import ServicesDetailSection from "./components/ui/services-detail-section";
 import Portfolio from "./components/ui/portfolio";
 import { Testimonial } from "./components/ui/design-testimonial";
 import CTACallback from "./components/ui/cta-callback";
@@ -15,7 +18,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 50, restDelta: 0.001 });
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 200,
+    damping: 50,
+    restDelta: 0.001,
+  });
   return (
     <motion.div
       className="fixed top-0 left-0 right-0 h-[2px] origin-left z-[9999] pointer-events-none"
@@ -58,9 +65,12 @@ function App() {
       </AnimatePresence>
       {!loading && (
         <>
+          <Navbar />
           <HeroSection />
           <div id="explore-sections">
-            <AboutUsSection />
+            <VisionSection />
+
+            <ServicesDetailSection />
             <Portfolio />
             <Testimonial />
             <CTACallback />

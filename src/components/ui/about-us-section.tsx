@@ -13,7 +13,7 @@ import {
 gsap.registerPlugin(ScrollTrigger);
 
 const MARQUEE_TEXT =
-  "NEXUS DESIGN STUDIO • ARCHITECTURE & INTERIORS • SINCE 1997 • ";
+  "KAD STUDIO & INFRA VENTURES • ARCHITECTURE & INTERIORS • DESIGN EDUCATION • ";
 
 // Split a word into individually animated char spans
 function SplitWord({ word, className }: { word: string; className?: string }) {
@@ -97,9 +97,9 @@ export default function AboutUsSection() {
   }, []);
 
   const stats = [
-    { value: 25, label: "Years of\nExcellence", suffix: "+" },
-    { value: 300, label: "Projects\nDelivered", suffix: "+" },
-    { value: 1997, label: "Year\nEstablished", suffix: "" },
+    { value: 15, label: "Years of\nExperience", suffix: "+" },
+    { value: 4, label: "Core\nDisciplines", suffix: "" },
+    { value: 100, label: "Projects\nCompleted", suffix: "+" },
     { value: 98, label: "Client\nSatisfaction", suffix: "%" },
   ];
 
@@ -136,7 +136,7 @@ export default function AboutUsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.65 }}
           >
-            Established 1997
+            Full-Spectrum Practice
           </motion.span>
 
           {/* "About" — overflow-hidden keeps chars clipped while offscreen */}
@@ -174,11 +174,11 @@ export default function AboutUsSection() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="text-[clamp(1.4rem,2.8vw,2rem)] font-extralight leading-[1.2] text-[#222A35]/88 mb-8">
-              Unconventional,
+              Designed from
               <br />
-              striking, minimalist
+              the inside
               <br />
-              yet <em className="not-italic text-[#222A35]">bold.</em>
+              <em className="not-italic text-[#222A35]">out.</em>
             </p>
             <motion.div
               className="w-12 h-px bg-[#222A35] mb-7"
@@ -204,14 +204,17 @@ export default function AboutUsSection() {
             className="flex flex-col justify-center"
           >
             <p className="text-[#222A35]/50 leading-[1.95] text-[0.94rem]">
-              With a versatile body of work ranging from the architecture and
-              interiors of residences, corporate offices to retail and
-              hospitality spaces,{" "}
-              <span className="text-[#222A35]/80">{COMPANY_NAME}</span> is a
-              force to reckon with. The firm's design statement is
-              unconventional, striking, minimalist yet bold and contemporary —
-              entrenched in practice for more than two decades and winning many
-              accolades along the way.
+              At{" "}
+              <span className="text-[#222A35]/80">{COMPANY_NAME}</span>, we
+              view the built environment as a living, breathing extension of
+              human behavior. Founded as a full-spectrum architecture, turnkey
+              development, and design education firm, we operate at the precise
+              intersection of rigorous technical engineering and deep spatial
+              empathy. With over 15 years of practical field experience, our
+              integrated framework unites architects, structural engineers, and
+              interior specialists under a single line of communication — by
+              owning every phase, we eliminate contractor friction and protect
+              our clients' investments from first sketch to final key handover.
             </p>
           </motion.div>
         </div>
@@ -256,11 +259,12 @@ export default function AboutUsSection() {
           </span>
           <blockquote className="max-w-[780px] text-center">
             <p className="text-[clamp(1rem,2.3vw,1.45rem)] font-extralight leading-[1.95] text-[#222A35]/60 italic mb-10">
-              A sustainable building must maintain the luxury and comfort
-              required by clients, and this is very important. By sun
-              path-oriented planning, we bridge this gap. In the gardens and
-              courtyards, we use indigenous plants, while rainwater is recycled
-              for landscaping and other purposes.
+              A space succeeds not when it wins an aesthetic award, but when it
+              seamlessly accommodates the rhythm of the people inside it.
+              Whether we are master-planning a transit-oriented development,
+              drafting a custom fluid volumetric villa, or engineering a complex
+              retail layout, our objective remains unchanged: to design from the
+              inside out.
             </p>
             <div className="flex items-center justify-center gap-5">
               <div className="h-px w-10 bg-[#222A35]/55" />
