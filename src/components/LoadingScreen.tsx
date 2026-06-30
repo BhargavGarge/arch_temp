@@ -5,286 +5,268 @@ interface Props {
   onComplete: () => void;
 }
 
-const LETTERS = ["K", "A", "D"];
+const KHARE_LETTERS = ["K", "H", "A", "R", "E"];
+const KAD_LETTERS   = ["K", "A", "D"];
 
 export default function LoadingScreen({ onComplete }: Props) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const studioRef = useRef<HTMLParagraphElement>(null);
-  const lineTopRef = useRef<HTMLDivElement>(null);
+  const containerRef  = useRef<HTMLDivElement>(null);
+  const khareWrapRef  = useRef<HTMLDivElement>(null);
+  const kadWrapRef    = useRef<HTMLDivElement>(null);
+  const khareRefs     = useRef<(HTMLSpanElement | null)[]>([]);
+  const kadRefs       = useRef<(HTMLSpanElement | null)[]>([]);
+  const sub1Ref       = useRef<HTMLParagraphElement>(null);
+  const sub2Ref       = useRef<HTMLParagraphElement>(null);
+  const lineTopRef    = useRef<HTMLDivElement>(null);
   const lineBottomRef = useRef<HTMLDivElement>(null);
-  const creditRef = useRef<HTMLParagraphElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+  const creditRef     = useRef<HTMLParagraphElement>(null);
+  const progressRef   = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const khare = khareRefs.current.filter(Boolean) as HTMLSpanElement[];
+    const kad   = kadRefs.current.filter(Boolean) as HTMLSpanElement[];
+
+    // initialise hidden states
+    gsap.set(kad,             { y: "110%" });
+    gsap.set(kadWrapRef.current,  { autoAlpha: 1 });   // wrapper always visible
+    gsap.set(sub2Ref.current, { autoAlpha: 0, letterSpacing: "0.8em" });
+
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ delay: 0.2 });
+      const tl = gsap.timeline({ delay: 0.15 });
 
-      // Blueprint lines draw in (the SVG .plan-line elements)
-      const planLines = containerRef.current?.querySelectorAll(".plan-line");
-      if (planLines?.length) {
-        tl.to(
-          planLines,
-          {
-            strokeDashoffset: 0,
-            duration: 1.4,
-            stagger: 0.1,
-            ease: "power2.inOut",
-          },
-          0
-        );
-      }
+      /* ── blueprint lines ─────────────────────── */
+      const lines = containerRef.current?.querySelectorAll(".plan-line");
+      if (lines?.length)
+        tl.to(lines, { strokeDashoffset: 0, duration: 1.4, stagger: 0.1, ease: "power2.inOut" }, 0);
 
-      // Corner accents snap in
-      tl.to(
-        containerRef.current?.querySelectorAll(".corner") ?? [],
-        { opacity: 1, duration: 0.001, stagger: 0.06 },
-        0.1
-      );
+      /* ── corner accents ──────────────────────── */
+      tl.to(containerRef.current?.querySelectorAll(".corner") ?? [],
+        { opacity: 1, duration: 0.001, stagger: 0.07 }, 0.1);
 
-      // Top line expands from center
-      tl.from(
-        lineTopRef.current,
-        {
-          scaleX: 0,
-          transformOrigin: "center",
-          duration: 0.85,
-          ease: "power3.out",
-        },
-        0.5
-      );
+      /* ── top gold line ───────────────────────── */
+      tl.from(lineTopRef.current,
+        { scaleX: 0, transformOrigin: "center", duration: 0.8, ease: "power3.out" }, 0.45);
 
-      // KAD letters — clip reveal stagger
-      tl.from(
-        lettersRef.current,
-        {
-          y: "108%",
-          duration: 0.9,
-          stagger: 0.09,
-          ease: "power4.out",
-        },
-        0.75
-      );
+      /* ══ PHASE 1 — KHARE ═══════════════════════ */
+      tl.addLabel("p1", 0.7);
 
-      // Design Studio tracks in
-      tl.from(
-        studioRef.current,
-        {
-          opacity: 0,
-          letterSpacing: "1.2em",
-          duration: 1.1,
-          ease: "power3.out",
-        },
-        1.1
-      );
+      // clip-reveal each KHARE letter from below
+      tl.from(khare,
+        { y: "110%", duration: 0.85, stagger: 0.07, ease: "power4.out" }, "p1");
 
-      // Bottom line
-      tl.from(
-        lineBottomRef.current,
-        {
-          scaleX: 0,
-          transformOrigin: "center",
-          duration: 0.85,
-          ease: "power3.out",
-        },
-        1.3
-      );
+      // subtitle1 tracks in
+      tl.from(sub1Ref.current,
+        { autoAlpha: 0, letterSpacing: "0.9em", duration: 0.95, ease: "power3.out" }, "p1+=0.32");
 
-      // Progress bar fills
-      tl.to(
-        progressRef.current,
-        {
-          scaleX: 1,
-          duration: 2.2,
-          ease: "power1.inOut",
-        },
-        0.8
-      );
+      // progress to 40 %
+      tl.to(progressRef.current,
+        { scaleX: 0.4, duration: 1.7, ease: "power1.inOut" }, "p1");
 
-      // art by pheneron
-      tl.from(
-        creditRef.current,
-        {
-          opacity: 0,
-          y: 8,
-          duration: 0.7,
-          ease: "power2.out",
-        },
-        1.6
-      );
+      /* ── hold so user reads the name ─────────── */
+      tl.addLabel("p1End", 2.55);
 
-      // Hold then call complete — Framer Motion handles the exit
-      tl.to({}, { duration: 0.7 }).call(onComplete);
+      /* ══ TRANSITION  ════════════════════════════ */
+      // fade + compress KHARE group out
+      tl.to(khareWrapRef.current,
+        { autoAlpha: 0, scaleY: 0.92, transformOrigin: "center bottom",
+          duration: 0.38, ease: "power2.in" }, "p1End");
+
+      // fade subtitle1 out simultaneously
+      tl.to(sub1Ref.current,
+        { autoAlpha: 0, y: -6, duration: 0.28, ease: "power2.in" }, "p1End");
+
+      // progress to 65 %
+      tl.to(progressRef.current,
+        { scaleX: 0.65, duration: 0.5, ease: "power1.inOut" }, "p1End");
+
+      /* ══ PHASE 2 — KAD ══════════════════════════ */
+      tl.addLabel("p2", "p1End+=0.32");
+
+      // clip-reveal KAD letters from below
+      tl.to(kad,
+        { y: "0%", duration: 0.9, stagger: 0.1, ease: "power4.out" }, "p2");
+
+      // subtitle2 tracks in
+      tl.to(sub2Ref.current,
+        { autoAlpha: 1, letterSpacing: "0.45em", duration: 1.0, ease: "power3.out" }, "p2+=0.38");
+
+      // bottom gold line
+      tl.from(lineBottomRef.current,
+        { scaleX: 0, transformOrigin: "center", duration: 0.8, ease: "power3.out" }, "p2+=0.52");
+
+      // progress to 100 %
+      tl.to(progressRef.current,
+        { scaleX: 1, duration: 1.1, ease: "power1.inOut" }, "p2+=0.38");
+
+      // credit
+      tl.from(creditRef.current,
+        { autoAlpha: 0, y: 7, duration: 0.6, ease: "power2.out" }, "p2+=0.9");
+
+      /* ── hold then exit ──────────────────────── */
+      tl.to({}, { duration: 0.45 }).call(onComplete);
     }, containerRef);
 
     return () => ctx.revert();
   }, [onComplete]);
 
+  /* ─── font style shared between phases ─────────────────────────── */
+  const letterStyle = (size: string, spacing: string): React.CSSProperties => ({
+    display: "inline-block",
+    fontFamily: "'Cormorant Garamond', serif",
+    fontWeight: 300,
+    fontSize: size,
+    color: "#FFFFFF",
+    letterSpacing: spacing,
+    lineHeight: 1,
+  });
+
   return (
     <div
       ref={containerRef}
       className="fixed inset-0 z-[999] flex flex-col items-center justify-center select-none overflow-hidden"
-      style={{ background: "#222A35", fontFamily: "'Jost', sans-serif" }}
+      style={{ background: "#222A35" }}
     >
-      {/* Subtle grid lines */}
-      {[20, 40, 60, 80].map((p) => (
-        <div
-          key={`h${p}`}
-          className="absolute left-0 right-0 h-px"
-          style={{ top: `${p}%`, background: "rgba(255,255,255,0.04)" }}
-        />
+      {/* ── grid lines ─────────────────────────────────────── */}
+      {[20, 40, 60, 80].map(p => (
+        <div key={`h${p}`} className="absolute left-0 right-0 h-px"
+          style={{ top: `${p}%`, background: "rgba(255,255,255,0.035)" }} />
       ))}
-      {[15, 35, 65, 85].map((p) => (
-        <div
-          key={`v${p}`}
-          className="absolute top-0 bottom-0 w-px"
-          style={{ left: `${p}%`, background: "rgba(255,255,255,0.04)" }}
-        />
+      {[15, 35, 65, 85].map(p => (
+        <div key={`v${p}`} className="absolute top-0 bottom-0 w-px"
+          style={{ left: `${p}%`, background: "rgba(255,255,255,0.035)" }} />
       ))}
 
-      {/* Blueprint floor plan SVG */}
-      <svg
-        viewBox="0 0 800 520"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ opacity: 0.6 }}
-      >
-        <rect
-          x="160" y="110" width="480" height="300"
-          className="plan-line"
-          style={{
-            stroke: "rgba(184,147,90,0.18)",
-            strokeWidth: 0.5,
-            fill: "none",
-            strokeDasharray: 1600,
-            strokeDashoffset: 1600,
-          }}
-        />
-        <line x1="160" y1="230" x2="400" y2="230"
-          className="plan-line"
-          style={{ stroke: "rgba(184,147,90,0.15)", strokeWidth: 0.5, fill: "none", strokeDasharray: 500, strokeDashoffset: 500 }}
-        />
-        <line x1="400" y1="110" x2="400" y2="410"
-          className="plan-line"
-          style={{ stroke: "rgba(184,147,90,0.15)", strokeWidth: 0.5, fill: "none", strokeDasharray: 600, strokeDashoffset: 600 }}
-        />
-        <line x1="400" y1="280" x2="640" y2="280"
-          className="plan-line"
-          style={{ stroke: "rgba(184,147,90,0.15)", strokeWidth: 0.5, fill: "none", strokeDasharray: 400, strokeDashoffset: 400 }}
-        />
-        <line x1="500" y1="110" x2="500" y2="230"
-          className="plan-line"
-          style={{ stroke: "rgba(184,147,90,0.12)", strokeWidth: 0.5, fill: "none", strokeDasharray: 300, strokeDashoffset: 300 }}
-        />
-        <line x1="160" y1="320" x2="280" y2="320"
-          className="plan-line"
-          style={{ stroke: "rgba(184,147,90,0.12)", strokeWidth: 0.5, fill: "none", strokeDasharray: 250, strokeDashoffset: 250 }}
-        />
-        <line x1="280" y1="320" x2="280" y2="410"
-          className="plan-line"
-          style={{ stroke: "rgba(184,147,90,0.12)", strokeWidth: 0.5, fill: "none", strokeDasharray: 200, strokeDashoffset: 200 }}
-        />
+      {/* ── blueprint SVG ──────────────────────────────────── */}
+      <svg viewBox="0 0 800 520" className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ opacity: 0.55 }}>
+        {[
+          { d: "M160,110 h480 v300 h-480 Z",    da: 1600 },
+          { d: "M160,230 H400",                  da: 500  },
+          { d: "M400,110 V410",                  da: 600  },
+          { d: "M400,280 H640",                  da: 400  },
+          { d: "M500,110 V230",                  da: 300  },
+          { d: "M160,320 H280",                  da: 250  },
+          { d: "M280,320 V410",                  da: 200  },
+        ].map(({ d, da }, i) => (
+          <path key={i} d={d} className="plan-line"
+            style={{ stroke: "rgba(184,147,90,0.18)", strokeWidth: 0.5, fill: "none",
+              strokeDasharray: da, strokeDashoffset: da }} />
+        ))}
       </svg>
 
-      {/* Corner accents */}
+      {/* ── corner accents ─────────────────────────────────── */}
       {[
-        { cls: "top-5 left-5 border-t border-l", id: "cTL" },
-        { cls: "top-5 right-5 border-t border-r", id: "cTR" },
-        { cls: "bottom-5 left-5 border-b border-l", id: "cBL" },
-        { cls: "bottom-5 right-5 border-b border-r", id: "cBR" },
+        { cls: "top-6 left-6 border-t border-l",   id: "cTL" },
+        { cls: "top-6 right-6 border-t border-r",  id: "cTR" },
+        { cls: "bottom-6 left-6 border-b border-l", id: "cBL" },
+        { cls: "bottom-6 right-6 border-b border-r", id: "cBR" },
       ].map(({ cls, id }) => (
-        <div
-          key={id}
-          className={`corner absolute w-5 h-5 opacity-0 ${cls}`}
-          style={{ borderColor: "rgba(255,255,255,0.25)" }}
-        />
+        <div key={id} className={`corner absolute w-6 h-6 opacity-0 ${cls}`}
+          style={{ borderColor: "rgba(255,255,255,0.22)" }} />
       ))}
 
-      {/* Center content */}
-      <div className="relative z-10 flex flex-col items-center">
+      {/* ── centre content ─────────────────────────────────── */}
+      <div className="relative z-10 flex flex-col items-center w-full px-6">
 
-        {/* Top line */}
-        <div
-          ref={lineTopRef}
-          className="w-20 md:w-32 h-px mb-10 md:mb-12"
-          style={{ background: "rgba(184,147,90,0.45)" }}
-        />
+        {/* top gold rule */}
+        <div ref={lineTopRef} className="mb-10 md:mb-14 h-px w-24 md:w-36"
+          style={{ background: "rgba(184,147,90,0.5)" }} />
 
-        {/* K A D — clip reveal */}
-        <div className="flex items-end mb-5 md:mb-6">
-          {LETTERS.map((letter, i) => (
-            <div key={letter} className="overflow-hidden">
-              <span
-                ref={(el) => { lettersRef.current[i] = el; }}
-                style={{
-                  display: "inline-block",
-                  fontFamily: "'Cormorant Garamond', serif",
-                  fontWeight: 300,
-                  fontSize: "clamp(5rem, 13vw, 10rem)",
-                  color: "#FFFFFF",
-                  letterSpacing: "0.1em",
-                  lineHeight: 1,
-                }}
-              >
-                {letter}
-              </span>
-            </div>
-          ))}
+        {/* ══ letter stage ══════════════════════════════════ */}
+        {/*
+          Fixed-height container so both KHARE and KAD sit in the same
+          vertical slot. overflow-hidden on the inner wrapper clips the
+          y-translated letters (the clip-reveal trick).
+        */}
+        <div className="relative w-full flex items-end justify-center"
+          style={{ height: "clamp(4.2rem, 11vw, 8.5rem)", marginBottom: "clamp(1rem, 2vw, 1.4rem)" }}>
+
+          {/* Phase 1 — KHARE */}
+          <div ref={khareWrapRef}
+            className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-0">
+            {KHARE_LETTERS.map((l, i) => (
+              <div key={`kh-${i}`} className="overflow-hidden">
+                <span ref={el => { khareRefs.current[i] = el; }}
+                  style={letterStyle("clamp(4.2rem, 11vw, 8.5rem)", "0.1em")}>
+                  {l}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Phase 2 — KAD */}
+          <div ref={kadWrapRef}
+            className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-0">
+            {KAD_LETTERS.map((l, i) => (
+              <div key={`kd-${i}`} className="overflow-hidden">
+                <span ref={el => { kadRefs.current[i] = el; }}
+                  style={letterStyle("clamp(4.2rem, 11vw, 8.5rem)", "0.28em")}>
+                  {l}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Design Studio */}
-        <p
-          ref={studioRef}
+        {/* ══ subtitle stage ════════════════════════════════ */}
+        {/* fixed height holds either subtitle without reflow */}
+        <div className="relative w-full flex items-center justify-center"
+          style={{ height: 20, marginBottom: "clamp(2rem, 4.5vw, 3.2rem)" }}>
+
+          {/* Phase 1 subtitle */}
+          <p ref={sub1Ref}
+            className="absolute text-center whitespace-nowrap"
+            style={{
+              fontFamily: "'Jost', sans-serif",
+              fontWeight: 200,
+              fontSize: "clamp(9px, 1.1vw, 12px)",
+              letterSpacing: "0.48em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.5)",
+            }}>
+            Khare Architecture &amp; Design Studio
+          </p>
+
+          {/* Phase 2 subtitle */}
+          <p ref={sub2Ref}
+            className="absolute text-center whitespace-nowrap"
+            style={{
+              fontFamily: "'Jost', sans-serif",
+              fontWeight: 200,
+              fontSize: "clamp(9px, 1.1vw, 12px)",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.5)",
+            }}>
+            Architecture &amp; Design Studio
+          </p>
+        </div>
+
+        {/* bottom gold rule */}
+        <div ref={lineBottomRef} className="mb-7 md:mb-9 h-px w-24 md:w-36"
+          style={{ background: "rgba(184,147,90,0.5)" }} />
+
+        {/* credit */}
+        <p ref={creditRef}
           style={{
             fontFamily: "'Jost', sans-serif",
             fontWeight: 200,
-            fontSize: "clamp(8px, 1.2vw, 11px)",
-            letterSpacing: "0.55em",
+            fontSize: "clamp(7px, 0.85vw, 9px)",
+            letterSpacing: "0.32em",
             textTransform: "uppercase",
-            color: "rgba(255,255,255,0.55)",
-            marginBottom: "clamp(2.5rem, 5vw, 3.5rem)",
-          }}
-        >
-          Infra Ventures
-        </p>
-
-        {/* Bottom line */}
-        <div
-          ref={lineBottomRef}
-          className="w-20 md:w-32 h-px mb-7 md:mb-9"
-          style={{ background: "rgba(184,147,90,0.45)" }}
-        />
-
-        {/* art by pheneron */}
-        <p
-          ref={creditRef}
-          style={{
-            fontFamily: "'Jost', sans-serif",
-            fontWeight: 200,
-            fontSize: "clamp(7px, 1vw, 9px)",
-            letterSpacing: "0.3em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.35)",
-          }}
-        >
-          art by pheneron
+            color: "rgba(255,255,255,0.3)",
+          }}>
+          KAD Studio · Raipur, Chhattisgarh
         </p>
       </div>
 
-      {/* Progress line — bottom */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-px overflow-hidden"
-        style={{ background: "rgba(255,255,255,0.08)" }}
-      >
-        <div
-          ref={progressRef}
-          className="absolute inset-y-0 left-0 right-0"
+      {/* ── progress bar ───────────────────────────────────── */}
+      <div className="absolute bottom-0 inset-x-0 h-[2px]"
+        style={{ background: "rgba(255,255,255,0.07)" }}>
+        <div ref={progressRef} className="absolute inset-y-0 left-0 right-0"
           style={{
-            background: "linear-gradient(90deg, rgba(184,147,90,0.3), rgba(184,147,90,0.8))",
+            background: "linear-gradient(90deg, rgba(184,147,90,0.25), rgba(184,147,90,0.85))",
             transformOrigin: "left",
             transform: "scaleX(0)",
-          }}
-        />
+          }} />
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import VisionSection from "./components/ui/vision-section";
 
 import ServicesDetailSection from "./components/ui/services-detail-section";
 import Portfolio from "./components/ui/portfolio";
+import OurProjectsSection from "./components/ui/our-projects-section";
 import { Testimonial } from "./components/ui/design-testimonial";
 import CTACallback from "./components/ui/cta-callback";
 import { Footer } from "./components/ui/footer-section";
@@ -72,6 +73,7 @@ function App() {
 
             <ServicesDetailSection />
             <Portfolio />
+            <OurProjectsSection />
             <Testimonial />
             <CTACallback />
             <Footer />

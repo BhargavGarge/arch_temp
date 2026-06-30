@@ -13,7 +13,7 @@ import {
 gsap.registerPlugin(ScrollTrigger);
 
 const MARQUEE_TEXT =
-  "KAD STUDIO & INFRA VENTURES • ARCHITECTURE & INTERIORS • DESIGN EDUCATION • ";
+  "KAD STUDIO • ARCHITECTURE & INTERIORS • MODERN LUXURY • MEDITERRANEAN DESIGN • CHHATTISGARH • ";
 
 // Split a word into individually animated char spans
 function SplitWord({ word, className }: { word: string; className?: string }) {
@@ -174,7 +174,7 @@ export default function AboutUsSection() {
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="text-[clamp(1.4rem,2.8vw,2rem)] font-extralight leading-[1.2] text-[#222A35]/88 mb-8">
-              Designed from
+              Luxury from
               <br />
               the inside
               <br />
@@ -204,17 +204,20 @@ export default function AboutUsSection() {
             className="flex flex-col justify-center"
           >
             <p className="text-[#222A35]/50 leading-[1.95] text-[0.94rem]">
-              At{" "}
-              <span className="text-[#222A35]/80">{COMPANY_NAME}</span>, we
-              view the built environment as a living, breathing extension of
-              human behavior. Founded as a full-spectrum architecture, turnkey
-              development, and design education firm, we operate at the precise
-              intersection of rigorous technical engineering and deep spatial
-              empathy. With over 15 years of practical field experience, our
-              integrated framework unites architects, structural engineers, and
-              interior specialists under a single line of communication — by
-              owning every phase, we eliminate contractor friction and protect
-              our clients' investments from first sketch to final key handover.
+              <span className="text-[#222A35]/80">{COMPANY_NAME}</span> is a
+              contemporary architecture and interior design practice redefining
+              luxury living in Central India. Founded by architect{" "}
+              <span className="text-[#222A35]/80">Ar. Hrithvika Khare</span>,
+              the studio is celebrated for its modern luxury and
+              Mediterranean-inspired design language that seamlessly blends
+              understated elegance with functional sophistication. Based in
+              Chhattisgarh and drawing on rich design exposure from leading
+              firms in Delhi and Mumbai, KAD Studio positions itself as a
+              premium, cosmopolitan design house — bringing world-class
+              detailing, refined material palettes, and sustainable practices
+              to every project. From bespoke residences to high-end commercial
+              spaces, KAD Studio delivers spaces that embody comfort,
+              craftsmanship, and character.
             </p>
           </motion.div>
         </div>
@@ -259,12 +262,12 @@ export default function AboutUsSection() {
           </span>
           <blockquote className="max-w-[780px] text-center">
             <p className="text-[clamp(1rem,2.3vw,1.45rem)] font-extralight leading-[1.95] text-[#222A35]/60 italic mb-10">
-              A space succeeds not when it wins an aesthetic award, but when it
-              seamlessly accommodates the rhythm of the people inside it.
-              Whether we are master-planning a transit-oriented development,
-              drafting a custom fluid volumetric villa, or engineering a complex
-              retail layout, our objective remains unchanged: to design from the
-              inside out.
+              True luxury is not loud — it is the quiet confidence of a space
+              that knows exactly who it is. Whether crafting a bespoke
+              Mediterranean-inspired villa, a refined hospitality suite, or a
+              high-end commercial environment, our objective remains unchanged:
+              to create spaces that narrate their own timeless story of beauty,
+              comfort, and character.
             </p>
             <div className="flex items-center justify-center gap-5">
               <div className="h-px w-10 bg-[#222A35]/55" />
@@ -314,7 +317,7 @@ export default function AboutUsSection() {
             firstName={FOUNDER_NAME.first}
             lastName={FOUNDER_NAME.last}
             imageUrl={FOUNDER_IMAGE}
-            description={`With years of experience at the helm of ${COMPANY_NAME}, ${FOUNDER_NAME.first} ${FOUNDER_NAME.last} leads every project with an unwavering commitment to craft, context, and the human experience of space.`}
+            description={`An architect with a keen eye for refined aesthetics, Ar. ${FOUNDER_NAME.first} ${FOUNDER_NAME.last} brings the perfect balance of creativity, technical expertise, and global sensibility to her work. Honing her craft at India's top luxury design firms in Delhi and Mumbai, her philosophy is rooted in creating spaces that are luxurious yet livable — marrying natural textures, warm neutrals, and modern functionality with an unwavering commitment to quality and sustainability.`}
           />
         </div>
       </div>

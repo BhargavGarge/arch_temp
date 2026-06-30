@@ -67,7 +67,7 @@ export function Testimonial() {
   return (
     <section id="testimonial-section" className="overflow-hidden bg-white">
       {/* ── Section header ───────────────────────────────────────── */}
-      <div className="container mx-auto max-w-6xl px-4 md:px-12 lg:px-16 pt-14 md:pt-24 pb-0">
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 md:px-12 lg:px-16 pt-12 sm:pt-14 md:pt-24 pb-0">
         <motion.span
           className="block text-[#222A35] text-[10px] tracking-[0.4em] uppercase font-medium mb-5"
           initial={{ opacity: 0, y: 12 }}
@@ -114,7 +114,7 @@ export function Testimonial() {
       </div>
 
       {/* ── Testimonial widget ───────────────────────────────────── */}
-      <div className="flex items-center justify-center py-10 md:py-20 px-4 md:px-12 lg:px-16">
+      <div className="flex items-center justify-center py-8 sm:py-10 md:py-20 px-4 sm:px-6 md:px-12 lg:px-16">
         <div
           ref={containerRef}
           className="relative w-full max-w-5xl"
@@ -304,7 +304,7 @@ export function Testimonial() {
       </div>
 
       {/* Bottom rule */}
-      <div className="container mx-auto max-w-6xl px-6 md:px-12 lg:px-16 pb-24">
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 md:px-12 lg:px-16 pb-14 sm:pb-20 md:pb-24">
         <div className="h-px bg-[#202e44]/[0.08]" />
       </div>
     </section>

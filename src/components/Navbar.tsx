@@ -11,12 +11,13 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const [visible, setVisible] = useState(true);
+  const [navVisible, setNavVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [brandHover, setBrandHover] = useState(false);
 
   useEffect(() => {
     const onScroll = () =>
-      setVisible(window.scrollY < window.innerHeight * 0.75);
+      setNavVisible(window.scrollY < window.innerHeight * 0.75);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -32,33 +33,99 @@ export default function Navbar() {
     <>
       <motion.nav
         className="fixed top-0 left-0 right-0 z-[200]"
-        animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : -14 }}
+        animate={{ opacity: navVisible ? 1 : 0, y: navVisible ? 0 : -14 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        style={{ pointerEvents: visible ? "auto" : "none" }}
+        style={{ pointerEvents: navVisible ? "auto" : "none" }}
         initial={{ opacity: 0, y: -14 }}
       >
         <div className="relative flex items-center px-6 md:px-12 lg:px-16 py-6 md:py-8">
-
           {/* Left — logo */}
           <a href="#" className="shrink-0 z-10">
             <img
               src="/logo.png"
-              alt="KAD Studio & Infra Ventures"
+              alt="KAD Studio"
               className="h-9 md:h-10 w-auto object-contain brightness-0 invert"
             />
           </a>
 
-          {/* Center — brand text (absolute so it's truly centered on any screen) */}
-          <div className="absolute inset-x-0 flex flex-col items-center pointer-events-none">
-            <span className="text-white text-2xl md:text-3xl font-light tracking-[0.2em] uppercase leading-none">
-              KAD
-            </span>
-            <span className="text-white/45 text-[9px] md:text-[10px] tracking-[0.35em] uppercase font-light mt-1">
-              Infra Ventures
-            </span>
+          {/* Center — brand text with KAD ↔ KHARE hover */}
+          <div className="absolute inset-x-0 flex justify-center pointer-events-none">
+            <motion.div
+              className="flex flex-col items-center pointer-events-auto cursor-default"
+              style={{ minWidth: 110 }}
+              onHoverStart={() => setBrandHover(true)}
+              onHoverEnd={() => setBrandHover(false)}
+            >
+              <AnimatePresence mode="wait">
+                {!brandHover ? (
+                  /* ── default: KAD ─────────────────────────────── */
+                  <motion.div
+                    key="kad"
+                    className="flex flex-col items-center"
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <span
+                      className="text-white font-light uppercase leading-none"
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "clamp(1.5rem, 2.8vw, 5rem)",
+                        letterSpacing: "0.28em",
+                      }}
+                    >
+                      KAD
+                    </span>
+                    <span
+                      className="text-white/40 uppercase font-light mt-[3px]"
+                      style={{
+                        fontFamily: "'Jost', sans-serif",
+                        fontSize: "clamp(7px, 0.85vw, 20px)",
+                        letterSpacing: "0.38em",
+                      }}
+                    >
+                      Infra Ventures
+                    </span>
+                  </motion.div>
+                ) : (
+                  /* ── hover: KHARE ──────────────────────────────── */
+                  <motion.div
+                    key="khare"
+                    className="flex flex-col items-center"
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <span
+                      className="text-white font-light uppercase leading-none"
+                      style={{
+                        fontFamily: "'Cormorant Garamond', serif",
+                        fontSize: "clamp(1.1rem, 2vw, 5rem)",
+                        letterSpacing: "0.2em",
+                      }}
+                    >
+                      KHARE
+                    </span>
+                    <span
+                      className="text-white/45 uppercase font-light mt-[3px] text-center"
+                      style={{
+                        fontFamily: "'Jost', sans-serif",
+                        fontSize: "clamp(6px, 0.75vw, 10px)",
+                        letterSpacing: "0.3em",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      Architecture &amp; Design Studio
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
           </div>
 
-          {/* Right — hamburger, mobile only */}
+          {/* Right — hamburger (mobile only) */}
           <button
             onClick={() => setMenuOpen(true)}
             className="ml-auto z-10 md:hidden text-white p-1"
@@ -66,11 +133,10 @@ export default function Navbar() {
           >
             <Menu className="w-5 h-5" />
           </button>
-
         </div>
       </motion.nav>
 
-      {/* Mobile full-screen menu */}
+      {/* ── Mobile full-screen menu ─────────────────────────── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
@@ -81,7 +147,6 @@ export default function Navbar() {
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            {/* Close */}
             <div className="flex items-center justify-between px-6 py-6 border-b border-[#222A35]/[0.06]">
               <img
                 src="/logo.png"
@@ -97,7 +162,6 @@ export default function Navbar() {
               </button>
             </div>
 
-            {/* Nav links */}
             <nav className="flex flex-col flex-1 justify-center px-8">
               {NAV_LINKS.map((link, i) => (
                 <motion.a
@@ -115,9 +179,8 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* Bottom label */}
             <p className="px-8 pb-10 text-[10px] tracking-[0.35em] uppercase text-[#222A35]/30">
-              KAD Studio &amp; Infra Ventures
+              Khare Architecture &amp; Design Studio
             </p>
           </motion.div>
         )}

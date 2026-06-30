@@ -93,11 +93,11 @@ export default function VisionSection() {
       ref={sectionRef}
       className="w-full bg-white text-[#222A35] overflow-hidden"
     >
-      <div className="container mx-auto max-w-7xl px-6 lg:px-12">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Manifesto */}
-        <div className="pt-28 pb-20 border-b border-[#222A35]/[0.07]">
+        <div className="pt-14 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 border-b border-[#222A35]/[0.07]">
           <motion.span
-            className="block text-[10px] tracking-[0.48em] uppercase text-[#222A35]/45 mb-14"
+            className="block text-[10px] tracking-[0.48em] uppercase text-[#222A35]/45 mb-8 sm:mb-10 md:mb-14"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -114,7 +114,7 @@ export default function VisionSection() {
           </p>
 
           <motion.div
-            className="mt-16 flex items-center gap-4"
+            className="mt-10 sm:mt-16 flex items-center gap-4"
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -128,9 +128,9 @@ export default function VisionSection() {
         </div>
 
         {/* Scale Visions */}
-        <div className="py-20">
+        <div className="py-12 sm:py-16 md:py-20">
           <motion.div
-            className="flex items-center gap-6 mb-14"
+            className="flex items-center gap-4 sm:gap-6 mb-8 sm:mb-10 md:mb-14"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -149,7 +149,7 @@ export default function VisionSection() {
           </motion.div>
 
           {/* Tab pills */}
-          <div className="flex flex-wrap gap-2.5 mb-14">
+          <div className="flex flex-wrap gap-2 sm:gap-2.5 mb-8 sm:mb-10 md:mb-14">
             {SCALE_VISIONS.map((v, i) => (
               <motion.button
                 key={v.id}

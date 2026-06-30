@@ -8,7 +8,6 @@ import {
   GalleryGridCell,
 } from "./cta-section-with-gallery";
 import { Button } from "./button";
-import type { FormEvent } from "react";
 
 const IMAGES = [
   "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&auto=format&fit=crop&q=80",
@@ -26,7 +25,7 @@ export default function CTACallback() {
   const [submitted, setSubmitted] = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: { preventDefault(): void }) => {
     e.preventDefault();
     if (!formData.accepted) return;
     setSubmitted(true);
@@ -41,8 +40,8 @@ export default function CTACallback() {
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#222A35]/5 blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] rounded-full bg-[#222A35]/3 blur-[100px] pointer-events-none" />
 
-      <div className="container mx-auto max-w-6xl px-6 md:px-12 lg:px-16 py-16 md:py-28 relative z-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-20">
+      <div className="container mx-auto max-w-6xl px-4 sm:px-6 md:px-12 lg:px-16 py-12 sm:py-16 md:py-28 relative z-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12 sm:gap-16 lg:gap-20">
           {/* ── Left: text + form ─────────────────────────────── */}
           <ContainerStagger>
             <ContainerAnimated>

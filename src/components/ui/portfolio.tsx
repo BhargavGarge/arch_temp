@@ -1,9 +1,14 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import { useLenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowUpRight, MapPin, X } from "lucide-react";
 import { COMPANY_NAME } from "../../config/company";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,165 +22,489 @@ interface Project {
   image: string;
 }
 
-const leftProjects: Project[] = [
+// ── All portfolio photos ─────────────────────────────────────────────
+const ALL_PHOTOS: Project[] = [
   {
     id: 1,
-    title: "Sharma Residence",
-    location: "New Delhi",
-    year: "2023",
+    title: "Twilight Villa",
+    location: "Chhattisgarh",
+    year: "2024",
     category: "Residential",
-    image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&auto=format&fit=crop&q=80",
+    image: "/assets/TWILIGHT VILLA.webp",
   },
   {
     id: 2,
-    title: "TechHub Headquarters",
-    location: "Bangalore",
-    year: "2022",
-    category: "Corporate",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&auto=format&fit=crop&q=80",
+    title: "Chettinad Residence",
+    location: "Central India",
+    year: "2023",
+    category: "Residential",
+    image: "/assets/CHETTINAD RESIDENCE.webp",
   },
   {
     id: 3,
-    title: "Birch & Stone Villa",
-    location: "Chandigarh",
-    year: "2021",
-    category: "Residential",
-    image:
-      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=600&auto=format&fit=crop&q=80",
+    title: "Bedroom Suite",
+    location: "Raipur",
+    year: "2024",
+    category: "Interior",
+    image: "/assets/BEDROOM.webp",
   },
   {
     id: 4,
-    title: "Meridian Offices",
-    location: "Gurgaon",
-    year: "2022",
-    category: "Corporate",
-    image:
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=600&auto=format&fit=crop&q=80",
+    title: "Master Bedroom",
+    location: "Chhattisgarh",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/BEDROOM 2.webp",
   },
   {
     id: 5,
-    title: "The Amber Retreat",
-    location: "Jaipur",
-    year: "2023",
+    title: "Living Lobby",
+    location: "Raipur",
+    year: "2024",
     category: "Hospitality",
-    image:
-      "https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&auto=format&fit=crop&q=80",
+    image: "/assets/LIVING LOBBY.webp",
   },
-];
-
-const centerProjects: Project[] = [
   {
     id: 6,
-    title: "Courtyard House",
-    location: "Ahmedabad",
-    year: "2020",
+    title: "Private Residence",
+    location: "Central India",
+    year: "2023",
     category: "Residential",
-    image:
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&auto=format&fit=crop&q=80",
+    image: "/assets/RESIDENCE.webp",
   },
   {
     id: 7,
-    title: "The Cedar Lounge",
-    location: "New Delhi",
-    year: "2022",
-    category: "Hospitality",
-    image:
-      "https://images.unsplash.com/photo-1616137466211-f939a420be84?w=600&auto=format&fit=crop&q=80",
+    title: "KAD Signature II",
+    location: "Raipur",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/KAD2.webp",
   },
   {
     id: 8,
-    title: "Emerald Heights",
-    location: "Mumbai",
-    year: "2023",
-    category: "Residential",
-    image:
-      "https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=600&auto=format&fit=crop&q=80",
+    title: "KAD Signature III",
+    location: "Raipur",
+    year: "2022",
+    category: "Interior",
+    image: "/assets/KAD3.webp",
   },
-];
-
-const rightProjects: Project[] = [
   {
     id: 9,
-    title: "Heritage Haveli",
-    location: "Rajasthan",
-    year: "2021",
-    category: "Hospitality",
-    image:
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=80",
+    title: "KAD Signature VI",
+    location: "Chhattisgarh",
+    year: "2024",
+    category: "Design",
+    image: "/assets/KAD6.webp",
   },
   {
     id: 10,
-    title: "Oak & Glass House",
-    location: "Noida",
+    title: "KAD Signature VII",
+    location: "Raipur",
     year: "2023",
-    category: "Residential",
-    image:
-      "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=600&auto=format&fit=crop&q=80",
+    category: "Design",
+    image: "/assets/KAD7.webp",
   },
   {
     id: 11,
-    title: "Arva Retail Hub",
-    location: "Pune",
-    year: "2022",
-    category: "Retail",
-    image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&auto=format&fit=crop&q=80",
+    title: "KAD Signature VIII",
+    location: "Chhattisgarh",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/KAD8.webp",
   },
   {
     id: 12,
-    title: "Sun Path House",
-    location: "Rishikesh",
-    year: "2023",
-    category: "Sustainable",
-    image:
-      "https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=600&auto=format&fit=crop&q=80",
+    title: "KAD Signature X",
+    location: "Raipur",
+    year: "2024",
+    category: "Interior",
+    image: "/assets/KAD10.webp",
   },
   {
     id: 13,
-    title: "Metropolitan Complex",
-    location: "New Delhi",
-    year: "2021",
-    category: "Mixed Use",
-    image:
-      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=80",
+    title: "Studio Work I",
+    location: "Raipur",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/IMG_4033.webp",
+  },
+  {
+    id: 14,
+    title: "Studio Work II",
+    location: "Raipur",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/IMG_4034.webp",
+  },
+  {
+    id: 15,
+    title: "Detail Study I",
+    location: "Chhattisgarh",
+    year: "2023",
+    category: "Design",
+    image: "/assets/IMG_4036.webp",
+  },
+  {
+    id: 16,
+    title: "Material Study",
+    location: "Raipur",
+    year: "2022",
+    category: "Design",
+    image: "/assets/IMG_4037.webp",
+  },
+  {
+    id: 17,
+    title: "Project Detail",
+    location: "Central India",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/IMG_4060.webp",
+  },
+  {
+    id: 18,
+    title: "Space Study",
+    location: "Raipur",
+    year: "2024",
+    category: "Interior",
+    image: "/assets/IMG_4066.webp",
+  },
+  {
+    id: 19,
+    title: "Luxury Interior",
+    location: "Chhattisgarh",
+    year: "2024",
+    category: "Interior",
+    image: "/assets/IMG_4880.webp",
+  },
+  {
+    id: 20,
+    title: "Modern Living",
+    location: "Raipur",
+    year: "2023",
+    category: "Residential",
+    image: "/assets/IMG_4896.webp",
+  },
+  {
+    id: 21,
+    title: "Contemporary Space",
+    location: "Central India",
+    year: "2024",
+    category: "Design",
+    image: "/assets/IMG_4900.webp",
+  },
+  {
+    id: 22,
+    title: "Curated Interiors I",
+    location: "Raipur",
+    year: "2022",
+    category: "Commercial",
+    image: "/assets/PAB_0662.webp",
+  },
+  {
+    id: 23,
+    title: "Curated Interiors II",
+    location: "Raipur",
+    year: "2023",
+    category: "Commercial",
+    image: "/assets/PAB_0667.webp",
+  },
+  {
+    id: 24,
+    title: "Office Interior",
+    location: "Chhattisgarh",
+    year: "2023",
+    category: "Commercial",
+    image: "/assets/PAB_0668.webp",
+  },
+  {
+    id: 25,
+    title: "Corporate Space",
+    location: "Raipur",
+    year: "2022",
+    category: "Corporate",
+    image: "/assets/PAB_0670.webp",
+  },
+  {
+    id: 26,
+    title: "Modern Office",
+    location: "Central India",
+    year: "2023",
+    category: "Corporate",
+    image: "/assets/PAB_0672.webp",
+  },
+  {
+    id: 27,
+    title: "Luxury Suite",
+    location: "Chhattisgarh",
+    year: "2024",
+    category: "Hospitality",
+    image: "/assets/PAB_0680.webp",
+  },
+  {
+    id: 28,
+    title: "Premium Lounge",
+    location: "Raipur",
+    year: "2023",
+    category: "Hospitality",
+    image: "/assets/PAB_0681.webp",
+  },
+  {
+    id: 29,
+    title: "Elite Space",
+    location: "Central India",
+    year: "2022",
+    category: "Design",
+    image: "/assets/PAB_0682.webp",
+  },
+  {
+    id: 30,
+    title: "Crafted Interior",
+    location: "Raipur",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/PAB_0683.webp",
+  },
+  {
+    id: 31,
+    title: "Signature Design",
+    location: "Chhattisgarh",
+    year: "2024",
+    category: "Design",
+    image: "/assets/PAB_0688.webp",
+  },
+  {
+    id: 32,
+    title: "KAD Residence",
+    location: "Raipur",
+    year: "2023",
+    category: "Residential",
+    image: "/assets/PAB_0689.webp",
+  },
+  {
+    id: 33,
+    title: "Modern Villa",
+    location: "Central India",
+    year: "2024",
+    category: "Residential",
+    image: "/assets/PAB_0692.webp",
+  },
+  {
+    id: 34,
+    title: "Luxury Home",
+    location: "Raipur",
+    year: "2023",
+    category: "Residential",
+    image: "/assets/PAB_0693.webp",
+  },
+  {
+    id: 35,
+    title: "Contemporary Living",
+    location: "Chhattisgarh",
+    year: "2024",
+    category: "Residential",
+    image: "/assets/PAB_0694.webp",
+  },
+  {
+    id: 36,
+    title: "Interior Craft",
+    location: "Raipur",
+    year: "2023",
+    category: "Interior",
+    image: "/assets/PAB_0695.webp",
+  },
+  {
+    id: 37,
+    title: "Design Study",
+    location: "Central India",
+    year: "2022",
+    category: "Design",
+    image: "/assets/PAB_0698.webp",
+  },
+  {
+    id: 38,
+    title: "Space Planning",
+    location: "Raipur",
+    year: "2023",
+    category: "Design",
+    image: "/assets/PAB_0699.webp",
+  },
+  {
+    id: 39,
+    title: "Bespoke Interior",
+    location: "Chhattisgarh",
+    year: "2024",
+    category: "Interior",
+    image: "/assets/PAB_0701.webp",
+  },
+  {
+    id: 40,
+    title: "Architectural Study I",
+    location: "Central India",
+    year: "2023",
+    category: "Architecture",
+    image: "/assets/SHS_9769.webp",
+  },
+  {
+    id: 41,
+    title: "Architectural Study II",
+    location: "Raipur",
+    year: "2022",
+    category: "Architecture",
+    image: "/assets/SHS_9779.webp",
   },
 ];
 
+// Parallax intro columns — different images from the main grid for variety
+const INTRO_COL_IMAGES = [
+  ["/assets/TWILIGHT VILLA.webp", "/assets/KAD6.webp", "/assets/PAB_0680.webp"],
+  [
+    "/assets/LIVING LOBBY.webp",
+    "/assets/CHETTINAD RESIDENCE.webp",
+    "/assets/PAB_0662.webp",
+  ],
+  ["/assets/BEDROOM.webp", "/assets/KAD3.webp", "/assets/PAB_0672.webp"],
+  ["/assets/RESIDENCE.webp", "/assets/KAD2.webp", "/assets/PAB_0689.webp"],
+];
+const INTRO_COL_OFFSETS = ["-45%", "-95%", "-45%", "-75%"];
+const INTRO_COL_OFFSETS_MOBILE = ["-18%", "-40%", "-18%", "-35%"];
+
 export default function Portfolio() {
   const sectionRef = useRef<HTMLElement>(null);
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+  const [showAll, setShowAll] = useState(false);
+  const [activeCategory, setActiveCategory] = useState("All");
+  const [visibleCount, setVisibleCount] = useState(10);
+  const [isChangingCat, setIsChangingCat] = useState(false);
+  const [winH, setWinH] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => {
+      setWinH(window.innerHeight);
+      setIsMobile(window.innerWidth < 768);
+    };
+    onResize();
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  const { scrollYProgress: introProgress } = useScroll({
+    target: parallaxRef,
+    offset: ["start end", "end start"],
+  });
+
+  const py1 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 0.8 : 2)]);
+  const py2 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 1.1 : 3.3)]);
+  const py3 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 0.5 : 1.25)]);
+  const py4 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 1.0 : 3)]);
+
+  const CATEGORIES = [
+    "All",
+    "Residential",
+    "Interior",
+    "Design",
+    "Hospitality",
+    "Commercial",
+  ] as const;
+
+  const filteredPhotos = useMemo(() => {
+    if (activeCategory === "All") return ALL_PHOTOS;
+    if (activeCategory === "Commercial")
+      return ALL_PHOTOS.filter(
+        (p) => p.category === "Commercial" || p.category === "Corporate",
+      );
+    return ALL_PHOTOS.filter((p) => p.category === activeCategory);
+  }, [activeCategory]);
 
   // Keep GSAP ScrollTrigger in sync with Lenis virtual scroll
   useLenis(() => {
     ScrollTrigger.update();
   });
 
+  // Show skeleton when category changes — hide only after first images actually load
+  useEffect(() => {
+    setVisibleCount(10);
+    setIsChangingCat(true);
+    let cancelled = false;
+
+    // Preload first 6 images (carousel + first grid cards)
+    const srcs = filteredPhotos.slice(0, 6).map((p) => p.image);
+    let loaded = 0;
+    const done = () => {
+      if (cancelled) return;
+      loaded++;
+      if (loaded >= srcs.length) setIsChangingCat(false);
+    };
+
+    if (srcs.length === 0) {
+      setIsChangingCat(false);
+    } else {
+      srcs.forEach((src) => {
+        const img = new window.Image();
+        img.onload = done;
+        img.onerror = done; // don't hang on broken images
+        img.src = src;
+      });
+    }
+
+    // Fallback: never stay in skeleton more than 1.5s
+    const fallback = setTimeout(() => {
+      if (!cancelled) setIsChangingCat(false);
+    }, 1500);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(fallback);
+    };
+  }, [activeCategory]);
+
+  // Infinite scroll — load 10 more cards when sentinel enters view
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || visibleCount >= filteredPhotos.length) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting)
+          setVisibleCount((c) => Math.min(c + 10, filteredPhotos.length));
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [filteredPhotos.length, visibleCount]);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // ── Intro heading ──────────────────────────────────────────
       gsap.fromTo(
         ".port-eyebrow",
-        { y: 24, opacity: 0 },
+        { y: 20, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.9,
+          duration: 0.85,
           ease: "power2.out",
-          scrollTrigger: { trigger: ".port-eyebrow", start: "top 85%" },
+          scrollTrigger: {
+            trigger: ".port-eyebrow",
+            start: "top 88%",
+            once: true,
+          },
         },
       );
 
       gsap.fromTo(
         ".port-heading",
-        { y: 70, opacity: 0, skewY: 2 },
+        { y: 60, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          skewY: 0,
-          duration: 1.2,
+          duration: 1.1,
           ease: "power3.out",
-          scrollTrigger: { trigger: ".port-heading", start: "top 82%" },
+          scrollTrigger: {
+            trigger: ".port-heading",
+            start: "top 84%",
+            once: true,
+          },
         },
       );
 
@@ -184,69 +513,28 @@ export default function Portfolio() {
         { scaleX: 0 },
         {
           scaleX: 1,
-          duration: 1.4,
+          duration: 1.3,
           ease: "power2.inOut",
           transformOrigin: "left center",
-          scrollTrigger: { trigger: ".port-rule", start: "top 82%" },
+          scrollTrigger: {
+            trigger: ".port-rule",
+            start: "top 84%",
+            once: true,
+          },
         },
       );
 
-      // ── Left column: stagger up ────────────────────────────────
-      gsap.fromTo(
-        ".port-left-item",
-        { y: 64, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power2.out",
-          stagger: { each: 0.13 },
-          scrollTrigger: { trigger: ".port-left-col", start: "top 72%" },
-        },
-      );
-
-      // ── Right column: stagger up (slight offset) ───────────────
-      gsap.fromTo(
-        ".port-right-item",
-        { y: 64, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.9,
-          ease: "power2.out",
-          stagger: { each: 0.13 },
-          delay: 0.22,
-          scrollTrigger: { trigger: ".port-right-col", start: "top 72%" },
-        },
-      );
-
-      // ── Center column: scale-in ────────────────────────────────
-      gsap.fromTo(
-        ".port-center-item",
-        { scale: 0.88, opacity: 0 },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 1.1,
-          ease: "power3.out",
-          stagger: 0.14,
-          scrollTrigger: { trigger: ".port-center-col", start: "top 62%" },
-        },
-      );
-
-      // ── Footer headline scrub — opacity + letter-spacing expand ──
       gsap.fromTo(
         ".port-footer-text",
-        { opacity: 0.05, letterSpacing: "-0.06em" },
+        { opacity: 0.04 },
         {
-          opacity: 0.38,
-          letterSpacing: "0.18em",
+          opacity: 0.36,
           ease: "none",
           scrollTrigger: {
             trigger: ".port-footer-text",
             start: "top 95%",
-            end: "bottom 20%",
-            scrub: true,
+            end: "bottom 25%",
+            scrub: 1,
           },
         },
       );
@@ -257,118 +545,252 @@ export default function Portfolio() {
 
   return (
     <section ref={sectionRef} id="portfolio" className="bg-[#ffffff]">
-      {/* ── Sticky intro ──────────────────────────────────────── */}
-      <div>
-        <div className="h-screen w-full grid place-content-center sticky top-0 relative overflow-hidden">
-          {/* Grid pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:54px_54px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-
-          {/* Floating ambient glow */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full bg-[#222A35]/8 blur-[120px] pointer-events-none" />
-
-          <div className="relative z-10 text-center px-8 max-w-5xl mx-auto">
-            <span className="port-eyebrow block text-[#222A35] text-[10px] tracking-[0.4em] uppercase font-medium mb-6">
-              {COMPANY_NAME} — Since 1997
-            </span>
-
-            <h2
-              className="port-heading text-[#222A35] font-light tracking-tight leading-[1.05] mb-10"
-              style={{ fontSize: "clamp(2rem, 8vw, 7rem)" }}
+      {/* ── Complete Portfolio Overlay ─────────────────────── */}
+      <AnimatePresence>
+        {showAll && (
+          <motion.div
+            key="gallery"
+            className="fixed inset-0 z-[9998] flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+            onWheel={(e) => e.stopPropagation()}
+          >
+            {/* ── Header ──────────────────────────────────── */}
+            <motion.div
+              className="shrink-0 bg-[#0E1118] z-20"
+              initial={{ y: -28, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.48, ease: [0.22, 1, 0.36, 1] }}
             >
-              Spaces That
-              <br />
-              Define Tomorrow
-            </h2>
+              {/* Meta bar */}
+              <div className="flex items-center justify-between px-6 md:px-10 pt-5 pb-4 border-b border-white/[0.05]">
+                <div className="flex items-center gap-3">
+                  <span className="text-white/20 text-[9px] tracking-[0.52em] uppercase font-light">
+                    {COMPANY_NAME}
+                  </span>
+                  <span className="w-px h-3 bg-white/10" />
+                  <span className="text-white/50 text-[9px] tracking-[0.4em] uppercase font-light">
+                    Complete Portfolio
+                  </span>
+                </div>
+                <div className="flex items-center gap-5">
+                  <motion.span
+                    key={filteredPhotos.length}
+                    className="text-white/18 text-[9px] font-mono tracking-[0.28em] hidden sm:block"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    {Math.min(visibleCount, filteredPhotos.length)}&thinsp;
+                    <span className="text-white/10">/</span>&thinsp;
+                    {filteredPhotos.length}
+                  </motion.span>
+                  <button
+                    onClick={() => {
+                      setShowAll(false);
+                      setActiveCategory("All");
+                    }}
+                    className="group w-8 h-8 rounded-full border border-white/10 flex items-center justify-center text-white/25 hover:text-white hover:border-white/40 transition-all duration-250"
+                    aria-label="Close"
+                  >
+                    <X className="w-3.5 h-3.5 transition-transform duration-250 group-hover:rotate-90" />
+                  </button>
+                </div>
+              </div>
 
-            <div className="port-rule w-16 h-px bg-[#222A35] mx-auto origin-left" />
+              {/* Category tabs — animated underline */}
+              <div className="flex overflow-x-auto no-scrollbar">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`relative px-5 md:px-7 py-3.5 text-[9px] tracking-[0.34em] uppercase shrink-0 transition-colors duration-200 ${
+                      activeCategory === cat
+                        ? "text-white"
+                        : "text-white/22 hover:text-white/50"
+                    }`}
+                  >
+                    {cat}
+                    {activeCategory === cat && (
+                      <motion.div
+                        className="absolute bottom-0 left-0 right-0 h-px bg-white/60"
+                        layoutId="portfolio-tab-indicator"
+                        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                      />
+                    )}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
 
-            <p className="text-white/25 text-[10px] tracking-[0.3em] uppercase mt-10 animate-bounce">
-              ↓ scroll to explore
-            </p>
-          </div>
-        </div>
-      </div>
+            {/* ── Scrollable grid ──────────────────────────── */}
+            <div className="flex-1 overflow-y-auto bg-[#F5F4EE] overscroll-contain">
+              <AnimatePresence mode="wait">
+                {isChangingCat ? (
+                  <motion.div
+                    key="skeleton"
+                    className="grid grid-cols-2 md:grid-cols-3 gap-[2px] p-[2px]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.15 }}
+                  >
+                    {[...Array(9)].map((_, i) => (
+                      <motion.div
+                        key={i}
+                        className="aspect-[2/3] bg-[#E3E1D8]"
+                        animate={{ opacity: [0.45, 0.75, 0.45] }}
+                        transition={{
+                          duration: 1.3,
+                          repeat: Infinity,
+                          delay: i * 0.08,
+                          ease: "easeInOut",
+                        }}
+                      />
+                    ))}
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={activeCategory}
+                    className="grid grid-cols-2 md:grid-cols-3 gap-[2px] p-[2px]"
+                    variants={{
+                      visible: {
+                        transition: { staggerChildren: 0.042, delayChildren: 0.06 },
+                      },
+                    }}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {filteredPhotos.slice(0, visibleCount).map((photo) => (
+                      <GalleryCard key={photo.id} photo={photo} />
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-      {/* ── Gallery grid ──────────────────────────────────────── */}
-      <div className="bg-[#080808] text-white">
-        {/* Mobile: simple 2-column grid ─────────────────────── */}
-        <div className="md:hidden grid grid-cols-2 gap-2 p-2">
-          {[...leftProjects, ...centerProjects, ...rightProjects].map(
-            (project, i) => (
+              {/* Load more */}
+              {visibleCount < filteredPhotos.length ? (
+                <div
+                  ref={sentinelRef}
+                  className="py-12 flex flex-col items-center gap-3"
+                >
+                  <motion.div
+                    className="w-px h-8 bg-[#222A35]/12 origin-top"
+                    animate={{ scaleY: [0.25, 1, 0.25] }}
+                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  <span className="text-[#222A35]/20 text-[9px] tracking-[0.42em] uppercase">
+                    Loading more
+                  </span>
+                  <button
+                    onClick={() =>
+                      setVisibleCount((c) =>
+                        Math.min(c + 10, filteredPhotos.length),
+                      )
+                    }
+                    className="text-[#222A35]/35 text-[9px] tracking-[0.3em] uppercase border border-[#222A35]/10 px-6 py-2.5 rounded-full hover:border-[#222A35]/28 hover:text-[#222A35]/65 transition-all mt-1"
+                  >
+                    Show more ({filteredPhotos.length - visibleCount} remaining)
+                  </button>
+                </div>
+              ) : (
+                <p className="text-center text-[#222A35]/15 text-[9px] tracking-[0.48em] uppercase py-14">
+                  All {filteredPhotos.length} works · {COMPANY_NAME}
+                </p>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ── Parallax intro — images behind "Spaces That Define Tomorrow" ── */}
+      <div
+        ref={parallaxRef}
+        className="relative h-[175vh] overflow-hidden bg-[#080808]"
+        style={{ contain: "layout paint" }}
+      >
+        {/* 4-column parallax image strips — 2 columns on mobile, 4 on md+ */}
+        <div className="absolute inset-0 flex gap-[1.5vw] p-[1.5vw]">
+          {INTRO_COL_IMAGES.map((imgs, colIdx) => {
+            const yVals = [py1, py2, py3, py4];
+            const hiddenOnMobile = colIdx === 1 || colIdx === 3;
+            return (
               <motion.div
-                key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: (i % 4) * 0.07 }}
+                key={colIdx}
+                className={`relative flex h-full flex-col gap-[1.5vw] ${hiddenOnMobile ? "hidden md:flex w-1/4" : "w-1/2 md:w-1/4"}`}
+                style={{
+                  y: yVals[colIdx],
+                  top: isMobile ? INTRO_COL_OFFSETS_MOBILE[colIdx] : INTRO_COL_OFFSETS[colIdx],
+                  willChange: "transform",
+                }}
               >
-                <ProjectCard project={project} className="h-44" />
+                {imgs.map((src, i) => (
+                  <div
+                    key={i}
+                    className="relative flex-1 overflow-hidden rounded-sm"
+                    style={{ minHeight: "33.33%" }}
+                  >
+                    <img
+                      src={src}
+                      alt=""
+                      loading={i === 0 ? "eager" : "lazy"}
+                      decoding="async"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
               </motion.div>
-            ),
-          )}
+            );
+          })}
         </div>
 
-        {/* Desktop: original 3-column sticky layout ─────────── */}
-        <div className="hidden md:block">
-          <div className="grid grid-cols-12 gap-2 p-2">
-            {/* Left: scrolls normally */}
-            <div className="port-left-col col-span-4 grid gap-2">
-              {leftProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  className="port-left-item"
-                />
-              ))}
-            </div>
+        {/* Dark overlay */}
 
-            {/* Center: sticky */}
-            <div className="port-center-col col-span-4 sticky top-0 h-screen grid grid-rows-3 gap-2">
-              {centerProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  className="port-center-item"
-                  isCenter
-                />
-              ))}
-            </div>
+        {/* Sticky heading */}
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center text-center z-10 px-8 pointer-events-none">
+          <span className="port-eyebrow block text-white/55 text-[10px] tracking-[0.4em] uppercase font-medium mb-6">
+            {COMPANY_NAME} — Raipur, Chhattisgarh
+          </span>
 
-            {/* Right: scrolls normally */}
-            <div className="port-right-col col-span-4 grid gap-2">
-              {rightProjects.map((project) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  className="port-right-item"
-                />
-              ))}
-            </div>
-          </div>
+          <h2
+            className="port-heading text-white font-light tracking-tight leading-[1.05] mb-10"
+            style={{ fontSize: "clamp(2rem, 8vw, 7rem)" }}
+          >
+            Spaces That
+            <br />
+            Define Tomorrow
+          </h2>
+
+          <div className="port-rule w-16 h-px bg-white/40 mx-auto origin-left" />
+
+          <p className="text-white/30 text-[10px] tracking-[0.3em] uppercase mt-10 animate-bounce">
+            ↓ scroll to explore
+          </p>
         </div>
       </div>
 
-      {/* ── Footer ────────────────────────────────────────────── */}
+      {/* ── Footer ────────────────────────────────────────── */}
       <footer className="bg-[#ffffff] overflow-hidden pb-0">
-        {/* Large scrubbed text — letter-spacing + opacity scrub via GSAP */}
         <div className="relative overflow-hidden">
           <h2
             className="port-footer-text select-none text-center font-extralight uppercase leading-none text-[#222A35]"
-            style={{ fontSize: "clamp(5rem, 20vw, 22rem)", transform: "translateY(22%)" }}
+            style={{
+              fontSize: "clamp(5rem, 20vw, 22rem)",
+              transform: "translateY(22%)",
+            }}
           >
             KAD
           </h2>
         </div>
 
-        {/* ── Luxury CTA band ───────────────────────────────────── */}
         <div className="relative z-10 bg-[#222A35] rounded-tl-[2rem] rounded-tr-[2rem] md:rounded-tl-[3.5rem] md:rounded-tr-[3.5rem] overflow-hidden">
-          {/* Subtle grid texture */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
 
           <div className="relative z-10 max-w-6xl mx-auto px-8 md:px-14 lg:px-20">
-            {/* Main row */}
             <div className="pt-16 md:pt-20 pb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 border-b border-white/[0.06]">
-              {/* Editorial heading */}
               <div>
                 <motion.span
                   className="text-white/28 text-[10px] tracking-[0.48em] uppercase block mb-8"
@@ -399,15 +821,19 @@ export default function Portfolio() {
                     initial={{ y: "106%" }}
                     whileInView={{ y: "0%" }}
                     viewport={{ once: true }}
-                    transition={{ duration: 1.05, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{
+                      duration: 1.05,
+                      delay: 0.1,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
                   >
                     portfolio.
                   </motion.h3>
                 </div>
               </div>
 
-              {/* Circle arrow button */}
               <motion.button
+                onClick={() => setShowAll(true)}
                 className="group flex items-center gap-5 self-start lg:self-end mb-1 cursor-pointer"
                 initial={{ opacity: 0, x: 24 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -415,7 +841,7 @@ export default function Portfolio() {
                 transition={{ duration: 0.75, delay: 0.25 }}
                 whileHover="hover"
               >
-                <div className="relative w-16 h-16 rounded-full border border-white/18 flex items-center justify-center overflow-hidden group-hover:border-white/50 transition-colors duration-400">
+                <div className="relative w-16 h-16 rounded-full border border-white/18 flex items-center justify-center overflow-hidden group-hover:border-white/50 transition-colors duration-300">
                   <motion.div
                     className="absolute inset-0 bg-white rounded-full"
                     initial={{ scale: 0 }}
@@ -430,7 +856,6 @@ export default function Portfolio() {
               </motion.button>
             </div>
 
-            {/* Stats row */}
             <div className="py-8 md:py-10 grid grid-cols-3 gap-6">
               {[
                 { value: "100+", label: "Projects Completed" },
@@ -463,107 +888,115 @@ export default function Portfolio() {
   );
 }
 
-// ── Project card ──────────────────────────────────────────────────
+// ── Gallery card — for View All overlay ─────────────────────────────
 
-interface ProjectCardProps {
-  project: Project;
-  className?: string;
-  isCenter?: boolean;
-}
-
-function ProjectCard({
-  project,
-  className = "",
-  isCenter = false,
-}: ProjectCardProps) {
-  const [hovered, setHovered] = useState(false);
+function GalleryCard({ photo }: { photo: Project }) {
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <motion.figure
-      className={`relative overflow-hidden rounded-md cursor-pointer bg-[#111111] ${isCenter ? "h-full" : ""} ${className}`}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
+      className="relative overflow-hidden cursor-pointer bg-[#E0DFD7] aspect-[2/3]"
+      variants={{
+        hidden: { opacity: 0, y: 22 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+        },
+      }}
+      whileHover="hover"
     >
-      {/* Image */}
-      <motion.img
-        src={project.image}
-        alt={project.title}
-        className={`${isCenter ? "h-full" : "h-80"} w-full object-cover`}
-        animate={{ scale: hovered ? 1.08 : 1 }}
-        transition={{ duration: 0.65, ease: [0.25, 0.46, 0.45, 0.94] }}
+      {/* Shimmer */}
+      <motion.div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(90deg, #d8d7cf 0%, #e8e7df 50%, #d8d7cf 100%)",
+          backgroundSize: "200% 100%",
+        }}
+        animate={
+          loaded
+            ? { opacity: 0 }
+            : { backgroundPosition: ["200% 0%", "-200% 0%"] }
+        }
+        transition={
+          loaded
+            ? { duration: 0.35 }
+            : { duration: 1.4, repeat: Infinity, ease: "linear" }
+        }
       />
 
-      {/* Category chip — always visible */}
-      <div className="absolute top-3 left-3 z-10">
-        <span className="text-[9px] tracking-[0.2em] uppercase text-white/80 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-          {project.category}
+      {/* Image — scales on parent hover via variant propagation */}
+      <motion.img
+        src={photo.image}
+        alt={photo.title}
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        className={`absolute inset-0 w-full h-full object-cover ${loaded ? "opacity-100" : "opacity-0"}`}
+        variants={{
+          hover: {
+            scale: 1.07,
+            transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] },
+          },
+        }}
+      />
+
+      {/* Category chip — fades away on hover */}
+      <motion.div
+        className="absolute top-3 left-3 z-20"
+        variants={{
+          hover: { opacity: 0, transition: { duration: 0.18 } },
+        }}
+      >
+        <span className="text-[8px] tracking-[0.24em] uppercase text-white/78 bg-black/28 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/8">
+          {photo.category}
         </span>
+      </motion.div>
+
+      {/* Project number */}
+      <div className="absolute top-3 right-3 z-20 text-white/18 text-[9px] font-mono tabular-nums select-none">
+        {String(photo.id).padStart(2, "0")}
       </div>
 
-      {/* Project number — always visible, top-right */}
-      <div className="absolute top-3 right-3 z-10">
-        <span className="text-[10px] font-light text-white/30 tabular-nums">
-          {String(project.id).padStart(2, "0")}
-        </span>
-      </div>
-
-      {/* Hover overlay */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            className="absolute inset-0 flex flex-col justify-end p-4"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22 }}
-          >
-            <motion.div
-              className="flex items-end justify-between gap-2"
-              initial={{ y: 16, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 8, opacity: 0 }}
-              transition={{ duration: 0.22, delay: 0.04 }}
-            >
-              <div className="min-w-0">
-                <h3 className="text-white font-medium text-sm leading-snug truncate">
-                  {project.title}
-                </h3>
-                <div className="flex items-center gap-1 text-white/45 text-[11px] mt-0.5">
-                  <MapPin className="w-2.5 h-2.5 flex-shrink-0" />
-                  <span className="truncate">{project.location}</span>
-                  <span className="text-white/20 flex-shrink-0">·</span>
-                  <span className="flex-shrink-0">{project.year}</span>
-                </div>
-              </div>
-
-              {/* Arrow button */}
-              <motion.div
-                className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 flex items-center justify-center flex-shrink-0"
-                whileHover={{ backgroundColor: "rgba(255,255,255,0.2)" }}
-              >
-                <ArrowUpRight className="w-3.5 h-3.5 text-white" />
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Bottom edge shimmer on hover */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.div
-            className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#222A35]/60 to-transparent"
-            initial={{ scaleX: 0 }}
-            animate={{ scaleX: 1 }}
-            exit={{ scaleX: 0 }}
-            transition={{ duration: 0.4 }}
-          />
-        )}
-      </AnimatePresence>
+      {/* Hover reveal — gradient + text slides up */}
+      <motion.div
+        className="absolute inset-0 z-10"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(8,10,16,0.92) 0%, rgba(8,10,16,0.28) 42%, transparent 100%)",
+        }}
+        variants={{
+          hover: { opacity: 1, transition: { duration: 0.28 } },
+        }}
+        initial={{ opacity: 0 }}
+      >
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 p-4"
+          variants={{
+            hover: {
+              y: 0,
+              opacity: 1,
+              transition: {
+                duration: 0.42,
+                delay: 0.06,
+                ease: [0.22, 1, 0.36, 1],
+              },
+            },
+          }}
+          initial={{ y: 14, opacity: 0 }}
+        >
+          <h3 className="text-white text-sm font-light leading-snug tracking-tight">
+            {photo.title}
+          </h3>
+          <div className="flex items-center gap-1.5 text-white/35 text-[10px] mt-1.5">
+            <MapPin className="w-2.5 h-2.5 flex-shrink-0" />
+            <span>{photo.location}</span>
+            <span className="text-white/15 mx-0.5">·</span>
+            <span>{photo.year}</span>
+          </div>
+        </motion.div>
+      </motion.div>
     </motion.figure>
   );
 }
