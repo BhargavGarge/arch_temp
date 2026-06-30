@@ -87,7 +87,7 @@ export default function ParallaxGallery() {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           style={{ originX: 0 }}
-          transition={{ duration: 1.2, ease: "power2.inOut" }}
+          transition={{ duration: 1.2, ease: [0.37, 0, 0.63, 1] }}
         />
       </div>
 
