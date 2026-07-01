@@ -503,6 +503,7 @@ function ProjectModal({
       {/* ── Right: info panel ────────────────────── */}
       <motion.div
         className="relative flex-1 md:flex-[0_0_42%] bg-[#F4F3EC] flex flex-col overflow-y-auto overscroll-contain"
+        data-lenis-prevent
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0 }}

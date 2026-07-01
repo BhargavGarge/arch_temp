@@ -602,7 +602,7 @@ export default function Portfolio() {
               </div>
 
               {/* Category tabs — animated underline */}
-              <div className="flex overflow-x-auto no-scrollbar">
+              <div className="flex overflow-x-auto no-scrollbar" data-lenis-prevent style={{ touchAction: "pan-x" }}>
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat}
@@ -627,7 +627,7 @@ export default function Portfolio() {
             </motion.div>
 
             {/* ── Scrollable grid ──────────────────────────── */}
-            <div className="flex-1 overflow-y-auto bg-[#F5F4EE] overscroll-contain">
+            <div className="flex-1 overflow-y-auto bg-[#F5F4EE] overscroll-contain" data-lenis-prevent>
               <AnimatePresence mode="wait">
                 {isChangingCat ? (
                   <motion.div
