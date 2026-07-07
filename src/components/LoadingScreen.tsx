@@ -5,30 +5,22 @@ interface Props {
   onComplete: () => void;
 }
 
-const KHARE_LETTERS = ["K", "H", "A", "R", "E"];
-const KAD_LETTERS   = ["K", "A", "D"];
+const KAD_LETTERS = ["K", "A", "D"];
 
 export default function LoadingScreen({ onComplete }: Props) {
   const containerRef  = useRef<HTMLDivElement>(null);
-  const khareWrapRef  = useRef<HTMLDivElement>(null);
-  const kadWrapRef    = useRef<HTMLDivElement>(null);
-  const khareRefs     = useRef<(HTMLSpanElement | null)[]>([]);
   const kadRefs       = useRef<(HTMLSpanElement | null)[]>([]);
-  const sub1Ref       = useRef<HTMLParagraphElement>(null);
-  const sub2Ref       = useRef<HTMLParagraphElement>(null);
+  const subtitleRef   = useRef<HTMLParagraphElement>(null);
   const lineTopRef    = useRef<HTMLDivElement>(null);
   const lineBottomRef = useRef<HTMLDivElement>(null);
   const creditRef     = useRef<HTMLParagraphElement>(null);
   const progressRef   = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const khare = khareRefs.current.filter(Boolean) as HTMLSpanElement[];
-    const kad   = kadRefs.current.filter(Boolean) as HTMLSpanElement[];
+    const kad = kadRefs.current.filter(Boolean) as HTMLSpanElement[];
 
-    // initialise hidden states
-    gsap.set(kad,             { y: "110%" });
-    gsap.set(kadWrapRef.current,  { autoAlpha: 1 });   // wrapper always visible
-    gsap.set(sub2Ref.current, { autoAlpha: 0, letterSpacing: "0.8em" });
+    gsap.set(kad, { y: "110%" });
+    gsap.set(subtitleRef.current, { autoAlpha: 0, letterSpacing: "0.9em" });
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ delay: 0.15 });
@@ -46,60 +38,27 @@ export default function LoadingScreen({ onComplete }: Props) {
       tl.from(lineTopRef.current,
         { scaleX: 0, transformOrigin: "center", duration: 0.8, ease: "power3.out" }, 0.45);
 
-      /* ══ PHASE 1 — KHARE ═══════════════════════ */
-      tl.addLabel("p1", 0.7);
+      /* ── KAD clip-reveal ─────────────────────── */
+      tl.addLabel("p", 0.7);
 
-      // clip-reveal each KHARE letter from below
-      tl.from(khare,
-        { y: "110%", duration: 0.85, stagger: 0.07, ease: "power4.out" }, "p1");
-
-      // subtitle1 tracks in
-      tl.from(sub1Ref.current,
-        { autoAlpha: 0, letterSpacing: "0.9em", duration: 0.95, ease: "power3.out" }, "p1+=0.32");
-
-      // progress to 40 %
-      tl.to(progressRef.current,
-        { scaleX: 0.4, duration: 1.7, ease: "power1.inOut" }, "p1");
-
-      /* ── hold so user reads the name ─────────── */
-      tl.addLabel("p1End", 2.55);
-
-      /* ══ TRANSITION  ════════════════════════════ */
-      // fade + compress KHARE group out
-      tl.to(khareWrapRef.current,
-        { autoAlpha: 0, scaleY: 0.92, transformOrigin: "center bottom",
-          duration: 0.38, ease: "power2.in" }, "p1End");
-
-      // fade subtitle1 out simultaneously
-      tl.to(sub1Ref.current,
-        { autoAlpha: 0, y: -6, duration: 0.28, ease: "power2.in" }, "p1End");
-
-      // progress to 65 %
-      tl.to(progressRef.current,
-        { scaleX: 0.65, duration: 0.5, ease: "power1.inOut" }, "p1End");
-
-      /* ══ PHASE 2 — KAD ══════════════════════════ */
-      tl.addLabel("p2", "p1End+=0.32");
-
-      // clip-reveal KAD letters from below
       tl.to(kad,
-        { y: "0%", duration: 0.9, stagger: 0.1, ease: "power4.out" }, "p2");
+        { y: "0%", duration: 0.9, stagger: 0.1, ease: "power4.out" }, "p");
 
-      // subtitle2 tracks in
-      tl.to(sub2Ref.current,
-        { autoAlpha: 1, letterSpacing: "0.45em", duration: 1.0, ease: "power3.out" }, "p2+=0.38");
+      /* ── subtitle ────────────────────────────── */
+      tl.to(subtitleRef.current,
+        { autoAlpha: 1, letterSpacing: "0.45em", duration: 1.0, ease: "power3.out" }, "p+=0.4");
 
-      // bottom gold line
+      /* ── bottom gold line ────────────────────── */
       tl.from(lineBottomRef.current,
-        { scaleX: 0, transformOrigin: "center", duration: 0.8, ease: "power3.out" }, "p2+=0.52");
+        { scaleX: 0, transformOrigin: "center", duration: 0.8, ease: "power3.out" }, "p+=0.54");
 
-      // progress to 100 %
+      /* ── progress bar ────────────────────────── */
       tl.to(progressRef.current,
-        { scaleX: 1, duration: 1.1, ease: "power1.inOut" }, "p2+=0.38");
+        { scaleX: 1, duration: 1.6, ease: "power1.inOut" }, "p");
 
-      // credit
+      /* ── credit ──────────────────────────────── */
       tl.from(creditRef.current,
-        { autoAlpha: 0, y: 7, duration: 0.6, ease: "power2.out" }, "p2+=0.9");
+        { autoAlpha: 0, y: 7, duration: 0.6, ease: "power2.out" }, "p+=0.9");
 
       /* ── hold then exit ──────────────────────── */
       tl.to({}, { duration: 0.45 }).call(onComplete);
@@ -108,16 +67,15 @@ export default function LoadingScreen({ onComplete }: Props) {
     return () => ctx.revert();
   }, [onComplete]);
 
-  /* ─── font style shared between phases ─────────────────────────── */
-  const letterStyle = (size: string, spacing: string): React.CSSProperties => ({
+  const letterStyle: React.CSSProperties = {
     display: "inline-block",
     fontFamily: "'Cormorant Garamond', serif",
     fontWeight: 300,
-    fontSize: size,
+    fontSize: "clamp(4.2rem, 11vw, 8.5rem)",
     color: "#FFFFFF",
-    letterSpacing: spacing,
+    letterSpacing: "0.28em",
     lineHeight: 1,
-  });
+  };
 
   return (
     <div
@@ -155,8 +113,8 @@ export default function LoadingScreen({ onComplete }: Props) {
 
       {/* ── corner accents ─────────────────────────────────── */}
       {[
-        { cls: "top-6 left-6 border-t border-l",   id: "cTL" },
-        { cls: "top-6 right-6 border-t border-r",  id: "cTR" },
+        { cls: "top-6 left-6 border-t border-l",    id: "cTL" },
+        { cls: "top-6 right-6 border-t border-r",   id: "cTR" },
         { cls: "bottom-6 left-6 border-b border-l", id: "cBL" },
         { cls: "bottom-6 right-6 border-b border-r", id: "cBR" },
       ].map(({ cls, id }) => (
@@ -171,63 +129,22 @@ export default function LoadingScreen({ onComplete }: Props) {
         <div ref={lineTopRef} className="mb-10 md:mb-14 h-px w-24 md:w-36"
           style={{ background: "rgba(184,147,90,0.5)" }} />
 
-        {/* ══ letter stage ══════════════════════════════════ */}
-        {/*
-          Fixed-height container so both KHARE and KAD sit in the same
-          vertical slot. overflow-hidden on the inner wrapper clips the
-          y-translated letters (the clip-reveal trick).
-        */}
-        <div className="relative w-full flex items-end justify-center"
+        {/* KAD letters */}
+        <div className="flex items-end justify-center gap-0 overflow-hidden"
           style={{ height: "clamp(4.2rem, 11vw, 8.5rem)", marginBottom: "clamp(1rem, 2vw, 1.4rem)" }}>
-
-          {/* Phase 1 — KHARE */}
-          <div ref={khareWrapRef}
-            className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-0">
-            {KHARE_LETTERS.map((l, i) => (
-              <div key={`kh-${i}`} className="overflow-hidden">
-                <span ref={el => { khareRefs.current[i] = el; }}
-                  style={letterStyle("clamp(4.2rem, 11vw, 8.5rem)", "0.1em")}>
-                  {l}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Phase 2 — KAD */}
-          <div ref={kadWrapRef}
-            className="absolute inset-x-0 bottom-0 flex items-end justify-center gap-0">
-            {KAD_LETTERS.map((l, i) => (
-              <div key={`kd-${i}`} className="overflow-hidden">
-                <span ref={el => { kadRefs.current[i] = el; }}
-                  style={letterStyle("clamp(4.2rem, 11vw, 8.5rem)", "0.28em")}>
-                  {l}
-                </span>
-              </div>
-            ))}
-          </div>
+          {KAD_LETTERS.map((l, i) => (
+            <div key={i} className="overflow-hidden">
+              <span ref={el => { kadRefs.current[i] = el; }} style={letterStyle}>
+                {l}
+              </span>
+            </div>
+          ))}
         </div>
 
-        {/* ══ subtitle stage ════════════════════════════════ */}
-        {/* fixed height holds either subtitle without reflow */}
+        {/* subtitle */}
         <div className="relative w-full flex items-center justify-center"
           style={{ height: 20, marginBottom: "clamp(2rem, 4.5vw, 3.2rem)" }}>
-
-          {/* Phase 1 subtitle */}
-          <p ref={sub1Ref}
-            className="absolute text-center whitespace-nowrap"
-            style={{
-              fontFamily: "'Jost', sans-serif",
-              fontWeight: 200,
-              fontSize: "clamp(9px, 1.1vw, 12px)",
-              letterSpacing: "0.48em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.5)",
-            }}>
-            Khare Architecture &amp; Design Studio
-          </p>
-
-          {/* Phase 2 subtitle */}
-          <p ref={sub2Ref}
+          <p ref={subtitleRef}
             className="absolute text-center whitespace-nowrap"
             style={{
               fontFamily: "'Jost', sans-serif",
