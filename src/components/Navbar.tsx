@@ -68,11 +68,12 @@ export default function Navbar() {
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <span
-                      className="text-white font-light uppercase leading-none"
+                      className="text-white uppercase leading-none"
                       style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: "clamp(1.5rem, 2.8vw, 5rem)",
-                        letterSpacing: "0.28em",
+                        fontFamily: "'Inter', sans-serif",
+                        fontWeight: 500,
+                        fontSize: "clamp(1.2rem, 2.2vw, 3.5rem)",
+                        letterSpacing: "0.05em",
                       }}
                     >
                       KAD

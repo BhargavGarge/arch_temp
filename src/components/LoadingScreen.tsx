@@ -69,11 +69,11 @@ export default function LoadingScreen({ onComplete }: Props) {
 
   const letterStyle: React.CSSProperties = {
     display: "inline-block",
-    fontFamily: "'Cormorant Garamond', serif",
-    fontWeight: 300,
+    fontFamily: "'Inter', sans-serif",
+    fontWeight: 700,
     fontSize: "clamp(4.2rem, 11vw, 8.5rem)",
     color: "#FFFFFF",
-    letterSpacing: "0.28em",
+    letterSpacing: "0.05em",
     lineHeight: 1,
   };
 
@@ -153,7 +153,7 @@ export default function LoadingScreen({ onComplete }: Props) {
               textTransform: "uppercase",
               color: "rgba(255,255,255,0.5)",
             }}>
-            Architecture &amp; Design Studio
+            Infra Ventures
           </p>
         </div>
 
