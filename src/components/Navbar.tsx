@@ -5,8 +5,8 @@ import { Menu, X } from "lucide-react";
 const NAV_LINKS = [
   { label: "About", href: "#about-section" },
   { label: "Vision", href: "#vision-section" },
-  { label: "Services", href: "#services-detail" },
-  { label: "Portfolio", href: "#portfolio" },
+  { label: "Projects", href: "#our-projects" },
+  { label: "Services", href: "#services-timeline" },
   { label: "Contact", href: "#cta-section" },
 ];
 
@@ -68,18 +68,18 @@ export default function Navbar() {
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <span
-                      className="text-white uppercase leading-none"
+                      className="text-white uppercase leading-none text-4xl"
                       style={{
                         fontFamily: "'Inter', sans-serif",
                         fontWeight: 500,
-                        fontSize: "clamp(1.2rem, 2.2vw, 3.5rem)",
+                        // fontSize: "clamp(1.2rem, 2.2vw, 3.5rem)",
                         letterSpacing: "0.05em",
                       }}
                     >
                       KAD
                     </span>
                     <span
-                      className="text-white/40 uppercase font-light mt-[3px]"
+                      className="text-white/80 uppercase font-light mt-[3px]"
                       style={{
                         fontFamily: "'Jost', sans-serif",
                         fontSize: "clamp(7px, 0.85vw, 20px)",
@@ -102,18 +102,19 @@ export default function Navbar() {
                     <span
                       className="text-white font-light uppercase leading-none"
                       style={{
-                        fontFamily: "'Cormorant Garamond', serif",
-                        fontSize: "clamp(1.1rem, 2vw, 5rem)",
-                        letterSpacing: "0.2em",
+                                                fontFamily: "'Inter', sans-serif",
+
+                        fontSize: "clamp(2.1rem, 2vw, 5rem)",
+                        letterSpacing: "0em",
                       }}
                     >
                       KHARE
                     </span>
                     <span
-                      className="text-white/45 uppercase font-light mt-[3px] text-center"
+                      className="text-white/80 uppercase font-light mt-[3px] text-center"
                       style={{
                         fontFamily: "'Jost', sans-serif",
-                        fontSize: "clamp(6px, 0.75vw, 10px)",
+                        fontSize: "clamp(8px, 0.75vw, 10px)",
                         letterSpacing: "0.3em",
                         whiteSpace: "nowrap",
                       }}
@@ -129,7 +130,7 @@ export default function Navbar() {
           {/* Right — hamburger (mobile only) */}
           <button
             onClick={() => setMenuOpen(true)}
-            className="ml-auto z-10 md:hidden text-white p-1"
+            className="ml-auto z-10 text-white p-1"
             aria-label="Open menu"
           >
             <Menu className="w-5 h-5" />

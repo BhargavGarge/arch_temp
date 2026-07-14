@@ -116,10 +116,11 @@ export default function ServicesDetailSection() {
 
           <div ref={headingRef}>
             <div className="overflow-hidden leading-[0.85] pb-1">
-              <h2 className="text-[clamp(3.2rem,10vw,8rem)] font-extralight tracking-[-0.025em] text-[#222A35]">
-                {"Services".split("").map((c, i) => (
-                  <span key={i} className="svc-char inline-block">{c}</span>
-                ))}
+              <h2 
+               className="op-heading text-[#222A35] font-light tracking-tight leading-[1.03]"
+                style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)" }}
+              >
+                  Our Projects
               </h2>
             </div>
           </div>

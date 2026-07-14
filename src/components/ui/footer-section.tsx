@@ -8,15 +8,15 @@ import { COMPANY_NAME, COMPANY_ADDRESS } from "../../config/company";
 const NAV_COLUMNS = [
   {
     heading: "Explore",
-    links: ["Services", "Portfolio", "Videos", "Media"],
+    links: ["Services", "Portfolio"],
   },
   {
     heading: "Company",
-    links: ["About Us", "Careers", "Contact Us", "Privacy Policy"],
+    links: ["About Us", "Careers", "Contact Us",],
   },
   {
     heading: "Services",
-    links: ["Architecture", "Interiors", "Landscape", "Sustainability"],
+    links: ["Architecture", "Interiors", "Turnkey Project", "KAD Design Academy"],
   },
 ];
 
@@ -24,13 +24,13 @@ const BG_IMAGE =
   "https://images.adsttc.com/media/images/6037/0ec7/f91c/8122/3000/03d3/large_jpg/_FI_2_EXTERIOR_2.jpg?1614220985";
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  // const [email, setEmail] = useState("");
+  // const [subscribed, setSubscribed] = useState(false);
 
-  const handleSubscribe = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (email) setSubscribed(true);
-  };
+  // const handleSubscribe = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (email) setSubscribed(true);
+  // };
 
   return (
     <footer
@@ -107,14 +107,14 @@ export function Footer() {
               </div>
 
               {/* Newsletter */}
-              <p className="text-white/50 text-[10px] tracking-[0.3em] uppercase font-medium mb-1">
+              {/* <p className="text-white/50 text-[10px] tracking-[0.3em] uppercase font-medium mb-1">
                 Sign up for email updates
               </p>
               <p className="text-white/25 text-xs mb-4">
                 Stay current with our latest projects and insights.
-              </p>
+              </p> */}
 
-              {subscribed ? (
+              {/* {subscribed ? (
                 <motion.p
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -143,7 +143,7 @@ export function Footer() {
                     Subscribe <Send className="w-3 h-3" />
                   </button>
                 </form>
-              )}
+              )} */}
             </AnimatedContainer>
 
             {/* Nav columns */}

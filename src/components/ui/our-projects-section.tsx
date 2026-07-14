@@ -153,7 +153,7 @@ export default function OurProjectsSection() {
       <section
         ref={sectionRef}
         id="our-projects"
-        className="bg-[#F4F3EC] py-16 sm:py-20 md:py-32 overflow-hidden"
+        className="bg-[#ffffff] py-16 sm:py-20 md:py-32 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20">
           {/* ── Header ──────────────────────────────── */}
@@ -168,7 +168,7 @@ export default function OurProjectsSection() {
               >
                 Our Projects
               </h2>
-              <p className="text-[#222A35]/45 text-sm leading-relaxed max-w-xs md:text-right">
+              <p className="text-[#222A35]/60 text-sm leading-relaxed max-w-xs md:text-right">
                 Each space crafted with intention —<br />
                 timeless in form, personal in soul.
               </p>
@@ -225,7 +225,7 @@ export default function OurProjectsSection() {
                 />
                 <ArrowUpRight className="relative z-10 w-5 h-5 text-[#222A35] group-hover:text-white transition-colors duration-200" />
               </div>
-              <span className="text-[#222A35]/55 text-[11px] font-light tracking-[0.22em] uppercase group-hover:text-[#222A35] transition-colors duration-300">
+              <span className="text-[#222A35]/90 text-[11px] font-light tracking-[0.22em] uppercase group-hover:text-[#222A35] transition-colors duration-300">
                 View All Projects
               </span>
             </motion.button>
@@ -269,7 +269,7 @@ function ProjectCard({
 
   return (
     <motion.figure
-      className={`group relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer bg-[#1a1a1a] ${className}`}
+      className={`group relative overflow-hidden rounded-none cursor-pointer bg-[#1a1a1a] ${className}`}
       onClick={onClick}
       whileHover="hover"
     >

@@ -117,7 +117,7 @@ export default function LoadingScreen({ onComplete }: Props) {
     fontFamily: "'Inter', sans-serif",
     fontWeight: 700,
     fontSize: "clamp(4.2rem, 11vw, 8.5rem)",
-    color: "#222A35",
+    color: "#17202c",
     letterSpacing: "0.05em",
     lineHeight: 1,
   };
@@ -133,7 +133,7 @@ export default function LoadingScreen({ onComplete }: Props) {
         <div
           key={`h${p}`}
           className="absolute left-0 right-0 h-px"
-          style={{ top: `${p}%`, background: "rgba(255,255,255,0.035)" }}
+          style={{ top: `${p}%`, background: "rgba(141, 141, 141, 0.1)" }}
         />
       ))}
       {[15, 35, 65, 85].map((p) => (
@@ -230,7 +230,7 @@ export default function LoadingScreen({ onComplete }: Props) {
             style={{
               fontFamily: "'Jost', sans-serif",
               fontWeight: 200,
-              fontSize: "clamp(9px, 1.1vw, 12px)",
+              fontSize: "clamp(20px, 1.1vw, 12px)",
               textTransform: "uppercase",
               color: "#222A35",
             }}

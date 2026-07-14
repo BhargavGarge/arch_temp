@@ -1,3 +1,5 @@
+
+
 import {
   useScroll,
   useTransform,
@@ -24,11 +26,41 @@ export const Timeline = ({
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (ref.current) {
-      const rect = ref.current.getBoundingClientRect();
-      setHeight(rect.height);
-    }
-  }, [ref]);
+    const el = ref.current;
+    if (!el) return;
+
+    const updateHeight = () => {
+      setHeight(el.getBoundingClientRect().height);
+    };
+
+    // Initial measure
+    updateHeight();
+
+    // Recompute whenever the content resizes (e.g. images finishing loading,
+    // larger images, responsive reflow) so the beam matches real height.
+    const resizeObserver = new ResizeObserver(updateHeight);
+    resizeObserver.observe(el);
+
+    // Also catch late-loading images that change layout height.
+    const images = Array.from(el.querySelectorAll("img"));
+    images.forEach((img) => {
+      if (!img.complete) {
+        img.addEventListener("load", updateHeight);
+        img.addEventListener("error", updateHeight);
+      }
+    });
+
+    window.addEventListener("resize", updateHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      images.forEach((img) => {
+        img.removeEventListener("load", updateHeight);
+        img.removeEventListener("error", updateHeight);
+      });
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, [data]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -43,16 +75,24 @@ export const Timeline = ({
       className="w-full bg-white text-[#222A35] font-jost md:px-10"
       ref={containerRef}
     >
-      <div className="max-w-7xl mx-auto pt-20 pb-10 px-4 md:px-8 lg:px-10">
+     <div className="max-w-7xl mx-auto pt-20 pb-10 px-4 md:px-8 lg:px-10">
         <span className="block text-[10px] tracking-[0.48em] uppercase text-[#222A35]/45 mb-8">
           Unified Capabilities
         </span>
-        <h2 className="text-[clamp(2rem,6vw,4rem)] font-extralight tracking-[-0.02em] mb-5 text-[#222A35] max-w-4xl leading-[1.05]">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 sm:gap-6">
+
+        <h2
+         className="op-heading text-[#222A35] font-light tracking-tight leading-[1.03] mb-4"
+                style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)" }}
+                >
           {heading}
         </h2>
-        <p className="text-[#222A35]/45 text-sm md:text-base font-light leading-[1.85] max-w-md">
+        <p className="text-[#222A35]/60 text-sm md:text-base font-light leading-[1.85] max-w-md">
           {intro}
         </p>
+        </div>
+            <div className="mt-8 md:mt-10 h-px bg-[#222A35]/10 w-full" />
+
       </div>
 
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">
@@ -89,7 +129,7 @@ export const Timeline = ({
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-[#222A35] via-[#8a7a5c] to-transparent from-[0%] via-[10%] rounded-full"
+            className="absolute inset-x-0 top-0 w-[2px] bg-gradient-to-t from-[#222A35] via-blue-800 to-transparent from-[0%] via-[10%] rounded-full"
           />
         </div>
       </div>

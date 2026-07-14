@@ -21,16 +21,16 @@ export function ServicesTimelineSection() {
       title: "01",
       content: (
         <div>
-          <h4 className="text-[#222A35] text-lg md:text-2xl font-extralight tracking-[-0.01em] mb-3">
+          <h4 className="text-[#222A35] text-3xl  font-medium tracking-[-0.01em] mb-3">
             Architecture & Master Planning
           </h4>
-          <p className="text-[#222A35]/50 text-xs md:text-sm font-light leading-[1.85] mb-8 max-w-xl">
+          <p className="text-[#222A35]/80 text-md  font-medium leading-[1.85] mb-8 max-w-xl">
             We sculpt volumetric, fluid architecture — optimizing microclimates,
             capturing cross-ventilation, and following the natural path of
             daylight, from luxury villas to multi-acre master plans.
           </p>
           <div className="grid grid-cols-1 ">
-            <ServiceImage src="/assets/arch.webp" alt="Architectural study" />
+            <ServiceImage src="/assets/arch2.webp" alt="Architectural study" />
           </div>
         </div>
       ),
@@ -39,16 +39,16 @@ export function ServicesTimelineSection() {
       title: "02",
       content: (
         <div>
-          <h4 className="text-[#222A35] text-lg md:text-2xl font-extralight tracking-[-0.01em] mb-3">
+          <h4 className="text-[#222A35] text-3xl font-medium tracking-[-0.01em] mb-3">
             Bespoke Interior Design
           </h4>
-          <p className="text-[#222A35]/50 text-xs md:text-sm font-light leading-[1.85] mb-8 max-w-xl">
+          <p className="text-[#222A35]/80 text-md  font-medium leading-[1.85] mb-8 max-w-xl">
             Interiors tuned to human psychology — prioritizing spatial dignity,
             tactile comfort, and sensory ergonomics through layered lighting and
             precise material choices.
           </p>
           <div className="grid grid-cols-1">
-            <ServiceImage src="/assets/IMG_4033.webp" alt="Interior detail" />
+            <ServiceImage src="/assets/RESIDENCE.webp" alt="Interior detail" />
           </div>
         </div>
       ),
@@ -57,10 +57,10 @@ export function ServicesTimelineSection() {
       title: "03",
       content: (
         <div>
-          <h4 className="text-[#222A35] text-lg md:text-2xl font-extralight tracking-[-0.01em] mb-3">
+          <h4 className="text-[#222A35] text-3xl font-medium tracking-[-0.01em] mb-3">
             Turnkey Project Management
           </h4>
-          <p className="text-[#222A35]/50 text-xs md:text-sm font-light leading-[1.85] mb-4 max-w-xl">
+          <p className="text-[#222A35]/80 text-md  font-medium leading-[1.85] mb-4 max-w-xl">
             Single-source accountability across the entire pipeline — insulating
             clients from subcontractor conflict and guaranteeing budget and
             schedule compliance.
@@ -74,7 +74,7 @@ export function ServicesTimelineSection() {
             ].map((item) => (
               <div
                 key={item}
-                className="flex gap-2 items-center text-[#222A35]/55 text-xs md:text-sm font-light py-1"
+                className="flex gap-2 items-center text-[#222A35]/55 text-md  font-medium py-1"
               >
                 <span className="w-[3px] h-[3px] rounded-full bg-[#8a7a5c] flex-shrink-0" />
                 {item}
@@ -83,7 +83,7 @@ export function ServicesTimelineSection() {
           </div>
           <div className="grid grid-cols-1">
             <ServiceImage
-              src="/assets/PAB_0662.webp"
+              src="/assets/TWILIGHT VILLA.webp"
               alt="Construction detailing"
             />
           </div>
@@ -94,10 +94,10 @@ export function ServicesTimelineSection() {
       title: "04",
       content: (
         <div>
-          <h4 className="text-[#222A35] text-lg md:text-2xl font-extralight tracking-[-0.01em] mb-3">
+          <h4 className="text-[#222A35] text-3xl font-medium tracking-[-0.01em] mb-3">
             KAD Design Academy
           </h4>
-          <p className="text-[#222A35]/50 text-xs md:text-sm font-light leading-[1.85] mb-8 max-w-xl">
+          <p className="text-[#222A35]/80 text-md md:text-sm font-medium leading-[1.85] mb-8 max-w-xl">
             Our professional training incubator — a 12-month advanced course
             that bridges academic theory and real-world execution, taught by our
             own practicing architects on live studio briefs.

@@ -388,7 +388,7 @@ function LuxuryStatCounter({
           )}
         </div>
 
-        <p className="text-[#222A35]/32 text-[10px] tracking-[0.28em] uppercase leading-relaxed whitespace-pre-line">
+        <p className="text-[#222A35]/80 text-[10px] tracking-[0.28em] uppercase leading-relaxed whitespace-pre-line">
           {label}
         </p>
 

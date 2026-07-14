@@ -158,10 +158,10 @@ export default function VisionSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className={`px-5 py-2.5 text-[10px] tracking-[0.3em] uppercase rounded-full border transition-all duration-300 cursor-pointer ${
+                className={`px-5 py-2.5 text-[10px] tracking-[0.3em] uppercase rounded-none  transition-all duration-300 cursor-pointer ${
                   activeTab === i
-                    ? "bg-[#222A35] text-white border-[#222A35]"
-                    : "bg-transparent text-[#ffffff]/45 border-[#222A35]/20 hover:border-[#ffffff]/50 hover:text-[#ffffff]"
+                    ? "bg-[#222A35] text-white border-b-[#ffffff]/50  hover:border-[#ffffff]/50"
+                    : "bg-transparent text-[#ffffff]/45 border-b-[#fffff] border hover:border-[#ffffff]/50 hover:text-[#ffffff]"
                 }`}
               >
                 {v.label}

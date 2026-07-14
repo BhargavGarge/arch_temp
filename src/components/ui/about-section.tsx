@@ -149,7 +149,7 @@ export default function AboutSection() {
             >
               <div className="w-8 h-px bg-[#222A35]/20" />
               <span
-                className="text-[#222A35]/30 uppercase font-light"
+                className="text-[#222A35] uppercase font-semibold"
                 style={{
                   fontFamily: "'Jost', sans-serif",
                   fontSize: "clamp(8px, 0.9vw, 10px)",
@@ -164,7 +164,7 @@ export default function AboutSection() {
           {/* Right — body */}
           <div className="flex flex-col justify-center gap-7">
             <motion.p
-              className="text-[#222A35]/55 text-[0.925rem] leading-[1.9] font-light"
+              className="text-[#222A35]/80 text-[0.925rem] leading-[1.9] font-light"
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -179,7 +179,7 @@ export default function AboutSection() {
 
             {/* pull quote */}
             <motion.blockquote
-              className="border-l border-[#222A35]/20 pl-5 sm:pl-6"
+              className="border-l border-[#222A35]/80 pl-5 sm:pl-6"
               initial={{ opacity: 0, x: -12 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

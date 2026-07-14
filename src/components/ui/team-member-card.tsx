@@ -80,7 +80,7 @@ export default function TeamMemberCard({
           <img
             src={imageUrl}
             alt={fullName}
-            className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-105"
+            className="object-cover transition-transform duration-500 hover:scale-105 aspect-[3/2] md:aspect-auto"
           />
         </motion.div>
 

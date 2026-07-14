@@ -97,14 +97,15 @@ export default function HeroSection() {
         style={{ opacity: contentOpacity, y: contentY }}
       >
         {/* Main content — pushed to bottom */}
-        <div className="flex-1 flex flex-col justify-end pb-10 md:pb-14 lg:pb-16">
+        <div className="flex-1 flex flex-col justify-end pb-24 md:pb-14 lg:pb-16">
           {/* Headline */}
           <div className="mb-7 md:mb-10">
             {HEADLINE.map((line, i) => (
               <div key={i} className="overflow-hidden">
                 <motion.h1
-                  className="text-[2.6rem] md:text-6xl lg:text-7xl xl:text-[5.5rem] font-light text-white leading-[1.05]"
-                  style={{ letterSpacing: "-0.03em" }}
+                className="md:text-8xl text-4xl font-light  "
+                  // className="text-[2.6rem] md:text-6xl lg:text-7xl xl:text-[5.5rem] font-light text-white tracking-[-0.02em] md:tracking-[-0.03em] leading-[1.05] md:leading-[1.02]"
+                  style={{ letterSpacing: "-0.03em" , lineHeight: "1.2"}}
                   initial={{ y: "102%", opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 1.0, delay: 1.2 + i * 0.13, ease }}
@@ -126,7 +127,7 @@ export default function HeroSection() {
 
           {/* Bottom row */}
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-7 md:gap-12">
-            <motion.div
+            {/* <motion.div
               className="max-w-sm lg:max-w-md"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -142,7 +143,7 @@ export default function HeroSection() {
               >
                 kad@studio.com
               </a>
-            </motion.div>
+            </motion.div> */}
 
             <motion.div
               className="flex flex-wrap items-center gap-x-3 gap-y-1"
