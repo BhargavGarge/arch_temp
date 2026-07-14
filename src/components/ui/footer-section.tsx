@@ -1,8 +1,6 @@
-import { useState } from "react";
 import type { ComponentProps, ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Building2, MapPin, ArrowUpRight, Send } from "lucide-react";
-import type { FormEvent } from "react";
+import { Building2, MapPin, ArrowUpRight } from "lucide-react";
 import { COMPANY_NAME, COMPANY_ADDRESS } from "../../config/company";
 
 const NAV_COLUMNS = [
