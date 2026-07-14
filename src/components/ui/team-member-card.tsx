@@ -1,4 +1,3 @@
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
 import img from "../../../public/img1.png";
@@ -99,39 +98,21 @@ export default function TeamMemberCard({
           )}
         >
           {/* Display name */}
-          <div>
-            <p className="text-3xl md:text-5xl leading-[1.1] font-extralight tracking-tight text-[#222A35]">
-              {firstName}
+          <div className={cn("flex flex-col gap-1 md:items-center")}>
+            <p className="text-3xl md:text-5xl leading-[1.1] font-extralight tracking-tight text-[#222A35] ">
+              {firstName} {lastName}
               <br />
-              <span className="font-normal">{lastName}</span>
             </p>
           </div>
 
-          {/* Arrow button + bio */}
           <div
             className={cn("flex gap-6 md:gap-8", isRight && "md:justify-end")}
           >
-            <motion.div
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className={cn(
-                "group flex h-14 w-14 md:h-20 md:w-20 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#222A35]/30 transition-colors duration-300 hover:border-[#222A35] hover:bg-[#222A35]",
-              )}
-            >
-              <ArrowRight
-                size={18}
-                className={cn(
-                  "text-[#222A35] transition-all duration-300 group-hover:-rotate-45 group-hover:text-white",
-                  isRight && "rotate-180 group-hover:rotate-[225deg]",
-                )}
-              />
-            </motion.div>
-
             {/* Bio */}
-            <div className="flex-1 md:flex-none md:w-[40%]">
+            <div className="flex-1 md:flex-none md:w-[80%] md:ml-auto">
               <p
                 className={cn(
-                  "text-sm leading-[1.8] text-[#222A35]/60",
+                  "text-lg leading-[2] text-[#222A35]/60",
                   isRight && "md:text-right",
                 )}
               >

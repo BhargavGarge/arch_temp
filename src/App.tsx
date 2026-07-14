@@ -8,8 +8,10 @@ import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import VisionSection from "./components/ui/vision-section";
 
-import ServicesDetailSection from "./components/ui/services-detail-section";
+import { ServicesTimelineSection } from "./components/ui/services-timeline-section";
 import Portfolio from "./components/ui/portfolio";
+import AboutSection from "./components/ui/about-section";
+import FounderSection from "./components/ui/founder-section";
 import OurProjectsSection from "./components/ui/our-projects-section";
 import { Testimonial } from "./components/ui/design-testimonial";
 import CTACallback from "./components/ui/cta-callback";
@@ -68,12 +70,16 @@ function App() {
         <>
           <Navbar />
           <HeroSection />
-          <div id="explore-sections">
-            <VisionSection />
+          <AboutSection />
 
-            <ServicesDetailSection />
+          <VisionSection />
+          <FounderSection />
+          <OurProjectsSection />
+          <div id="explore-sections">
+            {/* <ServicesDetailSection /> */}
+            <ServicesTimelineSection />
             <Portfolio />
-            <OurProjectsSection />
+
             <Testimonial />
             <CTACallback />
             <Footer />

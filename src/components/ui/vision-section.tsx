@@ -91,13 +91,13 @@ export default function VisionSection() {
     <section
       id="vision-section"
       ref={sectionRef}
-      className="w-full bg-white text-[#222A35] overflow-hidden"
+      className="w-full bg-[#222A35] text-[#ffffff] overflow-hidden"
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-12">
         {/* Manifesto */}
         <div className="pt-14 sm:pt-20 md:pt-28 pb-12 sm:pb-16 md:pb-20 border-b border-[#222A35]/[0.07]">
           <motion.span
-            className="block text-[10px] tracking-[0.48em] uppercase text-[#222A35]/45 mb-8 sm:mb-10 md:mb-14"
+            className="block text-[35px]  uppercase text-[#ffffff]/45 mb-8 sm:mb-10 md:mb-14 "
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -108,7 +108,7 @@ export default function VisionSection() {
 
           <p
             ref={quoteRef}
-            className="text-[clamp(1.3rem,2.7vw,2.05rem)] font-extralight leading-[1.85] text-[#222A35] max-w-[860px]"
+            className="text-[clamp(1.3rem,2.7vw,2.05rem)] font-extralight leading-[1.85] text-[#ffffff] max-w-[860px]"
           >
             {splitToWords(VISION_STATEMENT)}
           </p>
@@ -120,8 +120,8 @@ export default function VisionSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.65, delay: 0.5 }}
           >
-            <div className="w-10 h-px bg-[#222A35]" />
-            <span className="text-[10px] tracking-[0.35em] uppercase text-[#222A35]/35">
+            <div className="w-10 h-px bg-[#ffffff]" />
+            <span className="text-[10px] tracking-[0.35em] uppercase text-[#ffffff]/35">
               KAD Studio &amp; Infra Ventures
             </span>
           </motion.div>
@@ -136,11 +136,11 @@ export default function VisionSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-[10px] tracking-[0.45em] uppercase text-[#222A35]/45 shrink-0">
+            <span className="text-[10px] tracking-[0.45em] uppercase text-[#ffffff]/45 shrink-0">
               Segmented Visions
             </span>
             <motion.div
-              className="flex-1 h-px bg-[#222A35]/[0.1]"
+              className="flex-1 h-px bg-[#ffffff]/[0.1]"
               initial={{ scaleX: 0, originX: "0%" }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
@@ -161,7 +161,7 @@ export default function VisionSection() {
                 className={`px-5 py-2.5 text-[10px] tracking-[0.3em] uppercase rounded-full border transition-all duration-300 cursor-pointer ${
                   activeTab === i
                     ? "bg-[#222A35] text-white border-[#222A35]"
-                    : "bg-transparent text-[#222A35]/45 border-[#222A35]/20 hover:border-[#222A35]/50 hover:text-[#222A35]"
+                    : "bg-transparent text-[#ffffff]/45 border-[#222A35]/20 hover:border-[#ffffff]/50 hover:text-[#ffffff]"
                 }`}
               >
                 {v.label}
@@ -181,10 +181,10 @@ export default function VisionSection() {
             >
               {/* Left: tag + subtitle + dots */}
               <div>
-                <span className="text-[10px] tracking-[0.35em] uppercase text-[#222A35]/35 block mb-5">
+                <span className="text-[10px] tracking-[0.35em] uppercase text-[#ffffff]/35 block mb-5">
                   {SCALE_VISIONS[activeTab].tag}
                 </span>
-                <h3 className="text-[clamp(1.8rem,4vw,2.85rem)] font-extralight leading-[1.12] text-[#222A35] tracking-[-0.02em]">
+                <h3 className="text-[clamp(1.8rem,4vw,2.85rem)] font-extralight leading-[1.12] text-[#ffffff] tracking-[-0.02em]">
                   {SCALE_VISIONS[activeTab].subtitle}
                 </h3>
                 <div className="flex gap-2 mt-9">
@@ -194,7 +194,7 @@ export default function VisionSection() {
                       onClick={() => setActiveTab(i)}
                       className={`rounded-full transition-all duration-300 cursor-pointer ${
                         i === activeTab
-                          ? "w-6 h-1.5 bg-[#222A35]"
+                          ? "w-6 h-1.5 bg-[#ffffff]"
                           : "w-1.5 h-1.5 bg-[#222A35]/22 hover:bg-[#222A35]/45"
                       }`}
                     />
@@ -204,7 +204,7 @@ export default function VisionSection() {
 
               {/* Right: body */}
               <div className="flex items-start pt-1 lg:pt-2">
-                <p className="text-[#222A35]/55 leading-[1.95] text-[0.975rem] font-light">
+                <p className="text-[#ffffff]/55 leading-[1.95] text-[0.975rem] font-light">
                   {SCALE_VISIONS[activeTab].body}
                 </p>
               </div>

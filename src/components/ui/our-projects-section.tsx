@@ -1,6 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, MapPin, ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
+import {
+  X,
+  MapPin,
+  ArrowLeft,
+  ArrowRight,
+  ChevronRight,
+  ArrowUpRight,
+} from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { COMPANY_NAME } from "../../config/company";
@@ -194,6 +201,34 @@ export default function OurProjectsSection() {
                 onClick={() => openProject(FEATURED_PROJECTS[2])}
               />
             </div>
+          </div>
+
+          {/* ── View all → opens the complete portfolio ──────── */}
+          <div className="mt-12 sm:mt-16 md:mt-20 flex justify-center">
+            <motion.button
+              onClick={() =>
+                window.dispatchEvent(new CustomEvent("kad:open-portfolio"))
+              }
+              className="group flex items-center gap-5 cursor-pointer"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              whileHover="hover"
+            >
+              <div className="relative w-16 h-16 rounded-full border border-[#222A35]/20 flex items-center justify-center overflow-hidden group-hover:border-[#222A35]/50 transition-colors duration-300">
+                <motion.div
+                  className="absolute inset-0 bg-[#222A35] rounded-full"
+                  initial={{ scale: 0 }}
+                  variants={{ hover: { scale: 1 } }}
+                  transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+                />
+                <ArrowUpRight className="relative z-10 w-5 h-5 text-[#222A35] group-hover:text-white transition-colors duration-200" />
+              </div>
+              <span className="text-[#222A35]/55 text-[11px] font-light tracking-[0.22em] uppercase group-hover:text-[#222A35] transition-colors duration-300">
+                View All Projects
+              </span>
+            </motion.button>
           </div>
         </div>
       </section>

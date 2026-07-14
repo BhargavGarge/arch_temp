@@ -8,7 +8,7 @@ import {
 import { useLenis } from "lenis/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, MapPin, X } from "lucide-react";
+import { MapPin, X } from "lucide-react";
 import { COMPANY_NAME } from "../../config/company";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -394,10 +394,26 @@ export default function Portfolio() {
     offset: ["start end", "end start"],
   });
 
-  const py1 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 0.8 : 2)]);
-  const py2 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 1.1 : 3.3)]);
-  const py3 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 0.5 : 1.25)]);
-  const py4 = useTransform(introProgress, [0, 1], [0, winH * (isMobile ? 1.0 : 3)]);
+  const py1 = useTransform(
+    introProgress,
+    [0, 1],
+    [0, winH * (isMobile ? 0.8 : 2)],
+  );
+  const py2 = useTransform(
+    introProgress,
+    [0, 1],
+    [0, winH * (isMobile ? 1.1 : 3.3)],
+  );
+  const py3 = useTransform(
+    introProgress,
+    [0, 1],
+    [0, winH * (isMobile ? 0.5 : 1.25)],
+  );
+  const py4 = useTransform(
+    introProgress,
+    [0, 1],
+    [0, winH * (isMobile ? 1.0 : 3)],
+  );
 
   const CATEGORIES = [
     "All",
@@ -421,6 +437,14 @@ export default function Portfolio() {
   useLenis(() => {
     ScrollTrigger.update();
   });
+
+  // Open the complete-portfolio overlay when triggered elsewhere
+  // (e.g. the "View All Projects" button under Our Projects)
+  useEffect(() => {
+    const open = () => setShowAll(true);
+    window.addEventListener("kad:open-portfolio", open);
+    return () => window.removeEventListener("kad:open-portfolio", open);
+  }, []);
 
   // Show skeleton when category changes — hide only after first images actually load
   useEffect(() => {
@@ -523,21 +547,6 @@ export default function Portfolio() {
           },
         },
       );
-
-      gsap.fromTo(
-        ".port-footer-text",
-        { opacity: 0.04 },
-        {
-          opacity: 0.36,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".port-footer-text",
-            start: "top 95%",
-            end: "bottom 25%",
-            scrub: 1,
-          },
-        },
-      );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -550,7 +559,7 @@ export default function Portfolio() {
         {showAll && (
           <motion.div
             key="gallery"
-            className="fixed inset-0 z-[9998] flex flex-col"
+            className="fixed inset-0 z-[9998] flex flex-col font-jost"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -567,19 +576,21 @@ export default function Portfolio() {
             >
               {/* Meta bar */}
               <div className="flex items-center justify-between px-6 md:px-10 pt-5 pb-4 border-b border-white/[0.05]">
-                <div className="flex items-center gap-3">
-                  <span className="text-white/20 text-[9px] tracking-[0.52em] uppercase font-light">
-                    {COMPANY_NAME}
-                  </span>
-                  <span className="w-px h-3 bg-white/10" />
-                  <span className="text-white/50 text-[9px] tracking-[0.4em] uppercase font-light">
+                <div className="flex items-center gap-3.5">
+                  <img
+                    src="/logo.png"
+                    alt={COMPANY_NAME}
+                    className="h-6 md:h-7 w-auto object-contain brightness-0 invert opacity-80"
+                  />
+                  <span className="w-px h-3.5 bg-white/10" />
+                  <span className="text-white/50 text-[10px] tracking-[0.4em] uppercase font-light">
                     Complete Portfolio
                   </span>
                 </div>
                 <div className="flex items-center gap-5">
                   <motion.span
                     key={filteredPhotos.length}
-                    className="text-white/18 text-[9px] font-mono tracking-[0.28em] hidden sm:block"
+                    className="text-white/18 text-[10px] font-mono tracking-[0.28em] hidden sm:block"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.4 }}
@@ -602,12 +613,16 @@ export default function Portfolio() {
               </div>
 
               {/* Category tabs — animated underline */}
-              <div className="flex overflow-x-auto no-scrollbar" data-lenis-prevent style={{ touchAction: "pan-x" }}>
+              <div
+                className="flex overflow-x-auto no-scrollbar"
+                data-lenis-prevent
+                style={{ touchAction: "pan-x" }}
+              >
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`relative px-5 md:px-7 py-3.5 text-[9px] tracking-[0.34em] uppercase shrink-0 transition-colors duration-200 ${
+                    className={`relative px-5 md:px-7 py-3.5 text-[10px] tracking-[0.34em] uppercase font-light shrink-0 transition-colors duration-200 ${
                       activeCategory === cat
                         ? "text-white"
                         : "text-white/22 hover:text-white/50"
@@ -618,7 +633,10 @@ export default function Portfolio() {
                       <motion.div
                         className="absolute bottom-0 left-0 right-0 h-px bg-white/60"
                         layoutId="portfolio-tab-indicator"
-                        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{
+                          duration: 0.32,
+                          ease: [0.22, 1, 0.36, 1],
+                        }}
                       />
                     )}
                   </button>
@@ -627,7 +645,10 @@ export default function Portfolio() {
             </motion.div>
 
             {/* ── Scrollable grid ──────────────────────────── */}
-            <div className="flex-1 overflow-y-auto bg-[#F5F4EE] overscroll-contain" data-lenis-prevent>
+            <div
+              className="flex-1 overflow-y-auto bg-[#F5F4EE] overscroll-contain"
+              data-lenis-prevent
+            >
               <AnimatePresence mode="wait">
                 {isChangingCat ? (
                   <motion.div
@@ -658,7 +679,10 @@ export default function Portfolio() {
                     className="grid grid-cols-2 md:grid-cols-3 gap-[2px] p-[2px]"
                     variants={{
                       visible: {
-                        transition: { staggerChildren: 0.042, delayChildren: 0.06 },
+                        transition: {
+                          staggerChildren: 0.042,
+                          delayChildren: 0.06,
+                        },
                       },
                     }}
                     initial="hidden"
@@ -680,9 +704,13 @@ export default function Portfolio() {
                   <motion.div
                     className="w-px h-8 bg-[#222A35]/12 origin-top"
                     animate={{ scaleY: [0.25, 1, 0.25] }}
-                    transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 1.6,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
-                  <span className="text-[#222A35]/20 text-[9px] tracking-[0.42em] uppercase">
+                  <span className="text-[#222A35]/20 text-[10px] tracking-[0.42em] uppercase font-light">
                     Loading more
                   </span>
                   <button
@@ -691,13 +719,13 @@ export default function Portfolio() {
                         Math.min(c + 10, filteredPhotos.length),
                       )
                     }
-                    className="text-[#222A35]/35 text-[9px] tracking-[0.3em] uppercase border border-[#222A35]/10 px-6 py-2.5 rounded-full hover:border-[#222A35]/28 hover:text-[#222A35]/65 transition-all mt-1"
+                    className="text-[#222A35]/35 text-[10px] tracking-[0.3em] uppercase font-light border border-[#222A35]/10 px-6 py-2.5 rounded-full hover:border-[#222A35]/28 hover:text-[#222A35]/65 transition-all mt-1"
                   >
                     Show more ({filteredPhotos.length - visibleCount} remaining)
                   </button>
                 </div>
               ) : (
-                <p className="text-center text-[#222A35]/15 text-[9px] tracking-[0.48em] uppercase py-14">
+                <p className="text-center text-[#222A35]/15 text-[10px] tracking-[0.48em] uppercase font-light py-14">
                   All {filteredPhotos.length} works · {COMPANY_NAME}
                 </p>
               )}
@@ -723,7 +751,9 @@ export default function Portfolio() {
                 className={`relative flex h-full flex-col gap-[1.5vw] ${hiddenOnMobile ? "hidden md:flex w-1/4" : "w-1/2 md:w-1/4"}`}
                 style={{
                   y: yVals[colIdx],
-                  top: isMobile ? INTRO_COL_OFFSETS_MOBILE[colIdx] : INTRO_COL_OFFSETS[colIdx],
+                  top: isMobile
+                    ? INTRO_COL_OFFSETS_MOBILE[colIdx]
+                    : INTRO_COL_OFFSETS[colIdx],
                   willChange: "transform",
                 }}
               >
@@ -772,118 +802,6 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* ── Footer ────────────────────────────────────────── */}
-      <footer className="bg-[#ffffff] overflow-hidden pb-0">
-        <div className="relative overflow-hidden">
-          <h2
-            className="port-footer-text select-none text-center font-extralight uppercase leading-none text-[#222A35]"
-            style={{
-              fontSize: "clamp(5rem, 20vw, 22rem)",
-              transform: "translateY(22%)",
-            }}
-          >
-            KAD
-          </h2>
-        </div>
-
-        <div className="relative z-10 bg-[#222A35] rounded-tl-[2rem] rounded-tr-[2rem] md:rounded-tl-[3.5rem] md:rounded-tr-[3.5rem] overflow-hidden">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
-
-          <div className="relative z-10 max-w-6xl mx-auto px-8 md:px-14 lg:px-20">
-            <div className="pt-16 md:pt-20 pb-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 border-b border-white/[0.06]">
-              <div>
-                <motion.span
-                  className="text-white/28 text-[10px] tracking-[0.48em] uppercase block mb-8"
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.65 }}
-                >
-                  Selected Works
-                </motion.span>
-
-                <div className="overflow-hidden">
-                  <motion.h3
-                    className="text-white font-extralight leading-[1.04] tracking-[-0.03em]"
-                    style={{ fontSize: "clamp(2.2rem, 5.5vw, 4.2rem)" }}
-                    initial={{ y: "106%" }}
-                    whileInView={{ y: "0%" }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.05, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    Our complete
-                  </motion.h3>
-                </div>
-                <div className="overflow-hidden">
-                  <motion.h3
-                    className="text-white/38 font-extralight leading-[1.04] tracking-[-0.03em] italic"
-                    style={{ fontSize: "clamp(2.2rem, 5.5vw, 4.2rem)" }}
-                    initial={{ y: "106%" }}
-                    whileInView={{ y: "0%" }}
-                    viewport={{ once: true }}
-                    transition={{
-                      duration: 1.05,
-                      delay: 0.1,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                  >
-                    portfolio.
-                  </motion.h3>
-                </div>
-              </div>
-
-              <motion.button
-                onClick={() => setShowAll(true)}
-                className="group flex items-center gap-5 self-start lg:self-end mb-1 cursor-pointer"
-                initial={{ opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.75, delay: 0.25 }}
-                whileHover="hover"
-              >
-                <div className="relative w-16 h-16 rounded-full border border-white/18 flex items-center justify-center overflow-hidden group-hover:border-white/50 transition-colors duration-300">
-                  <motion.div
-                    className="absolute inset-0 bg-white rounded-full"
-                    initial={{ scale: 0 }}
-                    variants={{ hover: { scale: 1 } }}
-                    transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
-                  />
-                  <ArrowUpRight className="relative z-10 w-5 h-5 text-white group-hover:text-[#222A35] transition-colors duration-200" />
-                </div>
-                <span className="text-white/55 text-[11px] font-light tracking-[0.22em] uppercase group-hover:text-white transition-colors duration-300">
-                  View All
-                </span>
-              </motion.button>
-            </div>
-
-            <div className="py-8 md:py-10 grid grid-cols-3 gap-6">
-              {[
-                { value: "100+", label: "Projects Completed" },
-                { value: "15+", label: "Years of Practice" },
-                { value: "98%", label: "Client Satisfaction" },
-              ].map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.65 }}
-                >
-                  <div
-                    className="text-white font-extralight tracking-[-0.02em]"
-                    style={{ fontSize: "clamp(1.5rem, 3vw, 2.2rem)" }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div className="text-white/22 text-[10px] tracking-[0.28em] uppercase mt-1.5">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
     </section>
   );
 }
@@ -949,7 +867,7 @@ function GalleryCard({ photo }: { photo: Project }) {
           hover: { opacity: 0, transition: { duration: 0.18 } },
         }}
       >
-        <span className="text-[8px] tracking-[0.24em] uppercase text-white/78 bg-black/28 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/8">
+        <span className="text-[9px] tracking-[0.24em] uppercase font-light text-white/78 bg-black/28 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/8">
           {photo.category}
         </span>
       </motion.div>
@@ -986,10 +904,10 @@ function GalleryCard({ photo }: { photo: Project }) {
           }}
           initial={{ y: 14, opacity: 0 }}
         >
-          <h3 className="text-white text-sm font-light leading-snug tracking-tight">
+          <h3 className="text-white text-[15px] font-light leading-snug tracking-tight">
             {photo.title}
           </h3>
-          <div className="flex items-center gap-1.5 text-white/35 text-[10px] mt-1.5">
+          <div className="flex items-center gap-1.5 text-white/35 text-[11px] font-light mt-1.5">
             <MapPin className="w-2.5 h-2.5 flex-shrink-0" />
             <span>{photo.location}</span>
             <span className="text-white/15 mx-0.5">·</span>
