@@ -147,7 +147,7 @@ export default function OurProjectsSection() {
 
   const nextImage = () =>
     setActiveImageIdx((i) => (i + 1) % (activeProject?.images.length ?? 1));
-
+ 
   return (
     <>
       <section
