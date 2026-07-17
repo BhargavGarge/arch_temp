@@ -21,8 +21,8 @@ export default function TeamMemberCard({
   description,
   className,
 }: TeamMemberCardProps) {
-  const fullName = `${firstName} ${lastName}`;
-  const isRight = position === "right";
+  // const fullName = `${firstName} ${lastName}`;
+  // const isRight = position === "right";
 
   return (
     <motion.div
