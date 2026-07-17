@@ -88,7 +88,7 @@ export const GalleryGridCell = React.forwardRef<HTMLDivElement, GalleryGridCellP
       viewport={{ once: true }}
       transition={{ duration: 0.55, delay: index * 0.18, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "relative overflow-hidden rounded-xl shadow-2xl",
+        "relative overflow-hidden  shadow-2xl",
         areaClasses[index],
         className
       )}

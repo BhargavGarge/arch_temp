@@ -34,7 +34,7 @@ export default function CTACallback() {
   return (
     <section id="cta-section" className="relative overflow-hidden">
       {/* Transition gradient from testimonial */}
-      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black to-transparent pointer-events-none z-10" />
+      {/* <div className="absolute top-0 left-0 right-0 h-full bg-gradient-to-br from-[#222A35] to-transparent pointer-events-none z-10" /> */}
 
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-[#222A35]/5 blur-[120px] pointer-events-none" />
@@ -45,7 +45,7 @@ export default function CTACallback() {
           {/* ── Left: text + form ─────────────────────────────── */}
           <ContainerStagger>
             <ContainerAnimated>
-              <span className="block text-[#222A35] text-[10px] tracking-[0.4em] uppercase font-medium mb-5">
+              <span className="block text-white/50 text-[10px] tracking-[0.4em] uppercase font-medium mb-5">
                 Start Your Project
               </span>
             </ContainerAnimated>

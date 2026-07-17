@@ -44,7 +44,7 @@ export default function Navbar() {
             <img
               src="/logo.png"
               alt="KAD Studio"
-              className="h-9 md:h-10 w-auto object-contain brightness-0 invert"
+              className="h-12 md:h-10 w-auto object-contain brightness-0 invert"
             />
           </a>
 
@@ -68,9 +68,10 @@ export default function Navbar() {
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <span
-                      className="text-white uppercase leading-none text-4xl"
+                      className="text-white uppercase leading-none text-4xl md:text-5xl "
                       style={{
                         fontFamily: "'Inter', sans-serif",
+                        // fontfamily: "'Inter', sans-serif",
                         fontWeight: 500,
                         // fontSize: "clamp(1.2rem, 2.2vw, 3.5rem)",
                         letterSpacing: "0.05em",
@@ -133,7 +134,7 @@ export default function Navbar() {
             className="ml-auto z-10 text-white p-1"
             aria-label="Open menu"
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-8 h-8" />
           </button>
         </div>
       </motion.nav>

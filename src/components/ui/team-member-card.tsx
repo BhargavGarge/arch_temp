@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
-import img from "../../../public/img1.png";
+// import img from "../../../public/img1.png";
 
 interface TeamMemberCardProps {
   position?: "left" | "right";
@@ -14,11 +14,11 @@ interface TeamMemberCardProps {
 
 export default function TeamMemberCard({
   position = "left",
-  jobPosition = "Principal Architect",
-  firstName = "Arun",
-  lastName = "Sharma",
-  imageUrl = img,
-  description = "With over 25 years of practice, Ar. Arun Sharma leads every project with an unwavering commitment to craft, context, and the human experience of space.",
+  jobPosition ,
+  firstName, 
+  lastName,
+  imageUrl,
+  description,
   className,
 }: TeamMemberCardProps) {
   const fullName = `${firstName} ${lastName}`;
@@ -42,14 +42,14 @@ export default function TeamMemberCard({
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <p
+        {/* <p
           className={cn(
             "mb-4 text-xs font-medium tracking-[0.3em] text-[#222A35] uppercase",
             isRight && "md:text-right",
           )}
         >
           {jobPosition}
-        </p>
+        </p> */}
       </motion.div>
 
       {/*
@@ -57,71 +57,45 @@ export default function TeamMemberCard({
         Desktop: flex-row  → original overlap layout (portrait + info side-by-side)
         isRight: portrait pushed last via md:order-1 (same as original order-1)
       */}
-      <div
-        className={cn(
-          "flex flex-col",
-          "md:flex-row md:items-center md:justify-end",
-        )}
-      >
-        {/* ── Portrait ─────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-          className={cn(
-            "relative overflow-hidden rounded-sm",
-            "h-[260px] w-full", // mobile
-            "md:h-[500px] md:w-[22.5rem] md:shrink-0", // desktop
-            isRight && "md:order-1",
-          )}
-        >
-          <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-          <img
-            src={imageUrl}
-            alt={fullName}
-            className="object-cover transition-transform duration-500 hover:scale-105 aspect-[3/2] md:aspect-auto"
-          />
-        </motion.div>
+    <div
+  className={`grid lg:grid-cols-2 gap-14 lg:gap-20 items-center ${
+    position === "right" ? "lg:[&>*:first-child]:order-2" : ""
+  }`}
+>
+  {/* Image */}
+  <div className="relative w-full flex justify-center">
+  <div className="w-full max-w-[420px] aspect-[7/9] overflow-hidden">
+    <img
+      src={imageUrl}
+      alt={`${firstName} ${lastName}`}
+      className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
+    />
+  </div>
+</div>
 
-        {/* ── Info block ───────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className={cn(
-            "relative z-[2] flex flex-col",
-            "gap-6 mt-6 w-full", // mobile
-            "md:mt-0 md:-left-8 md:w-[calc(100%-350px)] md:gap-14", // desktop
-            isRight && "md:left-8 md:items-end",
-          )}
-        >
-          {/* Display name */}
-          <div className={cn("flex flex-col gap-1 md:items-center")}>
-            <p className="text-3xl md:text-5xl leading-[1.1] font-extralight tracking-tight text-[#222A35] ">
-              {firstName} {lastName}
-              <br />
-            </p>
-          </div>
+  {/* Content */}
+  <div className="max-w-xl">
+  {/* Job Position */}
+  <p className="mb-3 text-[10px] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.35em] text-[#8D735B]">
+    {jobPosition}
+  </p>
 
-          <div
-            className={cn("flex gap-6 md:gap-8", isRight && "md:justify-end")}
-          >
-            {/* Bio */}
-            <div className="flex-1 md:flex-none md:w-[80%] md:ml-auto">
-              <p
-                className={cn(
-                  "text-lg leading-[2] text-[#222A35]/60",
-                  isRight && "md:text-right",
-                )}
-              >
-                {description}
-              </p>
-            </div>
-          </div>
-        </motion.div>
-      </div>
+  {/* Name */}
+  <h3 className="text-[2rem] sm:text-[2.5rem] lg:text-5xl font-extralight leading-[1.05] tracking-[-0.03em] text-[#222A35]">
+    {firstName}
+    <br />
+    <span className="font-light">{lastName}</span>
+  </h3>
+
+  {/* Divider */}
+  <div className="w-12 sm:w-16 h-px bg-[#8D735B] my-6 sm:my-8" />
+
+  {/* Description */}
+  <p className="text-[15px] sm:text-base lg:text-lg leading-7 sm:leading-8 lg:leading-9 text-[#222A35]/75">
+    {description}
+  </p>
+</div>
+</div>
     </motion.div>
   );
 }

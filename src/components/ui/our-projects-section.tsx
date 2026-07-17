@@ -153,7 +153,7 @@ export default function OurProjectsSection() {
       <section
         ref={sectionRef}
         id="our-projects"
-        className="bg-[#ffffff] py-16 sm:py-20 md:py-32 overflow-hidden"
+        className="bg-[#ffffff] py-2 pt-20 overflow-hidden"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20">
           {/* ── Header ──────────────────────────────── */}
@@ -231,6 +231,19 @@ export default function OurProjectsSection() {
             </motion.button>
           </div>
         </div>
+        <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.8 }}
+  className="flex justify-center pt-20"
+>
+  <img
+    src="/assets/architectural-separator.svg"
+    alt="Architectural Divider"
+    className="w-32 md:w-40 opacity-70"
+  />
+</motion.div>
       </section>
 
       {/* ── Project detail modal ─────────────────── */}

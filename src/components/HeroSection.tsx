@@ -103,7 +103,7 @@ export default function HeroSection() {
             {HEADLINE.map((line, i) => (
               <div key={i} className="overflow-hidden">
                 <motion.h1
-                className="md:text-8xl text-4xl font-light  "
+                className="md:text-8xl text-5xl font-thin font-[eb-g] text-white tracking-[-0.02em] md:tracking-[-0.03em] leading-[1.05] md:leading-[1.02]"
                   // className="text-[2.6rem] md:text-6xl lg:text-7xl xl:text-[5.5rem] font-light text-white tracking-[-0.02em] md:tracking-[-0.03em] leading-[1.05] md:leading-[1.02]"
                   style={{ letterSpacing: "-0.03em" , lineHeight: "1.2"}}
                   initial={{ y: "102%", opacity: 0 }}
@@ -153,7 +153,7 @@ export default function HeroSection() {
             >
               {DISCIPLINES.map((d, i) => (
                 <span key={d} className="flex items-center gap-3">
-                  <span className="text-white/45 text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-light">
+                  <span className="text-white text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-light">
                     {d}
                   </span>
                   {i < DISCIPLINES.length - 1 && (

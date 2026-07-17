@@ -6,10 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const STATS = [
-  { value: "15+", label: "Years of Field Experience" },
-  { value: "41+", label: "Projects Delivered" },
-  { value: "3", label: "Core Disciplines" },
-  { value: "1", label: "Unified Framework" },
+  { value: "25+", label: "Years of Field Experience" },
+  { value: "500+", label: "Projects Delivered" },
+  { value: "4", label: "Core Disciplines" },
+  { value: "20+", label: "Locations" },
 ];
 
 const HEADING_LINES = [
@@ -204,7 +204,7 @@ export default function AboutSection() {
               viewport={{ once: true }}
               transition={{ duration: 0.75, delay: 0.38 }}
             >
-              With over 15 years of practical field experience, our integrated
+              With over 25 years of practical field experience, our integrated
               framework unites architects, structural engineers, and interior
               specialists under a single line of communication — owning every
               phase from raw site microclimate analysis to precision material
@@ -238,7 +238,7 @@ export default function AboutSection() {
                 {stat.value}
               </span>
               <span
-                className="block text-[#222A35]/35 uppercase font-light leading-relaxed"
+                className="block text-[#222A35] uppercase  leading-relaxed"
                 style={{
                   fontFamily: "'Jost', sans-serif",
                   fontSize: "clamp(8px, 0.85vw, 10px)",
@@ -266,7 +266,7 @@ export default function AboutSection() {
             "Architecture & Master Planning",
             "Bespoke Interior Design",
             "Turnkey Project Management",
-            "KAD Design Academy",
+            "RITZY Design Academy",
           ].map((cap, i) => (
             <motion.div
               key={i}

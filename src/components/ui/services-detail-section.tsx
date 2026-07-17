@@ -24,7 +24,22 @@ const SERVICES = [
     ],
   },
   {
-    number: "02",
+  number: "02",
+  title: "Construction & Execution",
+  tagline: "Precision Built. Quality Assured.",
+  image: "/assets/construction.webp",
+  imageAlt: "Construction execution by KAD Studio",
+  description:
+    "Exceptional architecture deserves equally exceptional execution. Our construction division transforms carefully developed designs into enduring built environments through disciplined planning, skilled craftsmanship, and uncompromising quality control. Every stage is managed with precision, ensuring projects are delivered efficiently while maintaining the highest standards of structural integrity and finish.",
+
+  bullets: [
+    "End-to-End Construction Management: Complete supervision from site preparation to final handover.",
+    "Quality & Engineering Excellence: Strict quality control, premium materials, and precision workmanship throughout every phase.",
+    "Timely & Transparent Delivery: Coordinated execution, milestone-based planning, and seamless collaboration for predictable project outcomes.",
+  ],
+},
+  {
+    number: "03",
     title: "Bespoke Interior Design",
     tagline: "Environments Tuned to Human Psychology",
     image: "/assets/LIVING LOBBY.webp",
@@ -38,7 +53,7 @@ const SERVICES = [
     ],
   },
   {
-    number: "03",
+    number: "04",
     title: "Turnkey Project Management",
     tagline: "Single-Source Accountability, Precision Delivery",
     image: "/assets/KAD2.webp",
@@ -52,7 +67,7 @@ const SERVICES = [
     ],
   },
   {
-    number: "04",
+    number: "05",
     title: "KAD Design Academy",
     tagline: "Incubating the Next Generation of Empathetic Vanguards",
     image: "/assets/KAD3.webp",

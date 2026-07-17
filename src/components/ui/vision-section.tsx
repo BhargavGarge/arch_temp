@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const VISION_STATEMENT =
-  "We do not build to impose forms on the landscape. We design to honor the micro-narratives of daily life—sculpting spaces that elevate biological well-being, restore physical dignity, and serve as hyper-local anchors for human connection.";
+  "We do not build to impose forms on the landscape. We design to honor the micro narratives of daily life sculpting spaces that elevate biological well-being, restore physical dignity, and serve as hyper local anchors for human connection.";
 
 const SCALE_VISIONS = [
   {
@@ -34,8 +34,8 @@ const SCALE_VISIONS = [
     id: "educational",
     label: "Education",
     subtitle: "The Empathetic Vanguard",
-    body: "Through the KAD Design Academy, our vision is to transform the future of design education. We are building an institutional ecosystem where technical software mastery is never separated from human empathy, ensuring the next generation enters the field ready to design for real-world impact.",
-    tag: "KAD Design Academy",
+    body: "Through the RITZY Design Academy, our vision is to transform the future of design education. We are building an institutional ecosystem where technical software mastery is never separated from human empathy, ensuring the next generation enters the field ready to design for real-world impact.",
+    tag: "RITYZ Design Academy",
   },
 ];
 
